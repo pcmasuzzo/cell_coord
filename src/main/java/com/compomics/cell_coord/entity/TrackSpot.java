@@ -1,0 +1,169 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.compomics.cell_coord.entity;
+
+import java.util.Objects;
+
+/**
+ * A track spot object.
+ *
+ * @author Paola
+ */
+public class TrackSpot {
+
+    // an id
+    private Long trackSpotid;
+    // x coordinate
+    private double x;
+    // y coordinate
+    private double y;
+    // z coordinate: optional!
+    private double z;
+    // the track the spot belongs to
+    private Track track;
+
+    /**
+     * Empty constructor
+     */
+    public TrackSpot() {
+    }
+
+    /**
+     * Constructors of convenience.
+     */
+    public TrackSpot(double x, double y) {
+        this.x = x;
+        this.y = y;
+    }
+
+    public TrackSpot(Long trackSpotid, double x, double y, Track track) {
+        this.trackSpotid = trackSpotid;
+        this.x = x;
+        this.y = y;
+        this.track = track;
+    }
+
+    public TrackSpot(Long trackSpotid, double x, double y, double z, Track track) {
+        this.trackSpotid = trackSpotid;
+        this.x = x;
+        this.y = y;
+        this.z = z;
+        this.track = track;
+    }
+
+    public Long getTrackSpotid() {
+        return trackSpotid;
+    }
+
+    public void setTrackSpotid(Long trackSpotid) {
+        this.trackSpotid = trackSpotid;
+    }
+
+    public double getX() {
+        return x;
+    }
+
+    public void setX(double x) {
+        this.x = x;
+    }
+
+    public double getY() {
+        return y;
+    }
+
+    public void setY(double y) {
+        this.y = y;
+    }
+
+    public double getZ() {
+        return z;
+    }
+
+    public void setZ(double z) {
+        this.z = z;
+    }
+
+    public Track getTrack() {
+        return track;
+    }
+
+    public void setTrack(Track track) {
+        this.track = track;
+    }
+
+    /**
+     * Get the radius in polar coordinates.
+     *
+     * @return sqrt(x*x + y*y)
+     */
+    public double getPolarRadius() {
+        return Math.hypot(x, y);
+    }
+
+    /**
+     * Get the angle theta in polar coordinates.
+     *
+     * @return the angle in radians (between -pi/2 and pi/2)
+     */
+    public double getTheta() {
+        return Math.atan2(y, x);
+    }
+
+    /**
+     * Euclidean distance from one point to another one.
+     *
+     * @param other
+     * @return
+     */
+    public double euclideanDistance2DTo(TrackSpot other) {
+        double dx = this.x - other.x;
+        double dy = this.y - other.y;
+        return Math.hypot(dx, dy);
+    }
+
+    /**
+     * Euclidean distance from one point to another one.
+     *
+     * @param other
+     * @return
+     */
+    public double euclideanDistance3DTo(TrackSpot other) {
+        double dx = this.x - other.x;
+        double dy = this.y - other.y;
+        double dz = this.z - other.z;
+        return Math.sqrt(Math.pow(dx, 2) + Math.pow(dy, 2) + Math.pow(dz, 2));
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 43 * hash + Objects.hashCode(this.trackSpotid);
+        hash = 43 * hash + (int) (Double.doubleToLongBits(this.x) ^ (Double.doubleToLongBits(this.x) >>> 32));
+        hash = 43 * hash + (int) (Double.doubleToLongBits(this.y) ^ (Double.doubleToLongBits(this.y) >>> 32));
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final TrackSpot other = (TrackSpot) obj;
+        if (!Objects.equals(this.trackSpotid, other.trackSpotid)) {
+            return false;
+        }
+        if (Double.doubleToLongBits(this.x) != Double.doubleToLongBits(other.x)) {
+            return false;
+        }
+        if (Double.doubleToLongBits(this.y) != Double.doubleToLongBits(other.y)) {
+            return false;
+        }
+        return true;
+    }
+}
