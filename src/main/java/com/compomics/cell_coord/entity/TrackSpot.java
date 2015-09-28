@@ -20,8 +20,6 @@ public class TrackSpot {
     private double x;
     // y coordinate
     private double y;
-    // z coordinate: optional!
-    private double z;
     // the track the spot belongs to
     private Track track;
 
@@ -43,14 +41,6 @@ public class TrackSpot {
         this.trackSpotid = trackSpotid;
         this.x = x;
         this.y = y;
-        this.track = track;
-    }
-
-    public TrackSpot(Long trackSpotid, double x, double y, double z, Track track) {
-        this.trackSpotid = trackSpotid;
-        this.x = x;
-        this.y = y;
-        this.z = z;
         this.track = track;
     }
 
@@ -76,14 +66,6 @@ public class TrackSpot {
 
     public void setY(double y) {
         this.y = y;
-    }
-
-    public double getZ() {
-        return z;
-    }
-
-    public void setZ(double z) {
-        this.z = z;
     }
 
     public Track getTrack() {
@@ -118,23 +100,10 @@ public class TrackSpot {
      * @param other
      * @return
      */
-    public double euclideanDistance2DTo(TrackSpot other) {
+    public double euclideanDistanceTo(TrackSpot other) {
         double dx = this.x - other.x;
         double dy = this.y - other.y;
         return Math.hypot(dx, dy);
-    }
-
-    /**
-     * Euclidean distance from one point to another one.
-     *
-     * @param other
-     * @return
-     */
-    public double euclideanDistance3DTo(TrackSpot other) {
-        double dx = this.x - other.x;
-        double dy = this.y - other.y;
-        double dz = this.z - other.z;
-        return Math.sqrt(Math.pow(dx, 2) + Math.pow(dy, 2) + Math.pow(dz, 2));
     }
 
     @Override

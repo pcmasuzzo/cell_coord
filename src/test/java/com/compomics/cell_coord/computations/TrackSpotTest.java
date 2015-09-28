@@ -37,9 +37,9 @@ public class TrackSpotTest {
 
     @Test
     public void test2DEuclideanDistance() {
-        double euclideanDistanceTo = q.euclideanDistance2DTo(r);
+        double euclideanDistanceTo = q.euclideanDistanceTo(r);
         Assert.assertEquals(6.158733636065128, euclideanDistanceTo);
-        double zeroDistance = q.euclideanDistance2DTo(q);
+        double zeroDistance = q.euclideanDistanceTo(q);
         Assert.assertEquals(0.0, zeroDistance);
     }
 }

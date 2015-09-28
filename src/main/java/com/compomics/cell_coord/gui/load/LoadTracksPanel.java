@@ -5,6 +5,9 @@
  */
 package com.compomics.cell_coord.gui.load;
 
+import javax.swing.JButton;
+import javax.swing.JRadioButton;
+
 /**
  *
  * @author Paola
@@ -18,6 +21,34 @@ public class LoadTracksPanel extends javax.swing.JPanel {
         initComponents();
     }
 
+    public JRadioButton getLoadPlateRadioButton() {
+        return loadPlateRadioButton;
+    }
+
+    public JRadioButton getLoadSparseFilesRadioButton() {
+        return loadSparseFilesRadioButton;
+    }
+
+    public JRadioButton getLoadTrackMateRadioButton() {
+        return loadTrackMateRadioButton;
+    }
+
+    public JButton getNextButton() {
+        return nextButton;
+    }
+
+    public JButton getPlateViewInfoButton() {
+        return plateViewInfoButton;
+    }
+
+    public JButton getSparseFilesInfoButton() {
+        return sparseFilesInfoButton;
+    }
+
+    public JButton getTrackMateInfoButton() {
+        return trackMateInfoButton;
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -27,19 +58,100 @@ public class LoadTracksPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        infoLabel = new javax.swing.JLabel();
+        sparseFilesInfoButton = new javax.swing.JButton();
+        plateViewInfoButton = new javax.swing.JButton();
+        trackMateInfoButton = new javax.swing.JButton();
+        loadSparseFilesRadioButton = new javax.swing.JRadioButton();
+        loadPlateRadioButton = new javax.swing.JRadioButton();
+        loadTrackMateRadioButton = new javax.swing.JRadioButton();
+        nextButton = new javax.swing.JButton();
+
+        infoLabel.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        infoLabel.setText("How do you want to load your cell tracking data?");
+
+        sparseFilesInfoButton.setBorder(null);
+        sparseFilesInfoButton.setContentAreaFilled(false);
+
+        plateViewInfoButton.setBorder(null);
+        plateViewInfoButton.setContentAreaFilled(false);
+
+        trackMateInfoButton.setBorder(null);
+        trackMateInfoButton.setContentAreaFilled(false);
+
+        loadSparseFilesRadioButton.setText("Load sparse files");
+
+        loadPlateRadioButton.setText("Load files and a plate view");
+
+        loadTrackMateRadioButton.setText("Load a TrackMate model");
+
+        nextButton.setText("Next");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addGap(58, 58, 58)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(loadSparseFilesRadioButton)
+                                    .addComponent(loadPlateRadioButton)
+                                    .addComponent(loadTrackMateRadioButton))
+                                .addGap(28, 28, 28)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(plateViewInfoButton, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(sparseFilesInfoButton, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(trackMateInfoButton, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(14, 14, 14)
+                                .addComponent(infoLabel)
+                                .addGap(4, 4, 4)))
+                        .addGap(0, 48, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(nextButton)))
+                .addContainerGap())
         );
+
+        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {loadPlateRadioButton, loadSparseFilesRadioButton, loadTrackMateRadioButton});
+
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(infoLabel)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(plateViewInfoButton, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(loadSparseFilesRadioButton))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(sparseFilesInfoButton, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(loadPlateRadioButton))
+                        .addGap(11, 11, 11)
+                        .addComponent(loadTrackMateRadioButton))
+                    .addComponent(trackMateInfoButton, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(nextButton)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel infoLabel;
+    private javax.swing.JRadioButton loadPlateRadioButton;
+    private javax.swing.JRadioButton loadSparseFilesRadioButton;
+    private javax.swing.JRadioButton loadTrackMateRadioButton;
+    private javax.swing.JButton nextButton;
+    private javax.swing.JButton plateViewInfoButton;
+    private javax.swing.JButton sparseFilesInfoButton;
+    private javax.swing.JButton trackMateInfoButton;
     // End of variables declaration//GEN-END:variables
 }

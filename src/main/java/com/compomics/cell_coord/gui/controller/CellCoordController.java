@@ -7,6 +7,7 @@ package com.compomics.cell_coord.gui.controller;
 
 import com.compomics.cell_coord.gui.CellCoordFrame;
 import com.compomics.cell_coord.gui.controller.load.LoadTracksController;
+import java.awt.CardLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
@@ -47,12 +48,24 @@ public class CellCoordController {
                 System.exit(1);
             }
         });
+
         // new frame instance
         cellCoordFrame = new CellCoordFrame();
         cellCoordFrame.setTitle("Cell_Coord");
-        initMainFrame();
+        // at starter, show main panel with logo    
+        getCardLayout().first(cellCoordFrame.getBackgroundPanel());
         // init child controllers
         loadTracksController.init();
+        initMainFrame();
+    }
+
+    /**
+     * Get the main frame
+     *
+     * @return
+     */
+    public CellCoordFrame getCellCoordFrame() {
+        return cellCoordFrame;
     }
 
     /**
@@ -70,7 +83,7 @@ public class CellCoordController {
      * Initialize main frame.
      */
     private void initMainFrame() {
-
+        
         /**
          * Add action listeners.
          */
@@ -79,8 +92,26 @@ public class CellCoordController {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                // first action: loading tracks
+                onLoadingTracks();
             }
         });
     }
+
+    /**
+     * On loading tracks.
+     */
+    private void onLoadingTracks() {
+        getCardLayout().show(cellCoordFrame.getBackgroundPanel(), cellCoordFrame.getLoadTracksParentPanel().getName());
+    }
+
+    /**
+     * Get the card layout from the background panel of CellMissy frame
+     *
+     * @return
+     */
+    private CardLayout getCardLayout() {
+        return (CardLayout) cellCoordFrame.getBackgroundPanel().getLayout();
+    }
+
 }

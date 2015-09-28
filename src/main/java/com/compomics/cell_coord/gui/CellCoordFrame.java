@@ -31,6 +31,10 @@ public class CellCoordFrame extends javax.swing.JFrame {
         UIManager.put("info", Color.white); // Background for tooltip texts (info class)
     }
 
+    public JPanel getBackgroundPanel() {
+        return backgroundPanel;
+    }
+
     public JPanel getLoadTracksParentPanel() {
         return loadTracksParentPanel;
     }
@@ -115,18 +119,9 @@ public class CellCoordFrame extends javax.swing.JFrame {
 
         backgroundPanel.add(homeParentPanel, "card2");
 
-        javax.swing.GroupLayout loadTracksParentPanelLayout = new javax.swing.GroupLayout(loadTracksParentPanel);
-        loadTracksParentPanel.setLayout(loadTracksParentPanelLayout);
-        loadTracksParentPanelLayout.setHorizontalGroup(
-            loadTracksParentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 660, Short.MAX_VALUE)
-        );
-        loadTracksParentPanelLayout.setVerticalGroup(
-            loadTracksParentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 541, Short.MAX_VALUE)
-        );
-
-        backgroundPanel.add(loadTracksParentPanel, "card3");
+        loadTracksParentPanel.setLayout(new java.awt.GridBagLayout());
+        backgroundPanel.add(loadTracksParentPanel, "loadTracksParentPanel");
+        loadTracksParentPanel.getAccessibleContext().setAccessibleName("loadTracksParentPanel");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);

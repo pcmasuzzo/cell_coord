@@ -5,13 +5,25 @@
  */
 package com.compomics.cell_coord.parser;
 
+import com.compomics.cell_coord.entity.Track;
+import com.compomics.cell_coord.exception.FileParserException;
+import java.io.File;
+import java.util.List;
+
 /**
- * An interface to load parse a single track File.
+ * An interface to parse a single track File.
  *
  * @author Paola
  */
 public interface TrackFileParser {
 
-    void parseCSVFile();
-
+    /**
+     * Parse a track file.
+     *
+     * @param trackFile
+     * @return the correspondent list of tracks
+     * @throws com.compomics.cell_coord.exception.FileParserException: an
+     * exception is something is wrong!
+     */
+    List<Track> parseTrackFile(File trackFile) throws FileParserException;
 }
