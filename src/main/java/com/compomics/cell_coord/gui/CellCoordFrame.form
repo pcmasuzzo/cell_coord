@@ -57,13 +57,20 @@
                       <Component id="infoPanel" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
+                  <Group type="102" alignment="1" attributes="0">
+                      <EmptySpace max="32767" attributes="0"/>
+                      <Component id="startButton" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
+                  </Group>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="infoPanel" max="32767" attributes="0"/>
+                      <Component id="infoPanel" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="startButton" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -72,13 +79,6 @@
           <SubComponents>
             <Container class="javax.swing.JPanel" name="infoPanel">
               <Properties>
-                <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-                  <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
-                    <TitledBorder title="Welcome to Cell_Coord">
-                      <Font PropertyName="font" name="Tahoma" size="12" style="0"/>
-                    </TitledBorder>
-                  </Border>
-                </Property>
                 <Property name="opaque" type="boolean" value="false"/>
               </Properties>
 
@@ -87,13 +87,7 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="infoScrollPane" alignment="0" pref="608" max="32767" attributes="0"/>
-                              <Group type="102" alignment="1" attributes="0">
-                                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                                  <Component id="startButton" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                          </Group>
+                          <Component id="infoScrollPane" pref="344" max="32767" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                       </Group>
                   </Group>
@@ -101,10 +95,9 @@
                 <DimensionLayout dim="1">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
-                          <Component id="infoScrollPane" min="-2" pref="451" max="-2" attributes="0"/>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="startButton" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="0" pref="10" max="32767" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="infoScrollPane" min="-2" pref="395" max="-2" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -125,22 +118,33 @@
                     <Component class="javax.swing.JEditorPane" name="infoEditorPane">
                       <Properties>
                         <Property name="editable" type="boolean" value="false"/>
+                        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                          <Border info="org.netbeans.modules.form.compat2.border.EtchedBorderInfo">
+                            <EtchetBorder bevelType="0"/>
+                          </Border>
+                        </Property>
                         <Property name="contentType" type="java.lang.String" value="text/html" noResource="true"/>
-                        <Property name="text" type="java.lang.String" value="&lt;html&gt;&#xa;  &lt;head&gt;&#xa;&lt;TITLE&gt;&lt;/TITLE&gt;&#xa;  &lt;/head&gt;&#xa;  &lt;body&gt;&#xa;&lt;a name=&quot;#top&quot;/&gt;&#xa;        &lt;H2&gt;Cell_Coord&lt;/H2&gt;&#xa;        &lt;i&gt;A Fiji/ImageJ plugin to study and visualize coordinated cell migration&lt;/i&gt;&#xa;  &lt;/body&gt;&#xa;&lt;/html&gt;"/>
+                        <Property name="text" type="java.lang.String" value="&lt;html&gt;&#xa;  &lt;head&gt;&#xa;&lt;TITLE&gt;&lt;/TITLE&gt;&#xa;  &lt;/head&gt;&#xa;  &lt;body&gt;&#xa;&lt;a name=&quot;#top&quot;/&gt;&#xa;        &lt;H2&gt;Welcome to Cell_Coord&lt;/H2&gt;&#xa;        &lt;i&gt;A Fiji/ImageJ plugin to study and visualize coordinated cell migration&lt;/i&gt;&#xa;  &lt;/body&gt;&#xa;&lt;/html&gt;"/>
                       </Properties>
                     </Component>
                   </SubComponents>
                 </Container>
-                <Component class="javax.swing.JButton" name="startButton">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="Start"/>
-                  </Properties>
-                </Component>
               </SubComponents>
             </Container>
+            <Component class="javax.swing.JButton" name="startButton">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Start"/>
+              </Properties>
+            </Component>
           </SubComponents>
         </Container>
         <Container class="javax.swing.JPanel" name="loadTracksParentPanel">
+          <Properties>
+            <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+              <Dimension value="[20, 20]"/>
+            </Property>
+            <Property name="name" type="java.lang.String" value="loadTracksParentPanel" noResource="true"/>
+          </Properties>
           <AccessibilityProperties>
             <Property name="AccessibleContext.accessibleName" type="java.lang.String" value="loadTracksParentPanel"/>
           </AccessibilityProperties>

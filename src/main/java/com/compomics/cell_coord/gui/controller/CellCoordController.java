@@ -52,6 +52,7 @@ public class CellCoordController {
         // new frame instance
         cellCoordFrame = new CellCoordFrame();
         cellCoordFrame.setTitle("Cell_Coord");
+        cellCoordFrame.setVisible(true);
         // at starter, show main panel with logo    
         getCardLayout().first(cellCoordFrame.getBackgroundPanel());
         // init child controllers
@@ -83,7 +84,7 @@ public class CellCoordController {
      * Initialize main frame.
      */
     private void initMainFrame() {
-        
+
         /**
          * Add action listeners.
          */
@@ -93,16 +94,9 @@ public class CellCoordController {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // first action: loading tracks
-                onLoadingTracks();
+                getCardLayout().show(cellCoordFrame.getBackgroundPanel(), cellCoordFrame.getLoadTracksParentPanel().getName());
             }
         });
-    }
-
-    /**
-     * On loading tracks.
-     */
-    private void onLoadingTracks() {
-        getCardLayout().show(cellCoordFrame.getBackgroundPanel(), cellCoordFrame.getLoadTracksParentPanel().getName());
     }
 
     /**

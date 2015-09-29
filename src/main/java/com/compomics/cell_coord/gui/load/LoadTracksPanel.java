@@ -6,6 +6,7 @@
 package com.compomics.cell_coord.gui.load;
 
 import javax.swing.JButton;
+import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 
 /**
@@ -15,7 +16,7 @@ import javax.swing.JRadioButton;
 public class LoadTracksPanel extends javax.swing.JPanel {
 
     /**
-     * Creates new form loadTracksPanel
+     * Creates new form LoadTracksPanel2
      */
     public LoadTracksPanel() {
         initComponents();
@@ -37,16 +38,36 @@ public class LoadTracksPanel extends javax.swing.JPanel {
         return nextButton;
     }
 
-    public JButton getPlateViewInfoButton() {
-        return plateViewInfoButton;
+    public JButton getPlateInfoButton() {
+        return plateInfoButton;
     }
 
-    public JButton getSparseFilesInfoButton() {
-        return sparseFilesInfoButton;
+    public JPanel getPlateParentPanel() {
+        return plateParentPanel;
+    }
+
+    public JButton getPreviousButton() {
+        return previousButton;
+    }
+
+    public JButton getSparseInfoButton() {
+        return sparseInfoButton;
+    }
+
+    public JPanel getSparseParentPanel() {
+        return sparseParentPanel;
     }
 
     public JButton getTrackMateInfoButton() {
         return trackMateInfoButton;
+    }
+
+    public JPanel getTrackMateParentPanel() {
+        return trackMateParentPanel;
+    }
+
+    public JPanel getTopPanel() {
+        return topPanel;
     }
 
     /**
@@ -57,101 +78,177 @@ public class LoadTracksPanel extends javax.swing.JPanel {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
 
-        infoLabel = new javax.swing.JLabel();
-        sparseFilesInfoButton = new javax.swing.JButton();
-        plateViewInfoButton = new javax.swing.JButton();
+        topPanel = new javax.swing.JPanel();
+        choicePanel = new javax.swing.JPanel();
         trackMateInfoButton = new javax.swing.JButton();
-        loadSparseFilesRadioButton = new javax.swing.JRadioButton();
+        sparseInfoButton = new javax.swing.JButton();
+        plateInfoButton = new javax.swing.JButton();
         loadPlateRadioButton = new javax.swing.JRadioButton();
+        loadSparseFilesRadioButton = new javax.swing.JRadioButton();
         loadTrackMateRadioButton = new javax.swing.JRadioButton();
+        infoLabel = new javax.swing.JLabel();
+        sparseParentPanel = new javax.swing.JPanel();
+        plateParentPanel = new javax.swing.JPanel();
+        trackMateParentPanel = new javax.swing.JPanel();
+        bottomPanel = new javax.swing.JPanel();
         nextButton = new javax.swing.JButton();
+        previousButton = new javax.swing.JButton();
 
-        infoLabel.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        infoLabel.setText("How do you want to load your cell tracking data?");
+        setLayout(new java.awt.GridBagLayout());
 
-        sparseFilesInfoButton.setBorder(null);
-        sparseFilesInfoButton.setContentAreaFilled(false);
-
-        plateViewInfoButton.setBorder(null);
-        plateViewInfoButton.setContentAreaFilled(false);
+        topPanel.setMinimumSize(new java.awt.Dimension(20, 20));
+        topPanel.setPreferredSize(new java.awt.Dimension(20, 20));
+        topPanel.setLayout(new java.awt.CardLayout());
 
         trackMateInfoButton.setBorder(null);
         trackMateInfoButton.setContentAreaFilled(false);
 
+        sparseInfoButton.setBorder(null);
+        sparseInfoButton.setContentAreaFilled(false);
+
+        plateInfoButton.setBorder(null);
+        plateInfoButton.setContentAreaFilled(false);
+
+        loadPlateRadioButton.setText("Load files and assign them to a plate");
+
         loadSparseFilesRadioButton.setText("Load sparse files");
 
-        loadPlateRadioButton.setText("Load files and a plate view");
+        loadTrackMateRadioButton.setText("Load TrackMate model(s)");
 
-        loadTrackMateRadioButton.setText("Load a TrackMate model");
+        infoLabel.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        infoLabel.setText("How do you want to load your cell tracking data?");
 
-        nextButton.setText("Next");
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addGap(58, 58, 58)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(loadSparseFilesRadioButton)
-                                    .addComponent(loadPlateRadioButton)
-                                    .addComponent(loadTrackMateRadioButton))
-                                .addGap(28, 28, 28)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(plateViewInfoButton, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(sparseFilesInfoButton, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(trackMateInfoButton, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(14, 14, 14)
-                                .addComponent(infoLabel)
-                                .addGap(4, 4, 4)))
-                        .addGap(0, 48, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(nextButton)))
-                .addContainerGap())
-        );
-
-        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {loadPlateRadioButton, loadSparseFilesRadioButton, loadTrackMateRadioButton});
-
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+        javax.swing.GroupLayout choicePanelLayout = new javax.swing.GroupLayout(choicePanel);
+        choicePanel.setLayout(choicePanelLayout);
+        choicePanelLayout.setHorizontalGroup(
+            choicePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(choicePanelLayout.createSequentialGroup()
                 .addContainerGap()
+                .addGroup(choicePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(choicePanelLayout.createSequentialGroup()
+                        .addGroup(choicePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(loadSparseFilesRadioButton)
+                            .addComponent(loadPlateRadioButton)
+                            .addComponent(loadTrackMateRadioButton))
+                        .addGap(28, 28, 28)
+                        .addGroup(choicePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(sparseInfoButton, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(plateInfoButton, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(trackMateInfoButton, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(infoLabel))
+                .addContainerGap(165, Short.MAX_VALUE))
+        );
+        choicePanelLayout.setVerticalGroup(
+            choicePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(choicePanelLayout.createSequentialGroup()
+                .addGap(12, 12, 12)
                 .addComponent(infoLabel)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(plateViewInfoButton, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(choicePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(sparseInfoButton, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(loadSparseFilesRadioButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(sparseFilesInfoButton, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(choicePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(choicePanelLayout.createSequentialGroup()
+                        .addGroup(choicePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(plateInfoButton, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(loadPlateRadioButton))
                         .addGap(11, 11, 11)
                         .addComponent(loadTrackMateRadioButton))
                     .addComponent(trackMateInfoButton, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(nextButton)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(266, Short.MAX_VALUE))
         );
+
+        topPanel.add(choicePanel, "card2");
+
+        sparseParentPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Loading sparse files...", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 2, 11))); // NOI18N
+        sparseParentPanel.setMinimumSize(new java.awt.Dimension(20, 20));
+        sparseParentPanel.setName("sparseParentPanel"); // NOI18N
+        sparseParentPanel.setLayout(new java.awt.GridBagLayout());
+        topPanel.add(sparseParentPanel, "sparseParentPanel");
+        sparseParentPanel.getAccessibleContext().setAccessibleName("sparseParentPanel");
+
+        plateParentPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Loading files in a plate...", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 2, 11))); // NOI18N
+        plateParentPanel.setMinimumSize(new java.awt.Dimension(20, 20));
+        plateParentPanel.setName("plateParentPanel"); // NOI18N
+        plateParentPanel.setLayout(new java.awt.GridBagLayout());
+        topPanel.add(plateParentPanel, "plateParentPanel");
+        plateParentPanel.getAccessibleContext().setAccessibleName("plateParentPanel");
+
+        trackMateParentPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Loading TrackMate model(s)...", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 2, 11))); // NOI18N
+        trackMateParentPanel.setMinimumSize(new java.awt.Dimension(20, 20));
+        trackMateParentPanel.setName("trackMateParentPanel"); // NOI18N
+        trackMateParentPanel.setLayout(new java.awt.GridBagLayout());
+        topPanel.add(trackMateParentPanel, "trackMateParentPanel");
+        trackMateParentPanel.getAccessibleContext().setAccessibleName("trackMateParentPanel");
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTH;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 0.95;
+        add(topPanel, gridBagConstraints);
+
+        bottomPanel.setMinimumSize(new java.awt.Dimension(20, 20));
+        bottomPanel.setPreferredSize(new java.awt.Dimension(20, 20));
+
+        nextButton.setText("Next >>");
+
+        previousButton.setText("<< Previous");
+
+        javax.swing.GroupLayout bottomPanelLayout = new javax.swing.GroupLayout(bottomPanel);
+        bottomPanel.setLayout(bottomPanelLayout);
+        bottomPanelLayout.setHorizontalGroup(
+            bottomPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, bottomPanelLayout.createSequentialGroup()
+                .addContainerGap(255, Short.MAX_VALUE)
+                .addComponent(previousButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(nextButton)
+                .addContainerGap())
+        );
+
+        bottomPanelLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {nextButton, previousButton});
+
+        bottomPanelLayout.setVerticalGroup(
+            bottomPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, bottomPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(bottomPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(nextButton)
+                    .addComponent(previousButton)))
+        );
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTH;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 0.05;
+        add(bottomPanel, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel bottomPanel;
+    private javax.swing.JPanel choicePanel;
     private javax.swing.JLabel infoLabel;
     private javax.swing.JRadioButton loadPlateRadioButton;
     private javax.swing.JRadioButton loadSparseFilesRadioButton;
     private javax.swing.JRadioButton loadTrackMateRadioButton;
     private javax.swing.JButton nextButton;
-    private javax.swing.JButton plateViewInfoButton;
-    private javax.swing.JButton sparseFilesInfoButton;
+    private javax.swing.JButton plateInfoButton;
+    private javax.swing.JPanel plateParentPanel;
+    private javax.swing.JButton previousButton;
+    private javax.swing.JButton sparseInfoButton;
+    private javax.swing.JPanel sparseParentPanel;
+    private javax.swing.JPanel topPanel;
     private javax.swing.JButton trackMateInfoButton;
+    private javax.swing.JPanel trackMateParentPanel;
     // End of variables declaration//GEN-END:variables
 }

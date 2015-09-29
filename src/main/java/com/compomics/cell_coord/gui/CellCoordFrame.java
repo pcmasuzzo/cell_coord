@@ -66,17 +66,15 @@ public class CellCoordFrame extends javax.swing.JFrame {
 
         homeParentPanel.setBackground(new java.awt.Color(204, 204, 204));
 
-        infoPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Welcome to Cell_Coord", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 12))); // NOI18N
         infoPanel.setOpaque(false);
 
         infoScrollPane.setBorder(null);
 
         infoEditorPane.setEditable(false);
+        infoEditorPane.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         infoEditorPane.setContentType("text/html"); // NOI18N
-        infoEditorPane.setText("<html>\n  <head>\n<TITLE></TITLE>\n  </head>\n  <body>\n<a name=\"#top\"/>\n        <H2>Cell_Coord</H2>\n        <i>A Fiji/ImageJ plugin to study and visualize coordinated cell migration</i>\n  </body>\n</html>");
+        infoEditorPane.setText("<html>\n  <head>\n<TITLE></TITLE>\n  </head>\n  <body>\n<a name=\"#top\"/>\n        <H2>Welcome to Cell_Coord</H2>\n        <i>A Fiji/ImageJ plugin to study and visualize coordinated cell migration</i>\n  </body>\n</html>");
         infoScrollPane.setViewportView(infoEditorPane);
-
-        startButton.setText("Start");
 
         javax.swing.GroupLayout infoPanelLayout = new javax.swing.GroupLayout(infoPanel);
         infoPanel.setLayout(infoPanelLayout);
@@ -84,21 +82,18 @@ public class CellCoordFrame extends javax.swing.JFrame {
             infoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(infoPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(infoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(infoScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 608, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, infoPanelLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(startButton)))
+                .addComponent(infoScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 344, Short.MAX_VALUE)
                 .addContainerGap())
         );
         infoPanelLayout.setVerticalGroup(
             infoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(infoPanelLayout.createSequentialGroup()
-                .addComponent(infoScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 451, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(startButton)
-                .addGap(0, 10, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(infoScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 395, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        startButton.setText("Start");
 
         javax.swing.GroupLayout homeParentPanelLayout = new javax.swing.GroupLayout(homeParentPanel);
         homeParentPanel.setLayout(homeParentPanelLayout);
@@ -108,17 +103,25 @@ public class CellCoordFrame extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(infoPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, homeParentPanelLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(startButton)
+                .addGap(19, 19, 19))
         );
         homeParentPanelLayout.setVerticalGroup(
             homeParentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(homeParentPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(infoPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(infoPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(startButton)
                 .addContainerGap())
         );
 
         backgroundPanel.add(homeParentPanel, "card2");
 
+        loadTracksParentPanel.setMinimumSize(new java.awt.Dimension(20, 20));
+        loadTracksParentPanel.setName("loadTracksParentPanel"); // NOI18N
         loadTracksParentPanel.setLayout(new java.awt.GridBagLayout());
         backgroundPanel.add(loadTracksParentPanel, "loadTracksParentPanel");
         loadTracksParentPanel.getAccessibleContext().setAccessibleName("loadTracksParentPanel");

@@ -23,7 +23,7 @@ import org.apache.commons.csv.CSVParser;
  *
  * @author Paola
  */
-public class CsvFileParser implements TrackFileParser {
+public class CSVFileParser implements TrackFileParser {
 
     @Override
     public List<Track> parseTrackFile(File trackFile) throws FileParserException {
@@ -31,7 +31,7 @@ public class CsvFileParser implements TrackFileParser {
         try {
             CSVParser parser = CSVParser.parse(trackFile.getName(), CSVFormat.RFC4180);
         } catch (IOException ex) {
-            Logger.getLogger(CsvFileParser.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CSVFileParser.class.getName()).log(Level.SEVERE, null, ex);
         }
         return list;
     }

@@ -6,8 +6,6 @@
 package com.compomics.cell_coord;
 
 import com.compomics.cell_coord.gui.ApplicationValidator;
-import com.compomics.cell_coord.gui.CellCoordFrame;
-import ij.IJ;
 import ij.plugin.PlugIn;
 
 /**
@@ -19,8 +17,10 @@ public class Cell_Coord implements PlugIn {
 
     @Override
     public void run(String string) {
-        new CellCoordFrame().setVisible(true);
+//        new CellCoordFrame().setVisible(true);
 //        IJ.showMessage("Welcome to Cell_Corr");
+        ApplicationValidator applicationValidator = new ApplicationValidator();
+        applicationValidator.startApplicationContext();
     }
 
     /**
@@ -30,8 +30,7 @@ public class Cell_Coord implements PlugIn {
      */
     public static void main(final String... args) {
         new ij.ImageJ();
-        ApplicationValidator applicationValidator = new ApplicationValidator();
-        applicationValidator.startApplicationContext();
+
         new Cell_Coord().run("");
     }
 }

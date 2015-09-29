@@ -13,11 +13,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * An implementation of the track file parser: parse an Excel (.xls) file.
+ * An implementation of the track file parser: parse a tab-separated-values
+ * file.
  *
  * @author Paola
  */
-public class XlsFileParser implements TrackFileParser {
+public class TSVFileParser implements TrackFileParser {
 
     @Override
     public List<Track> parseTrackFile(File trackFile) throws FileParserException {
