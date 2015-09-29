@@ -5,21 +5,27 @@
  */
 package com.compomics.cell_coord.gui.controller.load;
 
+import com.compomics.cell_coord.entity.Track;
 import com.compomics.cell_coord.entity.TrackSpot;
+import com.compomics.cell_coord.exception.FileParserException;
 import com.compomics.cell_coord.exception.LoadDirectoryException;
 import com.compomics.cell_coord.factory.TrackFileParserFactory;
 import com.compomics.cell_coord.gui.load.LoadSparseFilesPanel;
+import com.compomics.cell_coord.parser.TrackFileParser;
 import com.compomics.cell_coord.utils.GuiUtils;
 import java.awt.GridBagConstraints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
+import java.util.logging.Level;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.TreePath;
 import org.apache.log4j.Logger;
 import org.jdesktop.beansbinding.AutoBinding;
 import org.jdesktop.beansbinding.BindingGroup;
@@ -134,7 +140,20 @@ public class LoadSparseFilesController {
     }
 
     /**
-     * Initialize main view
+     * Parse a specific track file.
+     *
+     * @param trackFile
+     * @return list of tracks
+     */
+    private List<Track> parseTrackFile(File trackFile) throws FileParserException {
+        // get the selected file format -- call the correspondent file parser
+        String parserName = (String) loadSparseFilesPanel.getFileFormatComboBox().getSelectedItem();
+        TrackFileParser parser = TrackFileParserFactory.getInstance().getParser(parserName);
+        return parser.parseTrackFile(trackFile);
+    }
+
+    /**
+     * Initialize main view.
      */
     private void initLoadSparseFilesPanel() {
         // make new view
@@ -171,6 +190,32 @@ public class LoadSparseFilesController {
                             chooseDirectoryAndLoadData();
                             break;  // cancel: do nothing
                     }
+                }
+            }
+        });
+
+        // import the selected files
+        loadSparseFilesPanel.getImportFilesButton().addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // get the selected file(s)
+                TreePath[] selectionPaths = loadSparseFilesPanel.getDirectoryTree().getSelectionPaths();
+                if (selectionPaths.length != 0) {
+                    for (TreePath path : selectionPaths) {
+                        String fileName = (String) path.getLastPathComponent().toString();
+                        File trackFile = new File(directory.getAbsolutePath() + File.separator + fileName);
+                        try {
+                            List<Track> currentTracks = parseTrackFile(trackFile);
+                        } catch (FileParserException ex) {
+                            LOG.error("Could not parse the file: " + trackFile);
+                            loadTracksController.showMessage((String) loadSparseFilesPanel.getFileFormatComboBox().getSelectedItem() + " expected!",
+                                      "Error parsing file", JOptionPane.ERROR_MESSAGE);
+                        }
+                    }
+                } else {
+                    // inform the user that no file was selected!
+                    loadTracksController.showMessage("You have to select at least one file!", "no files selected", JOptionPane.WARNING_MESSAGE);
                 }
             }
         });

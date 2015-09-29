@@ -20,6 +20,8 @@ public class TrackSpot {
     private double x;
     // y coordinate
     private double y;
+    // the time
+    private double time;
     // the track the spot belongs to
     private Track track;
 
@@ -37,11 +39,19 @@ public class TrackSpot {
         this.y = y;
     }
 
-    public TrackSpot(Long trackSpotid, double x, double y, Track track) {
+    public TrackSpot(Long trackSpotid, double x, double y, double time, Track track) {
         this.trackSpotid = trackSpotid;
         this.x = x;
         this.y = y;
+        this.time = time;
         this.track = track;
+    }
+
+    public TrackSpot(Long trackSpotid, double x, double y, double time) {
+        this.trackSpotid = trackSpotid;
+        this.x = x;
+        this.y = y;
+        this.time = time;
     }
 
     public Long getTrackSpotid() {
@@ -66,6 +76,14 @@ public class TrackSpot {
 
     public void setY(double y) {
         this.y = y;
+    }
+
+    public double getTime() {
+        return time;
+    }
+
+    public void setTime(double time) {
+        this.time = time;
     }
 
     public Track getTrack() {
