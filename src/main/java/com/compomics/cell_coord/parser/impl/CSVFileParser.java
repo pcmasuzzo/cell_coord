@@ -52,11 +52,9 @@ public class CSVFileParser implements TrackFileParser {
             csvFileParser = new CSVParser(fileReader, csvFileFormat);
             // get the csv records
             List<CSVRecord> csvRecords = csvFileParser.getRecords();
-
             Track currentTrack = null;
             List<TrackSpot> currentTrackPointList = new ArrayList<>();
             Long currentId = 0L;
-
             //Read the CSV file records starting from the second record to skip the header
             for (int i = 1; i < csvRecords.size(); i++) {
                 CSVRecord cSVRecord = csvRecords.get(i);
