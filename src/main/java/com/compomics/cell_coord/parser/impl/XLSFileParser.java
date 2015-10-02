@@ -12,9 +12,16 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 /**
  * An implementation of the track file parser: parse an Excel file.
@@ -30,7 +37,24 @@ public class XLSFileParser implements TrackFileParser {
         List<Track> list = new ArrayList<>();
 
         try {
-            FileInputStream file = new FileInputStream(trackFile);
+            FileInputStream fileInputStream = new FileInputStream(trackFile);
+            Workbook workbook;
+            // xls extension
+            if (trackFile.getName().endsWith("xls")) {
+                workbook = new HSSFWorkbook(fileInputStream);
+            } else { // xlsx extension
+                workbook = new XSSFWorkbook(fileInputStream);
+            }
+            Sheet sheet = workbook.getSheetAt(0);
+            Iterator<Row> iterator = sheet.iterator();
+            // iterate through each row
+            while (iterator.hasNext()) {
+
+                Row row = iterator.next();
+                // iterate through the cells
+                Iterator<Cell> cellIterator = row.cellIterator();
+                
+            }
         } catch (IOException ex) {
             Logger.getLogger(CSVFileParser.class.getName()).log(Level.SEVERE, null, ex);
 

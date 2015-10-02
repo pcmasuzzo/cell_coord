@@ -1,0 +1,11 @@
+-------------------------------------------------------------------------------
+Test set: com.compomics.cell_coord.parser.TrackFileParserTest
+-------------------------------------------------------------------------------
+Tests run: 3, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 0.898 sec <<< FAILURE! - in com.compomics.cell_coord.parser.TrackFileParserTest
+testXLSFileParsing(com.compomics.cell_coord.parser.TrackFileParserTest)  Time elapsed: 0.678 sec  <<< FAILURE!
+junit.framework.AssertionFailedError: null
+	at junit.framework.Assert.fail(Assert.java:55)
+	at junit.framework.Assert.assertTrue(Assert.java:22)
+	at junit.framework.Assert.assertTrue(Assert.java:31)
+	at com.compomics.cell_coord.parser.TrackFileParserTest.testXLSFileParsing(TrackFileParserTest.java:103)
+
