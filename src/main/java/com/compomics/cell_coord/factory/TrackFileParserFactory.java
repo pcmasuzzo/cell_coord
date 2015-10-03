@@ -5,8 +5,8 @@
  */
 package com.compomics.cell_coord.factory;
 
-import be.ugent.maf.cellmissy.spring.ApplicationContextProvider;
 import com.compomics.cell_coord.parser.TrackFileParser;
+import com.compomics.cell_coord.spring.ApplicationContextProvider;
 import java.util.Map;
 import java.util.Set;
 import org.springframework.context.ApplicationContext;
