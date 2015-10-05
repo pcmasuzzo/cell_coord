@@ -8,6 +8,8 @@ package com.compomics.cell_coord.gui.controller.load;
 import com.compomics.cell_coord.entity.Track;
 import com.compomics.cell_coord.gui.CellCoordFrame;
 import com.compomics.cell_coord.gui.controller.CellCoordController;
+import com.compomics.cell_coord.gui.info.SparseFilesInfoDialog;
+import com.compomics.cell_coord.gui.info.TrackMateFilesInfoDialog;
 import com.compomics.cell_coord.gui.load.LoadTracksPanel;
 import com.compomics.cell_coord.utils.GuiUtils;
 import java.awt.CardLayout;
@@ -16,6 +18,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 import javax.swing.ButtonGroup;
+import javax.swing.Icon;
+import javax.swing.UIManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -32,9 +36,13 @@ public class LoadTracksController {
     private List<Track> tracks; // might not be needed!
     // view
     private LoadTracksPanel loadTracksPanel;
+    private SparseFilesInfoDialog sparseFilesInfoDialog;
+    private TrackMateFilesInfoDialog trackMateFilesInfoDialog;
     // child controllers
     @Autowired
     private LoadSparseFilesController loadSparseFilesController;
+    @Autowired
+    private LoadTrackMateFilesController loadTrackMateFilesController;
     // parent controller
     @Autowired
     private CellCoordController cellCoordController;
@@ -84,10 +92,13 @@ public class LoadTracksController {
      */
     public void init() {
         gridBagConstraints = GuiUtils.getDefaultGridBagConstraints();
+        sparseFilesInfoDialog = new SparseFilesInfoDialog(cellCoordController.getCellCoordFrame(), true);
+        trackMateFilesInfoDialog = new TrackMateFilesInfoDialog(cellCoordController.getCellCoordFrame(), true);
         // init main view
         initLoadTracksPanel();
         // init child controllers
         loadSparseFilesController.init();
+        loadTrackMateFilesController.init();
     }
 
     /**
@@ -104,6 +115,40 @@ public class LoadTracksController {
         // select first option by default
         loadTracksPanel.getLoadSparseFilesRadioButton().setSelected(true);
 
+        // set icon for the question button
+        Icon questionIcon = UIManager.getIcon("OptionPane.questionIcon");
+        loadTracksPanel.getSparseInfoButton().setIcon(GuiUtils.getScaledIcon(questionIcon));
+        loadTracksPanel.getPlateInfoButton().setIcon(GuiUtils.getScaledIcon(questionIcon));
+        loadTracksPanel.getTrackMateInfoButton().setIcon(GuiUtils.getScaledIcon(questionIcon));
+
+        /**
+         * Show appropriate info dialogs.
+         */
+        loadTracksPanel.getSparseInfoButton().addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // simply show the dialog
+                sparseFilesInfoDialog.setVisible(true);
+            }
+        });
+
+        loadTracksPanel.getPlateInfoButton().addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            }
+        });
+
+        loadTracksPanel.getTrackMateInfoButton().addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // simply show the dialog
+                trackMateFilesInfoDialog.setVisible(true);
+            }
+        });
+
         /**
          * Next action: read the selection and call the correspondent child
          * controller.
@@ -119,6 +164,7 @@ public class LoadTracksController {
                     // call the plate view controller
                 } else {
                     // call the TrackMate controller
+                    loadTrackMateFilesController.onLoadingTrackMateFilesGui();
                 }
             }
         });

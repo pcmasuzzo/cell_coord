@@ -37,6 +37,10 @@ public class Track {
         this.trackSpots = trackSpots;
     }
 
+    public Track(Long trackid) {
+        this.trackid = trackid;
+    }
+
     public Long getTrackid() {
         return trackid;
     }

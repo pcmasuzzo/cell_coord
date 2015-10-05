@@ -28,6 +28,7 @@ import javax.swing.tree.TreePath;
 import org.apache.log4j.Logger;
 import org.jdesktop.beansbinding.AutoBinding;
 import org.jdesktop.beansbinding.BindingGroup;
+import org.jdesktop.beansbinding.ELProperty;
 import org.jdesktop.observablecollections.ObservableCollections;
 import org.jdesktop.observablecollections.ObservableList;
 import org.jdesktop.swingbinding.JTableBinding;
@@ -71,15 +72,7 @@ public class LoadSparseFilesController {
     }
 
     /**
-     * Show loaded tracks in the table.
-     */
-    public void showTracksInTable() {
-        // table binding
-        trackSpotsTableBinding = SwingBindings.createJTableBinding(AutoBinding.UpdateStrategy.READ, trackSpotsBindingList, loadSparseFilesPanel.getTracksTable());
-    }
-
-    /**
-     * On loading sparse files.
+     * On loading sparse files - render the right GUI view.
      */
     public void onLoadingSparseFilesGui() {
         loadTracksController.getCardLayout().show(loadTracksController.getLoadTracksPanel().getTopPanel(),
@@ -136,6 +129,43 @@ public class LoadSparseFilesController {
         directoryIsLoaded = true;
         loadSparseFilesPanel.getDirectoryTextArea().setText(directory.getAbsolutePath());
         loadTracksController.showMessage("Directory successful loaded!\nYou can select the files to import!", "", JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    /**
+     * Show loaded tracks in the table.
+     */
+    private void showTracksInTable() {
+        // table binding
+        trackSpotsTableBinding = SwingBindings.createJTableBinding(AutoBinding.UpdateStrategy.READ, trackSpotsBindingList, loadSparseFilesPanel.getTracksTable());
+        //add column bindings
+
+        JTableBinding.ColumnBinding columnBinding = trackSpotsTableBinding.addColumnBinding(ELProperty.create("${track.trackid}"));
+        columnBinding.setColumnName("track_id");
+        columnBinding.setEditable(false);
+        columnBinding.setColumnClass(Long.class);
+
+        columnBinding = trackSpotsTableBinding.addColumnBinding(ELProperty.create("${trackSpotid}"));
+        columnBinding.setColumnName("spot_id");
+        columnBinding.setEditable(false);
+        columnBinding.setColumnClass(Long.class);
+
+        columnBinding = trackSpotsTableBinding.addColumnBinding(ELProperty.create("${x}"));
+        columnBinding.setColumnName("x");
+        columnBinding.setEditable(false);
+        columnBinding.setColumnClass(Double.class);
+
+        columnBinding = trackSpotsTableBinding.addColumnBinding(ELProperty.create("${y}"));
+        columnBinding.setColumnName("y");
+        columnBinding.setEditable(false);
+        columnBinding.setColumnClass(Double.class);
+
+        columnBinding = trackSpotsTableBinding.addColumnBinding(ELProperty.create("${time}"));
+        columnBinding.setColumnName("time");
+        columnBinding.setEditable(false);
+        columnBinding.setColumnClass(Double.class);
+
+        bindingGroup.addBinding(trackSpotsTableBinding);
+        bindingGroup.bind();
     }
 
     /**
@@ -200,19 +230,26 @@ public class LoadSparseFilesController {
             public void actionPerformed(ActionEvent e) {
                 // get the selected file(s)
                 TreePath[] selectionPaths = loadSparseFilesPanel.getDirectoryTree().getSelectionPaths();
-                if (selectionPaths.length != 0) {
+                if (selectionPaths != null && selectionPaths.length != 0) {
                     for (TreePath path : selectionPaths) {
                         String fileName = (String) path.getLastPathComponent().toString();
                         File trackFile = new File(directory.getAbsolutePath() + File.separator + fileName);
                         try {
+                            // get the tracks and add all the spots to the binding list
                             List<Track> currentTracks = parseTrackFile(trackFile);
-                            
+                            for (Track track : currentTracks) {
+                                trackSpotsBindingList.addAll(track.getTrackSpots());
+                            }
+                            if (trackSpotsTableBinding == null) {
+                                showTracksInTable();
+                            }
                         } catch (FileParserException ex) {
-                            LOG.error("Could not parse the file: " + trackFile);
+                            LOG.error("Could not parse the file: " + trackFile, ex);
                             loadTracksController.showMessage((String) loadSparseFilesPanel.getFileFormatComboBox().getSelectedItem() + " expected!",
                                       "Error parsing file", JOptionPane.ERROR_MESSAGE);
                         }
                     }
+                    loadTracksController.showMessage(selectionPaths.length + " files successfully imported!", "success loading", JOptionPane.INFORMATION_MESSAGE);
                 } else {
                     // inform the user that no file was selected!
                     loadTracksController.showMessage("You have to select at least one file!", "no files selected", JOptionPane.WARNING_MESSAGE);

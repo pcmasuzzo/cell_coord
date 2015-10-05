@@ -40,7 +40,7 @@
     <bean id="TSV" class="com.compomics.cell_coord.parser.impl.TSVFileParser">
     </bean>
     
-    <bean id="XLS" class="com.compomics.cell_coord.parser.impl.XLSFileParser">
+    <bean id="XLS_XLSX" class="com.compomics.cell_coord.parser.impl.XLSFileParser">
     </bean>
     <!-- specify a bean name for each implementation, and the fully qualified classname, i.e.: including package -->
 
