@@ -15,8 +15,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
@@ -78,7 +76,7 @@ public class TSVFileParser implements TrackFileParser {
                 currentTrack.setTrackSpots(currentTrackPointList);
             }
         } catch (IOException ex) {
-            Logger.getLogger(CSVFileParser.class.getName()).log(Level.SEVERE, null, ex);
+            LOG.error(ex.getMessage(), ex);
         } catch (NumberFormatException ex) {
             LOG.error(ex.getMessage(), ex);
             throw new FileParserException("It seems like a line does not contain a number!\nPlease check your files!");

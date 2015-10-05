@@ -20,7 +20,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-import java.util.logging.Level;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -207,6 +206,7 @@ public class LoadSparseFilesController {
                         File trackFile = new File(directory.getAbsolutePath() + File.separator + fileName);
                         try {
                             List<Track> currentTracks = parseTrackFile(trackFile);
+                            
                         } catch (FileParserException ex) {
                             LOG.error("Could not parse the file: " + trackFile);
                             loadTracksController.showMessage((String) loadSparseFilesPanel.getFileFormatComboBox().getSelectedItem() + " expected!",

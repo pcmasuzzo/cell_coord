@@ -8,7 +8,6 @@ package com.compomics.cell_coord.parser;
 import com.compomics.cell_coord.entity.Track;
 import com.compomics.cell_coord.entity.TrackSpot;
 import com.compomics.cell_coord.exception.FileParserException;
-import com.compomics.cell_coord.parser.impl.CSVFileParser;
 import com.compomics.cell_coord.parser.impl.TSVFileParser;
 import java.io.File;
 import java.util.ArrayList;
@@ -23,7 +22,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 /**
- * A test unit for CSV file parsing.
+ * A unit test for CSV file parsing.
  *
  * @author Paola
  */

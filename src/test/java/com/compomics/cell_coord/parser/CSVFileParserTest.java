@@ -22,7 +22,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 /**
- * A test unit for CSV file parsing.
+ * A unit test for CSV file parsing.
  *
  * @author Paola
  */
@@ -33,7 +33,7 @@ public class CSVFileParserTest {
     private final TrackFileParser csvFileParser = new CSVFileParser();
 
     /**
-     * Test CSV (comma-separated-values- file parsing.
+     * Test CSV (comma-separated-values) file parsing.
      */
     @Test
     public void testCSVFileParsing() {

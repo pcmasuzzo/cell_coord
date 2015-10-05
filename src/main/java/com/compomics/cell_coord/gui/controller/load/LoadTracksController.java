@@ -6,7 +6,6 @@
 package com.compomics.cell_coord.gui.controller.load;
 
 import com.compomics.cell_coord.entity.Track;
-import com.compomics.cell_coord.entity.TrackSpot;
 import com.compomics.cell_coord.gui.CellCoordFrame;
 import com.compomics.cell_coord.gui.controller.CellCoordController;
 import com.compomics.cell_coord.gui.load.LoadTracksPanel;
@@ -15,14 +14,8 @@ import java.awt.CardLayout;
 import java.awt.GridBagConstraints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import java.util.List;
 import javax.swing.ButtonGroup;
-import javax.swing.JOptionPane;
-import org.jdesktop.beansbinding.AutoBinding;
-import org.jdesktop.beansbinding.BindingGroup;
-import org.jdesktop.observablecollections.ObservableCollections;
-import org.jdesktop.swingbinding.SwingBindings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

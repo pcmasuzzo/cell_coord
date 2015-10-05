@@ -6,18 +6,16 @@
 package com.compomics.cell_coord.parser.impl;
 
 import com.compomics.cell_coord.entity.Track;
+import com.compomics.cell_coord.entity.TrackSpot;
 import com.compomics.cell_coord.exception.FileParserException;
 import com.compomics.cell_coord.parser.TrackFileParser;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.Objects;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -35,33 +33,52 @@ public class XLSFileParser implements TrackFileParser {
     @Override
     public List<Track> parseTrackFile(File trackFile) throws FileParserException {
         List<Track> list = new ArrayList<>();
-
         try {
             FileInputStream fileInputStream = new FileInputStream(trackFile);
-            Workbook workbook;
+            Workbook workbook = null;
             // xls extension
             if (trackFile.getName().endsWith("xls")) {
                 workbook = new HSSFWorkbook(fileInputStream);
-            } else { // xlsx extension
+            } else if (trackFile.getName().endsWith("xlsx")) { // xlsx extension
                 workbook = new XSSFWorkbook(fileInputStream);
             }
-            Sheet sheet = workbook.getSheetAt(0);
-            Iterator<Row> iterator = sheet.iterator();
-            // iterate through each row
-            while (iterator.hasNext()) {
-
-                Row row = iterator.next();
-                // iterate through the cells
-                Iterator<Cell> cellIterator = row.cellIterator();
-                
+            // check that at least one sheet is present
+            if (workbook.getNumberOfSheets() > 0) {
+                Track currentTrack = null;
+                List<TrackSpot> currentTrackPointList = new ArrayList<>();
+                Long currentId = 0L;
+                Sheet sheet = workbook.getSheetAt(0);
+                // iterate through all the rows, starting from the second one to skip the header
+                for (int i = 1; i < sheet.getLastRowNum() + 1; i++) {
+                    // get the row
+                    Row row = sheet.getRow(i);
+                    // check the track id
+                    Long trackid = (long) row.getCell(0).getNumericCellValue();
+                    if (!Objects.equals(currentId, trackid)) {
+                        currentTrack = new Track();
+                        currentTrack.setTrackid(trackid);
+                        list.add(currentTrack);
+                        currentId = trackid;
+                        currentTrackPointList = new ArrayList<>();
+                    }
+                    // create new Track Spot object
+                    Long spotid = (long) row.getCell(1).getNumericCellValue();
+                    double x = row.getCell(2).getNumericCellValue();
+                    double y = row.getCell(3).getNumericCellValue();
+                    double time = row.getCell(4).getNumericCellValue();
+                    TrackSpot trackSpot = new TrackSpot(spotid, x, y, time, currentTrack);
+                    currentTrackPointList.add(trackSpot);
+                    currentTrack.setTrackSpots(currentTrackPointList);
+                }
+            } else {
+                throw new FileParserException("It seems an Excel file does not have any sheets!\nPlease check your files!");
             }
         } catch (IOException ex) {
-            Logger.getLogger(CSVFileParser.class.getName()).log(Level.SEVERE, null, ex);
-
+            LOG.error(ex.getMessage(), ex);
         } catch (NumberFormatException ex) {
             LOG.error(ex.getMessage(), ex);
             throw new FileParserException("It seems like a line does not contain a number!\nPlease check your files!");
         }
-        return null;
+        return list;
     }
 }
