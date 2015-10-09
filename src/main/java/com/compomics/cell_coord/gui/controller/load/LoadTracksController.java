@@ -5,7 +5,8 @@
  */
 package com.compomics.cell_coord.gui.controller.load;
 
-import com.compomics.cell_coord.entity.Track;
+import com.compomics.cell_coord.entity.TrackSpot;
+import com.compomics.cell_coord.exception.LoadDirectoryException;
 import com.compomics.cell_coord.gui.CellCoordFrame;
 import com.compomics.cell_coord.gui.controller.CellCoordController;
 import com.compomics.cell_coord.gui.info.SparseFilesInfoDialog;
@@ -16,10 +17,22 @@ import java.awt.CardLayout;
 import java.awt.GridBagConstraints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.List;
+import java.io.File;
+import java.util.ArrayList;
 import javax.swing.ButtonGroup;
 import javax.swing.Icon;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import javax.swing.JTree;
 import javax.swing.UIManager;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
+import org.apache.log4j.Logger;
+import org.jdesktop.beansbinding.BindingGroup;
+import org.jdesktop.beansbinding.ELProperty;
+import org.jdesktop.observablecollections.ObservableCollections;
+import org.jdesktop.observablecollections.ObservableList;
+import org.jdesktop.swingbinding.JTableBinding;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -32,8 +45,11 @@ import org.springframework.stereotype.Component;
 @Component("loadTracksController")
 public class LoadTracksController {
 
+    private static final Logger LOG = Logger.getLogger(LoadTracksController.class);
     // model
-    private List<Track> tracks; // might not be needed!
+    private BindingGroup bindingGroup;
+    private ObservableList<TrackSpot> trackSpotsBindingList;
+    private File directory;
     // view
     private LoadTracksPanel loadTracksPanel;
     private SparseFilesInfoDialog sparseFilesInfoDialog;
@@ -56,6 +72,14 @@ public class LoadTracksController {
      */
     public LoadTracksPanel getLoadTracksPanel() {
         return loadTracksPanel;
+    }
+
+    public File getDirectory() {
+        return directory;
+    }
+
+    public ObservableList<TrackSpot> getTrackSpotsBindingList() {
+        return trackSpotsBindingList;
     }
 
     /**
@@ -88,9 +112,11 @@ public class LoadTracksController {
     }
 
     /**
-     * Initialize controller
+     * Initialize controller.
      */
     public void init() {
+        bindingGroup = new BindingGroup();
+        trackSpotsBindingList = ObservableCollections.observableList(new ArrayList<TrackSpot>());
         gridBagConstraints = GuiUtils.getDefaultGridBagConstraints();
         sparseFilesInfoDialog = new SparseFilesInfoDialog(cellCoordController.getCellCoordFrame(), true);
         trackMateFilesInfoDialog = new TrackMateFilesInfoDialog(cellCoordController.getCellCoordFrame(), true);
@@ -99,6 +125,92 @@ public class LoadTracksController {
         // init child controllers
         loadSparseFilesController.init();
         loadTrackMateFilesController.init();
+    }
+
+    /**
+     * Given the right table binding, show imported tracks in a table.
+     *
+     * @param trackSpotsTableBinding
+     */
+    public void showTracksInTable(JTableBinding trackSpotsTableBinding) {
+        //add column bindings
+        JTableBinding.ColumnBinding columnBinding = trackSpotsTableBinding.addColumnBinding(ELProperty.create("${track.trackid}"));
+        columnBinding.setColumnName("track_id");
+        columnBinding.setEditable(false);
+        columnBinding.setColumnClass(Long.class);
+
+        columnBinding = trackSpotsTableBinding.addColumnBinding(ELProperty.create("${trackSpotid}"));
+        columnBinding.setColumnName("spot_id");
+        columnBinding.setEditable(false);
+        columnBinding.setColumnClass(Long.class);
+
+        columnBinding = trackSpotsTableBinding.addColumnBinding(ELProperty.create("${x}"));
+        columnBinding.setColumnName("x");
+        columnBinding.setEditable(false);
+        columnBinding.setColumnClass(Double.class);
+
+        columnBinding = trackSpotsTableBinding.addColumnBinding(ELProperty.create("${y}"));
+        columnBinding.setColumnName("y");
+        columnBinding.setEditable(false);
+        columnBinding.setColumnClass(Double.class);
+
+        columnBinding = trackSpotsTableBinding.addColumnBinding(ELProperty.create("${time}"));
+        columnBinding.setColumnName("time");
+        columnBinding.setEditable(false);
+        columnBinding.setColumnClass(Double.class);
+
+        bindingGroup.addBinding(trackSpotsTableBinding);
+        bindingGroup.bind();
+    }
+
+    /**
+     * Choose the directory and load its data into a given JTree.
+     *
+     * @param dataTree
+     */
+    public void chooseDirectoryAndLoadData(JTree dataTree) {
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Select a root folder");
+        // allow for directories only
+        fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        // removing "All Files" option from FileType
+        fileChooser.setAcceptAllFileFilterUsed(false);
+        int returnVal = fileChooser.showOpenDialog(getMainFrame());
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+            // the directory for the data
+            directory = fileChooser.getSelectedFile();
+            try {
+                loadDataIntoTree(dataTree);
+            } catch (LoadDirectoryException ex) {
+                LOG.error(ex.getMessage());
+                showMessage(ex.getMessage(), "wrong directory structure error", JOptionPane.ERROR_MESSAGE);
+            }
+        } else {
+            showMessage("Open command cancelled by user", "", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }
+
+    /**
+     * Load the data files into the tree.
+     *
+     * @throws LoadDirectoryException - when the directory is empty!
+     */
+    private void loadDataIntoTree(JTree dataTree) throws LoadDirectoryException {
+        DefaultTreeModel model = (DefaultTreeModel) dataTree.getModel();
+        DefaultMutableTreeNode rootNote = (DefaultMutableTreeNode) model.getRoot();
+        // change name (user object) of root node
+        rootNote.setUserObject(directory.getName());
+        File[] listFiles = directory.listFiles();
+        if (listFiles.length != 0) {
+            for (File file : listFiles) {
+                DefaultMutableTreeNode fileNode = new DefaultMutableTreeNode(file.getName(), Boolean.FALSE);
+                rootNote.add(fileNode);
+            }
+        } else {
+            throw new LoadDirectoryException("This directory seems to be empty!");
+        }
+        model.reload();
+        showMessage("Directory successful loaded!\nYou can select the files to import!", "", JOptionPane.INFORMATION_MESSAGE);
     }
 
     /**

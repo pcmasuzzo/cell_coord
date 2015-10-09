@@ -16,7 +16,8 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
- * A controller for the main logic of the software.
+ * A controller for the main logic of the software. (This class is the main
+ * controller).
  *
  * @author Paola
  */
