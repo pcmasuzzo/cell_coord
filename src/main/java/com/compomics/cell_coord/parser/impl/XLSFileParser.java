@@ -42,36 +42,40 @@ public class XLSFileParser implements TrackFileParser {
             } else if (trackFile.getName().endsWith("xlsx")) { // xlsx extension
                 workbook = new XSSFWorkbook(fileInputStream);
             }
-            // check that at least one sheet is present
-            if (workbook.getNumberOfSheets() > 0) {
-                Track currentTrack = null;
-                List<TrackSpot> currentTrackPointList = new ArrayList<>();
-                Long currentId = 0L;
-                Sheet sheet = workbook.getSheetAt(0);
-                // iterate through all the rows, starting from the second one to skip the header
-                for (int i = 1; i < sheet.getLastRowNum() + 1; i++) {
-                    // get the row
-                    Row row = sheet.getRow(i);
-                    // check the track id
-                    Long trackid = (long) row.getCell(0).getNumericCellValue();
-                    if (!Objects.equals(currentId, trackid)) {
-                        currentTrack = new Track();
-                        currentTrack.setTrackid(trackid);
-                        list.add(currentTrack);
-                        currentId = trackid;
-                        currentTrackPointList = new ArrayList<>();
+            if (workbook != null) {
+                // check that at least one sheet is present
+                if (workbook.getNumberOfSheets() > 0) {
+                    Track currentTrack = null;
+                    List<TrackSpot> currentTrackPointList = new ArrayList<>();
+                    Long currentId = 0L;
+                    Sheet sheet = workbook.getSheetAt(0);
+                    // iterate through all the rows, starting from the second one to skip the header
+                    for (int i = 1; i < sheet.getLastRowNum() + 1; i++) {
+                        // get the row
+                        Row row = sheet.getRow(i);
+                        // check the track id
+                        Long trackid = (long) row.getCell(0).getNumericCellValue();
+                        if (!Objects.equals(currentId, trackid)) {
+                            currentTrack = new Track();
+                            currentTrack.setTrackid(trackid);
+                            list.add(currentTrack);
+                            currentId = trackid;
+                            currentTrackPointList = new ArrayList<>();
+                        }
+                        // create new Track Spot object
+                        Long spotid = (long) row.getCell(1).getNumericCellValue();
+                        double x = row.getCell(2).getNumericCellValue();
+                        double y = row.getCell(3).getNumericCellValue();
+                        double time = row.getCell(4).getNumericCellValue();
+                        TrackSpot trackSpot = new TrackSpot(spotid, x, y, time, currentTrack);
+                        currentTrackPointList.add(trackSpot);
+                        currentTrack.setTrackSpots(currentTrackPointList);
                     }
-                    // create new Track Spot object
-                    Long spotid = (long) row.getCell(1).getNumericCellValue();
-                    double x = row.getCell(2).getNumericCellValue();
-                    double y = row.getCell(3).getNumericCellValue();
-                    double time = row.getCell(4).getNumericCellValue();
-                    TrackSpot trackSpot = new TrackSpot(spotid, x, y, time, currentTrack);
-                    currentTrackPointList.add(trackSpot);
-                    currentTrack.setTrackSpots(currentTrackPointList);
+                } else {
+                    throw new FileParserException("It seems an Excel file does not have any sheets!\nPlease check your files!");
                 }
             } else {
-                throw new FileParserException("It seems an Excel file does not have any sheets!\nPlease check your files!");
+                throw new FileParserException("The parser did not find a single workbook!\nCheck your files!!");
             }
         } catch (IOException ex) {
             LOG.error(ex.getMessage(), ex);

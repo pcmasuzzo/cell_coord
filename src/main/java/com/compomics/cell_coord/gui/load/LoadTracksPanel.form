@@ -48,20 +48,20 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="loadSparseFilesRadioButton" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="loadPlateRadioButton" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="loadDirectoryRadioButton" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="loadSingleFileRadioButton" alignment="0" min="-2" max="-2" attributes="0"/>
                                   <Component id="loadTrackMateRadioButton" alignment="0" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="sparseInfoButton" alignment="0" min="-2" pref="53" max="-2" attributes="0"/>
-                                  <Component id="plateInfoButton" alignment="0" min="-2" pref="53" max="-2" attributes="0"/>
+                                  <Component id="directoryInfoButton" alignment="0" min="-2" pref="53" max="-2" attributes="0"/>
+                                  <Component id="singleFileInfoButton" alignment="0" min="-2" pref="53" max="-2" attributes="0"/>
                                   <Component id="trackMateInfoButton" alignment="0" min="-2" pref="53" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                           <Component id="infoLabel" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="165" max="32767" attributes="0"/>
+                      <EmptySpace pref="173" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -72,15 +72,15 @@
                       <Component id="infoLabel" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="sparseInfoButton" alignment="0" min="-2" pref="23" max="-2" attributes="0"/>
-                          <Component id="loadSparseFilesRadioButton" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="directoryInfoButton" alignment="0" min="-2" pref="23" max="-2" attributes="0"/>
+                          <Component id="loadDirectoryRadioButton" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="1" attributes="0">
                           <Group type="102" alignment="1" attributes="0">
                               <Group type="103" groupAlignment="1" attributes="0">
-                                  <Component id="plateInfoButton" alignment="1" min="-2" pref="23" max="-2" attributes="0"/>
-                                  <Component id="loadPlateRadioButton" alignment="1" min="-2" max="-2" attributes="0"/>
+                                  <Component id="singleFileInfoButton" alignment="1" min="-2" pref="23" max="-2" attributes="0"/>
+                                  <Component id="loadSingleFileRadioButton" alignment="1" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
                               <Component id="loadTrackMateRadioButton" min="-2" max="-2" attributes="0"/>
@@ -101,7 +101,7 @@
                 <Property name="contentAreaFilled" type="boolean" value="false"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JButton" name="sparseInfoButton">
+            <Component class="javax.swing.JButton" name="directoryInfoButton">
               <Properties>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                   <Border info="null"/>
@@ -109,7 +109,7 @@
                 <Property name="contentAreaFilled" type="boolean" value="false"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JButton" name="plateInfoButton">
+            <Component class="javax.swing.JButton" name="singleFileInfoButton">
               <Properties>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                   <Border info="null"/>
@@ -117,14 +117,14 @@
                 <Property name="contentAreaFilled" type="boolean" value="false"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JRadioButton" name="loadPlateRadioButton">
+            <Component class="javax.swing.JRadioButton" name="loadSingleFileRadioButton">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Load files and assign them to a plate"/>
+                <Property name="text" type="java.lang.String" value="Load a single file"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JRadioButton" name="loadSparseFilesRadioButton">
+            <Component class="javax.swing.JRadioButton" name="loadDirectoryRadioButton">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Load sparse files"/>
+                <Property name="text" type="java.lang.String" value="Load a directory of files"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JRadioButton" name="loadTrackMateRadioButton">
@@ -142,7 +142,7 @@
             </Component>
           </SubComponents>
         </Container>
-        <Container class="javax.swing.JPanel" name="sparseParentPanel">
+        <Container class="javax.swing.JPanel" name="directoryParentPanel">
           <Properties>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
@@ -154,7 +154,7 @@
             <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
               <Dimension value="[20, 20]"/>
             </Property>
-            <Property name="name" type="java.lang.String" value="sparseParentPanel" noResource="true"/>
+            <Property name="name" type="java.lang.String" value="directoryParentPanel" noResource="true"/>
           </Properties>
           <AccessibilityProperties>
             <Property name="AccessibleContext.accessibleName" type="java.lang.String" value="sparseParentPanel"/>
@@ -167,7 +167,7 @@
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout"/>
         </Container>
-        <Container class="javax.swing.JPanel" name="plateParentPanel">
+        <Container class="javax.swing.JPanel" name="singleFileParentPanel">
           <Properties>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
@@ -179,7 +179,7 @@
             <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
               <Dimension value="[20, 20]"/>
             </Property>
-            <Property name="name" type="java.lang.String" value="plateParentPanel" noResource="true"/>
+            <Property name="name" type="java.lang.String" value="singleFileParentPanel" noResource="true"/>
           </Properties>
           <AccessibilityProperties>
             <Property name="AccessibleContext.accessibleName" type="java.lang.String" value="plateParentPanel"/>

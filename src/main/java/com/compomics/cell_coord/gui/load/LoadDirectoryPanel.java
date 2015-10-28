@@ -15,12 +15,12 @@ import javax.swing.JTree;
  *
  * @author Paola
  */
-public class LoadSparseFilesPanel extends javax.swing.JPanel {
+public class LoadDirectoryPanel extends javax.swing.JPanel {
 
     /**
      * Creates new form LoadSparseFilesPanel
      */
-    public LoadSparseFilesPanel() {
+    public LoadDirectoryPanel() {
         initComponents();
     }
 
@@ -151,7 +151,7 @@ public class LoadSparseFilesPanel extends javax.swing.JPanel {
                         .addComponent(currentDirectoryScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(directoryScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 253, Short.MAX_VALUE)
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents

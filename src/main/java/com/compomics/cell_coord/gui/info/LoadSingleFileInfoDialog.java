@@ -9,12 +9,14 @@ package com.compomics.cell_coord.gui.info;
  *
  * @author Paola
  */
-public class TrackMateFilesInfoDialog extends javax.swing.JDialog {
+public class LoadSingleFileInfoDialog extends javax.swing.JDialog {
 
     /**
-     * Creates new form TrackMateFilesInfoDialog
+     * Creates new form SparseFilesInfoDialog
+     * @param parent
+     * @param modal
      */
-    public TrackMateFilesInfoDialog(java.awt.Frame parent, boolean modal) {
+    public LoadSingleFileInfoDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
     }
@@ -32,12 +34,13 @@ public class TrackMateFilesInfoDialog extends javax.swing.JDialog {
         infoEditorPane = new javax.swing.JEditorPane();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setMinimumSize(new java.awt.Dimension(20, 20));
 
         infoScrollPane.setBorder(null);
 
         infoEditorPane.setEditable(false);
         infoEditorPane.setContentType("text/html"); // NOI18N
-        infoEditorPane.setText("<html>\n   <head>\n      <TITLE></TITLE>\n   </head>\n   <body>\n      <a name=\"#top\"/>\n      <i>Cell_Coord, Load TrackMate XML files ...</i>\n      <hr>\n      <br>\n      <p align=\"left\">\n         In this module you can import cell tracking files associated with <b>TrackMate</b> XML models.\n         </br>\n         <br>\n\t\t <br>\n\t\t </br>\n         1. Choose the directory containing the TrackMate files to import.\n         </br>\n         <br>\n\t\t <br>\n\t\t </br>\n         2. Once the files are rendered in the data tree, select the ones you wish to import: if the import is successful, the tracks will appear in the data table underneath.\n         </br>\n         <br>\n      </p>\n   </body>\n</html>");
+        infoEditorPane.setText("<html>\n   <head>\n      <TITLE></TITLE>\n   </head>\n   <body>\n      <a name=\"#top\"/>\n      <i>Cell_Coord, Load a single file ...</i>\n      <hr>\n      <br>\n      <p align=\"left\">\n         In this module you can import a single cell tracking file.\n         </br>\n         <br>\n\t\t <br>\n\t\t </br>\n         1. Select the fomat of the file you want to import (<b>CSV</b>: comma separated values; <b>TSV</b>: tab separated values or <b>XLS/XLSX</b>: Microsoft Excel).\n         </br>\n         <br>\n\t\t <br>\n\t\t </br>\n         2. Choose the file to import.\n         </br>\n         <br>\n        \n      </p>\n   </body>\n</html>");
         infoScrollPane.setViewportView(infoEditorPane);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -46,15 +49,15 @@ public class TrackMateFilesInfoDialog extends javax.swing.JDialog {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(infoScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(infoScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 257, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(infoScrollPane)
-                .addGap(15, 15, 15))
+                .addComponent(infoScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 183, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
@@ -77,20 +80,27 @@ public class TrackMateFilesInfoDialog extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(TrackMateFilesInfoDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(LoadSingleFileInfoDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(TrackMateFilesInfoDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(LoadSingleFileInfoDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(TrackMateFilesInfoDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(LoadSingleFileInfoDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(TrackMateFilesInfoDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(LoadSingleFileInfoDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                TrackMateFilesInfoDialog dialog = new TrackMateFilesInfoDialog(new javax.swing.JFrame(), true);
+                LoadSingleFileInfoDialog dialog = new LoadSingleFileInfoDialog(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {

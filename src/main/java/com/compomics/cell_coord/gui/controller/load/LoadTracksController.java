@@ -9,7 +9,7 @@ import com.compomics.cell_coord.entity.TrackSpot;
 import com.compomics.cell_coord.exception.LoadDirectoryException;
 import com.compomics.cell_coord.gui.CellCoordFrame;
 import com.compomics.cell_coord.gui.controller.CellCoordController;
-import com.compomics.cell_coord.gui.info.SparseFilesInfoDialog;
+import com.compomics.cell_coord.gui.info.LoadDirectoryInfoDialog;
 import com.compomics.cell_coord.gui.info.TrackMateFilesInfoDialog;
 import com.compomics.cell_coord.gui.load.LoadTracksPanel;
 import com.compomics.cell_coord.utils.GuiUtils;
@@ -52,11 +52,11 @@ public class LoadTracksController {
     private File directory;
     // view
     private LoadTracksPanel loadTracksPanel;
-    private SparseFilesInfoDialog sparseFilesInfoDialog;
+    private LoadDirectoryInfoDialog sparseFilesInfoDialog;
     private TrackMateFilesInfoDialog trackMateFilesInfoDialog;
     // child controllers
     @Autowired
-    private LoadSparseFilesController loadSparseFilesController;
+    private LoadDirectoryController loadDirectoryController;
     @Autowired
     private LoadTrackMateFilesController loadTrackMateFilesController;
     // parent controller
@@ -118,12 +118,12 @@ public class LoadTracksController {
         bindingGroup = new BindingGroup();
         trackSpotsBindingList = ObservableCollections.observableList(new ArrayList<TrackSpot>());
         gridBagConstraints = GuiUtils.getDefaultGridBagConstraints();
-        sparseFilesInfoDialog = new SparseFilesInfoDialog(cellCoordController.getCellCoordFrame(), true);
+        sparseFilesInfoDialog = new LoadDirectoryInfoDialog(cellCoordController.getCellCoordFrame(), true);
         trackMateFilesInfoDialog = new TrackMateFilesInfoDialog(cellCoordController.getCellCoordFrame(), true);
         // init main view
         initLoadTracksPanel();
         // init child controllers
-        loadSparseFilesController.init();
+        loadDirectoryController.init();
         loadTrackMateFilesController.init();
     }
 
@@ -203,10 +203,18 @@ public class LoadTracksController {
         File[] listFiles = directory.listFiles();
         if (listFiles.length != 0) {
             for (File file : listFiles) {
-                DefaultMutableTreeNode fileNode = new DefaultMutableTreeNode(file.getName(), Boolean.FALSE);
-                rootNote.add(fileNode);
+                if (!file.isDirectory()) {
+                    DefaultMutableTreeNode fileNode = new DefaultMutableTreeNode(file.getName(), Boolean.FALSE);
+                    rootNote.add(fileNode);
+                } else {
+                    // reset the directory to null
+                    directory = null;
+                    throw new LoadDirectoryException("This directory has a wrong structure!");
+                }
             }
         } else {
+            // reset the directory to null
+            directory = null;
             throw new LoadDirectoryException("This directory seems to be empty!");
         }
         model.reload();
@@ -221,22 +229,22 @@ public class LoadTracksController {
         loadTracksPanel = new LoadTracksPanel();
         // add radio buttons to a group: only one selection allowed!
         ButtonGroup buttonGroup = new ButtonGroup();
-        buttonGroup.add(loadTracksPanel.getLoadSparseFilesRadioButton());
+        buttonGroup.add(loadTracksPanel.getLoadDirectoryRadioButton());
         buttonGroup.add(loadTracksPanel.getLoadPlateRadioButton());
         buttonGroup.add(loadTracksPanel.getLoadTrackMateRadioButton());
         // select first option by default
-        loadTracksPanel.getLoadSparseFilesRadioButton().setSelected(true);
+        loadTracksPanel.getLoadDirectoryRadioButton().setSelected(true);
 
         // set icon for the question button
         Icon questionIcon = UIManager.getIcon("OptionPane.questionIcon");
-        loadTracksPanel.getSparseInfoButton().setIcon(GuiUtils.getScaledIcon(questionIcon));
-        loadTracksPanel.getPlateInfoButton().setIcon(GuiUtils.getScaledIcon(questionIcon));
+        loadTracksPanel.getDirectoryInfoButton().setIcon(GuiUtils.getScaledIcon(questionIcon));
+        loadTracksPanel.getSingleFileInfoButton().setIcon(GuiUtils.getScaledIcon(questionIcon));
         loadTracksPanel.getTrackMateInfoButton().setIcon(GuiUtils.getScaledIcon(questionIcon));
 
         /**
          * Show appropriate info dialogs.
          */
-        loadTracksPanel.getSparseInfoButton().addActionListener(new ActionListener() {
+        loadTracksPanel.getDirectoryInfoButton().addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -245,7 +253,7 @@ public class LoadTracksController {
             }
         });
 
-        loadTracksPanel.getPlateInfoButton().addActionListener(new ActionListener() {
+        loadTracksPanel.getSingleFileInfoButton().addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -269,9 +277,9 @@ public class LoadTracksController {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (loadTracksPanel.getLoadSparseFilesRadioButton().isSelected()) {
+                if (loadTracksPanel.getLoadDirectoryRadioButton().isSelected()) {
                     // call the sparse files controller
-                    loadSparseFilesController.onLoadingSparseFilesGui();
+                    loadDirectoryController.onLoadingSparseFilesGui();
                 } else if (loadTracksPanel.getLoadPlateRadioButton().isSelected()) {
                     // call the plate view controller
                 } else {

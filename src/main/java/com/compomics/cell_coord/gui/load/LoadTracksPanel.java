@@ -23,11 +23,11 @@ public class LoadTracksPanel extends javax.swing.JPanel {
     }
 
     public JRadioButton getLoadPlateRadioButton() {
-        return loadPlateRadioButton;
+        return loadSingleFileRadioButton;
     }
 
-    public JRadioButton getLoadSparseFilesRadioButton() {
-        return loadSparseFilesRadioButton;
+    public JRadioButton getLoadDirectoryRadioButton() {
+        return loadDirectoryRadioButton;
     }
 
     public JRadioButton getLoadTrackMateRadioButton() {
@@ -38,24 +38,24 @@ public class LoadTracksPanel extends javax.swing.JPanel {
         return nextButton;
     }
 
-    public JButton getPlateInfoButton() {
-        return plateInfoButton;
+    public JButton getSingleFileInfoButton() {
+        return singleFileInfoButton;
     }
 
-    public JPanel getPlateParentPanel() {
-        return plateParentPanel;
+    public JPanel getSingleFileParentPanel() {
+        return singleFileParentPanel;
     }
 
     public JButton getPreviousButton() {
         return previousButton;
     }
 
-    public JButton getSparseInfoButton() {
-        return sparseInfoButton;
+    public JButton getDirectoryInfoButton() {
+        return directoryInfoButton;
     }
 
-    public JPanel getSparseParentPanel() {
-        return sparseParentPanel;
+    public JPanel getDirectoryParentPanel() {
+        return directoryParentPanel;
     }
 
     public JButton getTrackMateInfoButton() {
@@ -83,14 +83,14 @@ public class LoadTracksPanel extends javax.swing.JPanel {
         topPanel = new javax.swing.JPanel();
         choicePanel = new javax.swing.JPanel();
         trackMateInfoButton = new javax.swing.JButton();
-        sparseInfoButton = new javax.swing.JButton();
-        plateInfoButton = new javax.swing.JButton();
-        loadPlateRadioButton = new javax.swing.JRadioButton();
-        loadSparseFilesRadioButton = new javax.swing.JRadioButton();
+        directoryInfoButton = new javax.swing.JButton();
+        singleFileInfoButton = new javax.swing.JButton();
+        loadSingleFileRadioButton = new javax.swing.JRadioButton();
+        loadDirectoryRadioButton = new javax.swing.JRadioButton();
         loadTrackMateRadioButton = new javax.swing.JRadioButton();
         infoLabel = new javax.swing.JLabel();
-        sparseParentPanel = new javax.swing.JPanel();
-        plateParentPanel = new javax.swing.JPanel();
+        directoryParentPanel = new javax.swing.JPanel();
+        singleFileParentPanel = new javax.swing.JPanel();
         trackMateParentPanel = new javax.swing.JPanel();
         bottomPanel = new javax.swing.JPanel();
         nextButton = new javax.swing.JButton();
@@ -105,15 +105,15 @@ public class LoadTracksPanel extends javax.swing.JPanel {
         trackMateInfoButton.setBorder(null);
         trackMateInfoButton.setContentAreaFilled(false);
 
-        sparseInfoButton.setBorder(null);
-        sparseInfoButton.setContentAreaFilled(false);
+        directoryInfoButton.setBorder(null);
+        directoryInfoButton.setContentAreaFilled(false);
 
-        plateInfoButton.setBorder(null);
-        plateInfoButton.setContentAreaFilled(false);
+        singleFileInfoButton.setBorder(null);
+        singleFileInfoButton.setContentAreaFilled(false);
 
-        loadPlateRadioButton.setText("Load files and assign them to a plate");
+        loadSingleFileRadioButton.setText("Load a single file");
 
-        loadSparseFilesRadioButton.setText("Load sparse files");
+        loadDirectoryRadioButton.setText("Load a directory of files");
 
         loadTrackMateRadioButton.setText("Load TrackMate model(s)");
 
@@ -129,16 +129,16 @@ public class LoadTracksPanel extends javax.swing.JPanel {
                 .addGroup(choicePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(choicePanelLayout.createSequentialGroup()
                         .addGroup(choicePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(loadSparseFilesRadioButton)
-                            .addComponent(loadPlateRadioButton)
+                            .addComponent(loadDirectoryRadioButton)
+                            .addComponent(loadSingleFileRadioButton)
                             .addComponent(loadTrackMateRadioButton))
                         .addGap(28, 28, 28)
                         .addGroup(choicePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(sparseInfoButton, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(plateInfoButton, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(directoryInfoButton, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(singleFileInfoButton, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(trackMateInfoButton, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(infoLabel))
-                .addContainerGap(165, Short.MAX_VALUE))
+                .addContainerGap(173, Short.MAX_VALUE))
         );
         choicePanelLayout.setVerticalGroup(
             choicePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -147,14 +147,14 @@ public class LoadTracksPanel extends javax.swing.JPanel {
                 .addComponent(infoLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(choicePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(sparseInfoButton, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(loadSparseFilesRadioButton))
+                    .addComponent(directoryInfoButton, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(loadDirectoryRadioButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(choicePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(choicePanelLayout.createSequentialGroup()
                         .addGroup(choicePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(plateInfoButton, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(loadPlateRadioButton))
+                            .addComponent(singleFileInfoButton, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(loadSingleFileRadioButton))
                         .addGap(11, 11, 11)
                         .addComponent(loadTrackMateRadioButton))
                     .addComponent(trackMateInfoButton, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -163,19 +163,19 @@ public class LoadTracksPanel extends javax.swing.JPanel {
 
         topPanel.add(choicePanel, "card2");
 
-        sparseParentPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Loading sparse files...", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 2, 11))); // NOI18N
-        sparseParentPanel.setMinimumSize(new java.awt.Dimension(20, 20));
-        sparseParentPanel.setName("sparseParentPanel"); // NOI18N
-        sparseParentPanel.setLayout(new java.awt.GridBagLayout());
-        topPanel.add(sparseParentPanel, "sparseParentPanel");
-        sparseParentPanel.getAccessibleContext().setAccessibleName("sparseParentPanel");
+        directoryParentPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Loading sparse files...", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 2, 11))); // NOI18N
+        directoryParentPanel.setMinimumSize(new java.awt.Dimension(20, 20));
+        directoryParentPanel.setName("directoryParentPanel"); // NOI18N
+        directoryParentPanel.setLayout(new java.awt.GridBagLayout());
+        topPanel.add(directoryParentPanel, "sparseParentPanel");
+        directoryParentPanel.getAccessibleContext().setAccessibleName("sparseParentPanel");
 
-        plateParentPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Loading files in a plate...", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 2, 11))); // NOI18N
-        plateParentPanel.setMinimumSize(new java.awt.Dimension(20, 20));
-        plateParentPanel.setName("plateParentPanel"); // NOI18N
-        plateParentPanel.setLayout(new java.awt.GridBagLayout());
-        topPanel.add(plateParentPanel, "plateParentPanel");
-        plateParentPanel.getAccessibleContext().setAccessibleName("plateParentPanel");
+        singleFileParentPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Loading files in a plate...", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 2, 11))); // NOI18N
+        singleFileParentPanel.setMinimumSize(new java.awt.Dimension(20, 20));
+        singleFileParentPanel.setName("singleFileParentPanel"); // NOI18N
+        singleFileParentPanel.setLayout(new java.awt.GridBagLayout());
+        topPanel.add(singleFileParentPanel, "plateParentPanel");
+        singleFileParentPanel.getAccessibleContext().setAccessibleName("plateParentPanel");
 
         trackMateParentPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Loading TrackMate model(s)...", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 2, 11))); // NOI18N
         trackMateParentPanel.setMinimumSize(new java.awt.Dimension(20, 20));
@@ -237,16 +237,16 @@ public class LoadTracksPanel extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel bottomPanel;
     private javax.swing.JPanel choicePanel;
+    private javax.swing.JButton directoryInfoButton;
+    private javax.swing.JPanel directoryParentPanel;
     private javax.swing.JLabel infoLabel;
-    private javax.swing.JRadioButton loadPlateRadioButton;
-    private javax.swing.JRadioButton loadSparseFilesRadioButton;
+    private javax.swing.JRadioButton loadDirectoryRadioButton;
+    private javax.swing.JRadioButton loadSingleFileRadioButton;
     private javax.swing.JRadioButton loadTrackMateRadioButton;
     private javax.swing.JButton nextButton;
-    private javax.swing.JButton plateInfoButton;
-    private javax.swing.JPanel plateParentPanel;
     private javax.swing.JButton previousButton;
-    private javax.swing.JButton sparseInfoButton;
-    private javax.swing.JPanel sparseParentPanel;
+    private javax.swing.JButton singleFileInfoButton;
+    private javax.swing.JPanel singleFileParentPanel;
     private javax.swing.JPanel topPanel;
     private javax.swing.JButton trackMateInfoButton;
     private javax.swing.JPanel trackMateParentPanel;

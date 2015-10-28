@@ -8,7 +8,7 @@ package com.compomics.cell_coord.gui.controller.load;
 import com.compomics.cell_coord.entity.Track;
 import com.compomics.cell_coord.exception.FileParserException;
 import com.compomics.cell_coord.factory.TrackFileParserFactory;
-import com.compomics.cell_coord.gui.load.LoadSparseFilesPanel;
+import com.compomics.cell_coord.gui.load.LoadDirectoryPanel;
 import com.compomics.cell_coord.parser.TrackFileParser;
 import com.compomics.cell_coord.utils.GuiUtils;
 import java.awt.GridBagConstraints;
@@ -29,18 +29,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
- * A controller component to load sparse files, and assign them to conditions.
+ * A controller component to load a directory containing tracking files.
  *
  * @author Paola
  */
-@Component("loadSparseFilesController")
-public class LoadSparseFilesController {
+@Component("loadDirectoryController")
+public class LoadDirectoryController {
 
-    private static final Logger LOG = Logger.getLogger(LoadSparseFilesController.class);
+    private static final Logger LOG = Logger.getLogger(LoadDirectoryController.class);
     // model
     private JTableBinding trackSpotsTableBinding;
     // view
-    private LoadSparseFilesPanel loadSparseFilesPanel;
+    private LoadDirectoryPanel loadDirectoryPanel;
     // parent controller
     @Autowired
     private LoadTracksController loadTracksController;
@@ -62,7 +62,7 @@ public class LoadSparseFilesController {
      */
     public void onLoadingSparseFilesGui() {
         loadTracksController.getCardLayout().show(loadTracksController.getLoadTracksPanel().getTopPanel(),
-                  loadTracksController.getLoadTracksPanel().getSparseParentPanel().getName());
+                  loadTracksController.getLoadTracksPanel().getDirectoryParentPanel().getName());
     }
 
     /**
@@ -73,7 +73,7 @@ public class LoadSparseFilesController {
      */
     private List<Track> parseTrackFile(File trackFile) throws FileParserException {
         // get the selected file format -- call the correspondent file parser
-        String parserName = (String) loadSparseFilesPanel.getFileFormatComboBox().getSelectedItem();
+        String parserName = (String) loadDirectoryPanel.getFileFormatComboBox().getSelectedItem();
         TrackFileParser parser = TrackFileParserFactory.getInstance().getParser(parserName);
         return parser.parseTrackFile(trackFile);
     }
@@ -83,26 +83,29 @@ public class LoadSparseFilesController {
      */
     private void initLoadSparseFilesPanel() {
         // make new view
-        loadSparseFilesPanel = new LoadSparseFilesPanel();
+        loadDirectoryPanel = new LoadDirectoryPanel();
 
         // fill in combo box: get all parser methods from the factory
         Set<String> parsers = TrackFileParserFactory.getInstance().getParserBeanNames();
         for (String parser : parsers) {
-            loadSparseFilesPanel.getFileFormatComboBox().addItem(parser);
+            loadDirectoryPanel.getFileFormatComboBox().addItem(parser);
         }
 
         /**
          * Add action listeners.
          */
         // load directory:
-        loadSparseFilesPanel.getLoadDirectoryButton().addActionListener(new ActionListener() {
+        loadDirectoryPanel.getLoadDirectoryButton().addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent e) {
                 // we check if the directory was already loaded before
                 if (loadTracksController.getDirectory() == null) {
-                    loadTracksController.chooseDirectoryAndLoadData(loadSparseFilesPanel.getDirectoryTree());
-                    loadSparseFilesPanel.getDirectoryTextArea().setText(loadTracksController.getDirectory().getAbsolutePath());
+                    loadTracksController.chooseDirectoryAndLoadData(loadDirectoryPanel.getDirectoryTree());
+                    // if loading the directory was successful (i.e. the directory is still not null), set the ttext in the JComponent
+                    if (loadTracksController.getDirectory() != null) {
+                        loadDirectoryPanel.getDirectoryTextArea().setText(loadTracksController.getDirectory().getAbsolutePath());
+                    }
                 } else {
                     // otherwise we ask the user if they want to reload the directory
                     Object[] options = {"Load a different directory", "Cancel"};
@@ -110,12 +113,12 @@ public class LoadSparseFilesController {
                     switch (showOptionDialog) {
                         case 0: // load a different directory:
                             // reset the model of the directory tree
-                            DefaultTreeModel model = (DefaultTreeModel) loadSparseFilesPanel.getDirectoryTree().getModel();
+                            DefaultTreeModel model = (DefaultTreeModel) loadDirectoryPanel.getDirectoryTree().getModel();
                             DefaultMutableTreeNode rootNote = (DefaultMutableTreeNode) model.getRoot();
                             rootNote.removeAllChildren();
                             model.reload();
-                            loadTracksController.chooseDirectoryAndLoadData(loadSparseFilesPanel.getDirectoryTree());
-                            loadSparseFilesPanel.getDirectoryTextArea().setText(loadTracksController.getDirectory().getAbsolutePath());
+                            loadTracksController.chooseDirectoryAndLoadData(loadDirectoryPanel.getDirectoryTree());
+                            loadDirectoryPanel.getDirectoryTextArea().setText(loadTracksController.getDirectory().getAbsolutePath());
                             break;  // cancel: do nothing
                     }
                 }
@@ -123,12 +126,12 @@ public class LoadSparseFilesController {
         });
 
         // import the selected files
-        loadSparseFilesPanel.getImportFilesButton().addActionListener(new ActionListener() {
+        loadDirectoryPanel.getImportFilesButton().addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent e) {
                 // get the selected file(s)
-                TreePath[] selectionPaths = loadSparseFilesPanel.getDirectoryTree().getSelectionPaths();
+                TreePath[] selectionPaths = loadDirectoryPanel.getDirectoryTree().getSelectionPaths();
                 if (selectionPaths != null && selectionPaths.length != 0) {
                     for (TreePath path : selectionPaths) {
                         String fileName = (String) path.getLastPathComponent().toString();
@@ -140,13 +143,14 @@ public class LoadSparseFilesController {
                                 loadTracksController.getTrackSpotsBindingList().addAll(track.getTrackSpots());
                             }
                             if (trackSpotsTableBinding == null) {
-                                trackSpotsTableBinding = SwingBindings.createJTableBinding(AutoBinding.UpdateStrategy.READ, loadTracksController.getTrackSpotsBindingList(), loadSparseFilesPanel.getTracksTable());
+                                trackSpotsTableBinding = SwingBindings.createJTableBinding(AutoBinding.UpdateStrategy.READ, loadTracksController.getTrackSpotsBindingList(), loadDirectoryPanel.getTracksTable());
                                 loadTracksController.showTracksInTable(trackSpotsTableBinding);
                             }
                         } catch (FileParserException ex) {
                             LOG.error("Could not parse the file: " + trackFile, ex);
-                            loadTracksController.showMessage((String) loadSparseFilesPanel.getFileFormatComboBox().getSelectedItem() + " expected!",
+                            loadTracksController.showMessage((String) loadDirectoryPanel.getFileFormatComboBox().getSelectedItem() + " expected!",
                                       "Error parsing file", JOptionPane.ERROR_MESSAGE);
+                            return;
                         }
                     }
                     loadTracksController.showMessage(selectionPaths.length + " files successfully imported!", "success loading", JOptionPane.INFORMATION_MESSAGE);
@@ -158,6 +162,6 @@ public class LoadSparseFilesController {
         });
 
         // add panel to parent container
-        loadTracksController.getLoadTracksPanel().getSparseParentPanel().add(loadSparseFilesPanel, gridBagConstraints);
+        loadTracksController.getLoadTracksPanel().getDirectoryParentPanel().add(loadDirectoryPanel, gridBagConstraints);
     }
 }

@@ -26,9 +26,9 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="0" attributes="0">
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="infoScrollPane" pref="380" max="32767" attributes="0"/>
+          <Group type="102" alignment="1" attributes="0">
+              <EmptySpace max="32767" attributes="0"/>
+              <Component id="infoScrollPane" min="-2" pref="288" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -37,7 +37,7 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="infoScrollPane" pref="356" max="32767" attributes="0"/>
+              <Component id="infoScrollPane" pref="245" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -60,7 +60,7 @@
           <Properties>
             <Property name="editable" type="boolean" value="false"/>
             <Property name="contentType" type="java.lang.String" value="text/html" noResource="true"/>
-            <Property name="text" type="java.lang.String" value="&lt;html&gt;&#xa;   &lt;head&gt;&#xa;      &lt;TITLE&gt;&lt;/TITLE&gt;&#xa;   &lt;/head&gt;&#xa;   &lt;body&gt;&#xa;      &lt;a name=&quot;#top&quot;/&gt;&#xa;      &lt;i&gt;Cell_Coord, Load sparse files ...&lt;/i&gt;&#xa;      &lt;hr&gt;&#xa;      &lt;br&gt;&#xa;      &lt;p align=&quot;left&quot;&gt;&#xa;         In this module you can import cell tracking files sparsely, &lt;i&gt;i.e. &lt;/i&gt; without specific condition-based rules.&#xa;         &lt;/br&gt;&#xa;         &lt;br&gt;&#xa;&#x9;&#x9; &lt;br&gt;&#xa;&#x9;&#x9; &lt;/br&gt;&#xa;         1. Select the fomat of the files you want to import (&lt;b&gt;CSV&lt;/b&gt;: comma separated values; &lt;b&gt;TSV&lt;/b&gt;: tab separated values or &lt;b&gt;XLS/XLSX&lt;/b&gt;: Microsoft Excel).&#xa;         &lt;/br&gt;&#xa;         &lt;br&gt;&#xa;&#x9;&#x9; &lt;br&gt;&#xa;&#x9;&#x9; &lt;/br&gt;&#xa;         2. Choose the directory containing the cell tracking files to import.&#xa;         &lt;/br&gt;&#xa;         &lt;br&gt;&#xa;         &lt;/br&gt;&#xa;         &lt;br&gt;&#xa;         3. Once the files are rendered in the data tree, select the ones you wish to import: if the import is successful, the tracks will appear in the data table underneath.&#xa;      &lt;/p&gt;&#xa;   &lt;/body&gt;&#xa;&lt;/html&gt;"/>
+            <Property name="text" type="java.lang.String" value="&lt;html&gt;&#xa;   &lt;head&gt;&#xa;      &lt;TITLE&gt;&lt;/TITLE&gt;&#xa;   &lt;/head&gt;&#xa;   &lt;body&gt;&#xa;      &lt;a name=&quot;#top&quot;/&gt;&#xa;      &lt;i&gt;Cell_Coord, Load a directory ...&lt;/i&gt;&#xa;      &lt;hr&gt;&#xa;      &lt;br&gt;&#xa;      &lt;p align=&quot;left&quot;&gt;&#xa;         In this module you can import a directory listing cell tracking files.&#xa;         &lt;/br&gt;&#xa;         &lt;br&gt;&#xa;&#x9;&#x9; &lt;br&gt;&#xa;&#x9;&#x9; &lt;/br&gt;&#xa;         1. Select the fomat of the files you want to import (&lt;b&gt;CSV&lt;/b&gt;: comma separated values; &lt;b&gt;TSV&lt;/b&gt;: tab separated values or &lt;b&gt;XLS/XLSX&lt;/b&gt;: Microsoft Excel).&#xa;         &lt;/br&gt;&#xa;         &lt;br&gt;&#xa;&#x9;&#x9; &lt;br&gt;&#xa;&#x9;&#x9; &lt;/br&gt;&#xa;         2. Choose the directory containing the cell tracking files to import.&#xa;         &lt;/br&gt;&#xa;         &lt;br&gt;&#xa;         &lt;/br&gt;&#xa;         &lt;br&gt;&#xa;         3. Once the files are rendered in the data tree, select the ones you wish to import: if the import is successful, the tracks will appear in the data table underneath.&#xa;      &lt;/p&gt;&#xa;   &lt;/body&gt;&#xa;&lt;/html&gt;"/>
           </Properties>
         </Component>
       </SubComponents>

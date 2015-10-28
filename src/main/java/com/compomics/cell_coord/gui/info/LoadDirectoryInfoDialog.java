@@ -9,12 +9,14 @@ package com.compomics.cell_coord.gui.info;
  *
  * @author Paola
  */
-public class SparseFilesInfoDialog extends javax.swing.JDialog {
+public class LoadDirectoryInfoDialog extends javax.swing.JDialog {
 
     /**
      * Creates new form SparseFilesInfoDialog
+     * @param parent
+     * @param modal
      */
-    public SparseFilesInfoDialog(java.awt.Frame parent, boolean modal) {
+    public LoadDirectoryInfoDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
     }
@@ -38,23 +40,23 @@ public class SparseFilesInfoDialog extends javax.swing.JDialog {
 
         infoEditorPane.setEditable(false);
         infoEditorPane.setContentType("text/html"); // NOI18N
-        infoEditorPane.setText("<html>\n   <head>\n      <TITLE></TITLE>\n   </head>\n   <body>\n      <a name=\"#top\"/>\n      <i>Cell_Coord, Load sparse files ...</i>\n      <hr>\n      <br>\n      <p align=\"left\">\n         In this module you can import cell tracking files sparsely, <i>i.e. </i> without specific condition-based rules.\n         </br>\n         <br>\n\t\t <br>\n\t\t </br>\n         1. Select the fomat of the files you want to import (<b>CSV</b>: comma separated values; <b>TSV</b>: tab separated values or <b>XLS/XLSX</b>: Microsoft Excel).\n         </br>\n         <br>\n\t\t <br>\n\t\t </br>\n         2. Choose the directory containing the cell tracking files to import.\n         </br>\n         <br>\n         </br>\n         <br>\n         3. Once the files are rendered in the data tree, select the ones you wish to import: if the import is successful, the tracks will appear in the data table underneath.\n      </p>\n   </body>\n</html>");
+        infoEditorPane.setText("<html>\n   <head>\n      <TITLE></TITLE>\n   </head>\n   <body>\n      <a name=\"#top\"/>\n      <i>Cell_Coord, Load a directory ...</i>\n      <hr>\n      <br>\n      <p align=\"left\">\n         In this module you can import a directory listing cell tracking files.\n         </br>\n         <br>\n\t\t <br>\n\t\t </br>\n         1. Select the fomat of the files you want to import (<b>CSV</b>: comma separated values; <b>TSV</b>: tab separated values or <b>XLS/XLSX</b>: Microsoft Excel).\n         </br>\n         <br>\n\t\t <br>\n\t\t </br>\n         2. Choose the directory containing the cell tracking files to import.\n         </br>\n         <br>\n         </br>\n         <br>\n         3. Once the files are rendered in the data tree, select the ones you wish to import: if the import is successful, the tracks will appear in the data table underneath.\n      </p>\n   </body>\n</html>");
         infoScrollPane.setViewportView(infoEditorPane);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(infoScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(infoScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 288, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(infoScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 356, Short.MAX_VALUE)
+                .addComponent(infoScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 245, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -78,20 +80,21 @@ public class SparseFilesInfoDialog extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(SparseFilesInfoDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(LoadDirectoryInfoDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(SparseFilesInfoDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(LoadDirectoryInfoDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(SparseFilesInfoDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(LoadDirectoryInfoDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(SparseFilesInfoDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(LoadDirectoryInfoDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                SparseFilesInfoDialog dialog = new SparseFilesInfoDialog(new javax.swing.JFrame(), true);
+                LoadDirectoryInfoDialog dialog = new LoadDirectoryInfoDialog(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
