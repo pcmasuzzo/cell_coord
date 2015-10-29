@@ -7,6 +7,7 @@ package com.compomics.cell_coord.gui;
 
 import java.awt.Color;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
 
@@ -31,16 +32,32 @@ public class CellCoordFrame extends javax.swing.JFrame {
         UIManager.put("info", Color.white); // Background for tooltip texts (info class)
     }
 
-    public JPanel getBackgroundPanel() {
-        return backgroundPanel;
+    public JButton getCancelButton() {
+        return cancelButton;
+    }
+
+    public JPanel getTopPanel() {
+        return topPanel;
     }
 
     public JPanel getLoadTracksParentPanel() {
         return loadTracksParentPanel;
     }
 
+    public JButton getNextButton() {
+        return nextButton;
+    }
+
+    public JButton getPreviousButton() {
+        return previousButton;
+    }
+
     public JButton getStartButton() {
         return startButton;
+    }
+
+    public JLabel getInfoLabel() {
+        return infoLabel;
     }
 
     /**
@@ -51,91 +68,137 @@ public class CellCoordFrame extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
 
-        backgroundPanel = new javax.swing.JPanel();
-        homeParentPanel = new javax.swing.JPanel();
-        infoPanel = new javax.swing.JPanel();
-        infoScrollPane = new javax.swing.JScrollPane();
-        infoEditorPane = new javax.swing.JEditorPane();
-        startButton = new javax.swing.JButton();
+        topPanel = new javax.swing.JPanel();
+        homePanel = new javax.swing.JPanel();
+        welcomeScrollPane = new javax.swing.JScrollPane();
+        welcomeEditorPane = new javax.swing.JEditorPane();
         loadTracksParentPanel = new javax.swing.JPanel();
+        visualizeTracksPanel = new javax.swing.JPanel();
+        bottomPanel = new javax.swing.JPanel();
+        previousButton = new javax.swing.JButton();
+        nextButton = new javax.swing.JButton();
+        cancelButton = new javax.swing.JButton();
+        startButton = new javax.swing.JButton();
+        infoLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Cell_Coord");
+        setMinimumSize(new java.awt.Dimension(700, 550));
+        getContentPane().setLayout(new java.awt.GridBagLayout());
 
-        backgroundPanel.setLayout(new java.awt.CardLayout());
+        topPanel.setMinimumSize(new java.awt.Dimension(20, 20));
+        topPanel.setPreferredSize(new java.awt.Dimension(20, 20));
+        topPanel.setLayout(new java.awt.CardLayout());
 
-        homeParentPanel.setBackground(new java.awt.Color(204, 204, 204));
+        homePanel.setDoubleBuffered(false);
+        homePanel.setName("homePanel"); // NOI18N
 
-        infoPanel.setOpaque(false);
+        welcomeEditorPane.setEditable(false);
+        welcomeEditorPane.setContentType("text/html"); // NOI18N
+        welcomeEditorPane.setText("<html>   <head> <TITLE></TITLE>   </head>   <body> <a name=\"#top\"/>         <H2>Welcome to Cell_Coord</H2>         <i>A Fiji/ImageJ plugin to study and visualize coordinated cell migration</i>   </body> </html>");
+        welcomeScrollPane.setViewportView(welcomeEditorPane);
 
-        infoScrollPane.setBorder(null);
-
-        infoEditorPane.setEditable(false);
-        infoEditorPane.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
-        infoEditorPane.setContentType("text/html"); // NOI18N
-        infoEditorPane.setText("<html>\n  <head>\n<TITLE></TITLE>\n  </head>\n  <body>\n<a name=\"#top\"/>\n        <H2>Welcome to Cell_Coord</H2>\n        <i>A Fiji/ImageJ plugin to study and visualize coordinated cell migration</i>\n  </body>\n</html>");
-        infoScrollPane.setViewportView(infoEditorPane);
-
-        javax.swing.GroupLayout infoPanelLayout = new javax.swing.GroupLayout(infoPanel);
-        infoPanel.setLayout(infoPanelLayout);
-        infoPanelLayout.setHorizontalGroup(
-            infoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(infoPanelLayout.createSequentialGroup()
+        javax.swing.GroupLayout homePanelLayout = new javax.swing.GroupLayout(homePanel);
+        homePanel.setLayout(homePanelLayout);
+        homePanelLayout.setHorizontalGroup(
+            homePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(homePanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(infoScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 344, Short.MAX_VALUE)
+                .addComponent(welcomeScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 689, Short.MAX_VALUE)
                 .addContainerGap())
         );
-        infoPanelLayout.setVerticalGroup(
-            infoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(infoPanelLayout.createSequentialGroup()
+        homePanelLayout.setVerticalGroup(
+            homePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(homePanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(infoScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 395, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(welcomeScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 515, Short.MAX_VALUE)
+                .addContainerGap())
         );
+
+        topPanel.add(homePanel, "homePanel");
+        homePanel.getAccessibleContext().setAccessibleName("homePanel");
+
+        loadTracksParentPanel.setName("loadTracksParentPanel"); // NOI18N
+        loadTracksParentPanel.setLayout(new java.awt.GridBagLayout());
+        topPanel.add(loadTracksParentPanel, "loadTracksParentPanel");
+        loadTracksParentPanel.getAccessibleContext().setAccessibleName("loadTracksParentPanel");
+
+        javax.swing.GroupLayout visualizeTracksPanelLayout = new javax.swing.GroupLayout(visualizeTracksPanel);
+        visualizeTracksPanel.setLayout(visualizeTracksPanelLayout);
+        visualizeTracksPanelLayout.setHorizontalGroup(
+            visualizeTracksPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 709, Short.MAX_VALUE)
+        );
+        visualizeTracksPanelLayout.setVerticalGroup(
+            visualizeTracksPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 537, Short.MAX_VALUE)
+        );
+
+        topPanel.add(visualizeTracksPanel, "visualizeTracksPanel");
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTH;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 0.96;
+        getContentPane().add(topPanel, gridBagConstraints);
+
+        bottomPanel.setMinimumSize(new java.awt.Dimension(20, 20));
+        bottomPanel.setPreferredSize(new java.awt.Dimension(20, 20));
+
+        previousButton.setText("<< Previous");
+
+        nextButton.setText("Next >>");
+
+        cancelButton.setText("Cancel");
 
         startButton.setText("Start");
 
-        javax.swing.GroupLayout homeParentPanelLayout = new javax.swing.GroupLayout(homeParentPanel);
-        homeParentPanel.setLayout(homeParentPanelLayout);
-        homeParentPanelLayout.setHorizontalGroup(
-            homeParentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(homeParentPanelLayout.createSequentialGroup()
+        javax.swing.GroupLayout bottomPanelLayout = new javax.swing.GroupLayout(bottomPanel);
+        bottomPanel.setLayout(bottomPanelLayout);
+        bottomPanelLayout.setHorizontalGroup(
+            bottomPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, bottomPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(infoPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, homeParentPanelLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(startButton)
-                .addGap(19, 19, 19))
-        );
-        homeParentPanelLayout.setVerticalGroup(
-            homeParentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(homeParentPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(infoPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(infoLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 289, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(previousButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(nextButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cancelButton)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(startButton)
                 .addContainerGap())
         );
 
-        backgroundPanel.add(homeParentPanel, "card2");
+        bottomPanelLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {cancelButton, nextButton, previousButton, startButton});
 
-        loadTracksParentPanel.setMinimumSize(new java.awt.Dimension(20, 20));
-        loadTracksParentPanel.setName("loadTracksParentPanel"); // NOI18N
-        loadTracksParentPanel.setLayout(new java.awt.GridBagLayout());
-        backgroundPanel.add(loadTracksParentPanel, "loadTracksParentPanel");
-        loadTracksParentPanel.getAccessibleContext().setAccessibleName("loadTracksParentPanel");
+        bottomPanelLayout.setVerticalGroup(
+            bottomPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(bottomPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(bottomPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(infoLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(previousButton)
+                    .addComponent(nextButton)
+                    .addComponent(cancelButton)
+                    .addComponent(startButton))
+                .addContainerGap())
+        );
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(backgroundPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(backgroundPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.SOUTH;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 0.04;
+        getContentPane().add(bottomPanel, gridBagConstraints);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -166,6 +229,9 @@ public class CellCoordFrame extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(CellCoordFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -176,12 +242,17 @@ public class CellCoordFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel backgroundPanel;
-    private javax.swing.JPanel homeParentPanel;
-    private javax.swing.JEditorPane infoEditorPane;
-    private javax.swing.JPanel infoPanel;
-    private javax.swing.JScrollPane infoScrollPane;
+    private javax.swing.JPanel bottomPanel;
+    private javax.swing.JButton cancelButton;
+    private javax.swing.JPanel homePanel;
+    private javax.swing.JLabel infoLabel;
     private javax.swing.JPanel loadTracksParentPanel;
+    private javax.swing.JButton nextButton;
+    private javax.swing.JButton previousButton;
     private javax.swing.JButton startButton;
+    private javax.swing.JPanel topPanel;
+    private javax.swing.JPanel visualizeTracksPanel;
+    private javax.swing.JEditorPane welcomeEditorPane;
+    private javax.swing.JScrollPane welcomeScrollPane;
     // End of variables declaration//GEN-END:variables
 }

@@ -5,34 +5,35 @@
  */
 package com.compomics.cell_coord.gui.controller.load;
 
+import com.compomics.cell_coord.entity.Track;
 import com.compomics.cell_coord.entity.TrackSpot;
+import com.compomics.cell_coord.exception.FileParserException;
 import com.compomics.cell_coord.exception.LoadDirectoryException;
-import com.compomics.cell_coord.gui.CellCoordFrame;
+import com.compomics.cell_coord.factory.TrackFileParserFactory;
 import com.compomics.cell_coord.gui.controller.CellCoordController;
-import com.compomics.cell_coord.gui.info.LoadDirectoryInfoDialog;
-import com.compomics.cell_coord.gui.info.TrackMateFilesInfoDialog;
 import com.compomics.cell_coord.gui.load.LoadTracksPanel;
+import com.compomics.cell_coord.parser.TrackFileParser;
 import com.compomics.cell_coord.utils.GuiUtils;
-import java.awt.CardLayout;
 import java.awt.GridBagConstraints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.ArrayList;
-import javax.swing.ButtonGroup;
-import javax.swing.Icon;
+import java.util.List;
+import java.util.Set;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
-import javax.swing.JTree;
-import javax.swing.UIManager;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.TreePath;
 import org.apache.log4j.Logger;
+import org.jdesktop.beansbinding.AutoBinding;
 import org.jdesktop.beansbinding.BindingGroup;
 import org.jdesktop.beansbinding.ELProperty;
 import org.jdesktop.observablecollections.ObservableCollections;
 import org.jdesktop.observablecollections.ObservableList;
 import org.jdesktop.swingbinding.JTableBinding;
+import org.jdesktop.swingbinding.SwingBindings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -49,16 +50,10 @@ public class LoadTracksController {
     // model
     private BindingGroup bindingGroup;
     private ObservableList<TrackSpot> trackSpotsBindingList;
+    private JTableBinding trackSpotsTableBinding;
     private File directory;
     // view
     private LoadTracksPanel loadTracksPanel;
-    private LoadDirectoryInfoDialog sparseFilesInfoDialog;
-    private TrackMateFilesInfoDialog trackMateFilesInfoDialog;
-    // child controllers
-    @Autowired
-    private LoadDirectoryController loadDirectoryController;
-    @Autowired
-    private LoadTrackMateFilesController loadTrackMateFilesController;
     // parent controller
     @Autowired
     private CellCoordController cellCoordController;
@@ -66,65 +61,115 @@ public class LoadTracksController {
     private GridBagConstraints gridBagConstraints;
 
     /**
-     * Getters
-     *
-     * @return
-     */
-    public LoadTracksPanel getLoadTracksPanel() {
-        return loadTracksPanel;
-    }
-
-    public File getDirectory() {
-        return directory;
-    }
-
-    public ObservableList<TrackSpot> getTrackSpotsBindingList() {
-        return trackSpotsBindingList;
-    }
-
-    /**
-     * Get main frame through parent controller.
-     *
-     * @return
-     */
-    public CellCoordFrame getMainFrame() {
-        return cellCoordController.getCellCoordFrame();
-    }
-
-    /**
-     * Show a message to the user.
-     *
-     * @param message
-     * @param title
-     * @param messageType
-     */
-    public void showMessage(String message, String title, Integer messageType) {
-        cellCoordController.showMessage(message, title, messageType);
-    }
-
-    /**
-     * The layout of the panel: needed to switch cards.
-     *
-     * @return
-     */
-    public CardLayout getCardLayout() {
-        return (CardLayout) loadTracksPanel.getTopPanel().getLayout();
-    }
-
-    /**
      * Initialize controller.
      */
     public void init() {
         bindingGroup = new BindingGroup();
-        trackSpotsBindingList = ObservableCollections.observableList(new ArrayList<TrackSpot>());
         gridBagConstraints = GuiUtils.getDefaultGridBagConstraints();
-        sparseFilesInfoDialog = new LoadDirectoryInfoDialog(cellCoordController.getCellCoordFrame(), true);
-        trackMateFilesInfoDialog = new TrackMateFilesInfoDialog(cellCoordController.getCellCoordFrame(), true);
-        // init main view
-        initLoadTracksPanel();
-        // init child controllers
-        loadDirectoryController.init();
-        loadTrackMateFilesController.init();
+        trackSpotsBindingList = ObservableCollections.observableList(new ArrayList<TrackSpot>());
+        initView();
+    }
+
+    /**
+     * Initialize the view components.
+     */
+    private void initView() {
+        // create new view
+        loadTracksPanel = new LoadTracksPanel();
+
+        // populate the combobox with available file formats
+        // note: these are annoatated as spring beans
+        Set<String> parsers = TrackFileParserFactory.getInstance().getParserBeanNames();
+        for (String parser : parsers) {
+            loadTracksPanel.getFileFormatComboBox().addItem(parser);
+        }
+
+        /**
+         * Action Listeners.
+         */
+        // load directory
+        loadTracksPanel.getLoadDirectoryButton().addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (directory == null) {
+                    chooseDirectoryAndLoadData();
+                    // if loading the directory was successful (i.e. the directory is still not null), set the ttext in the JComponent
+                    if (directory != null) {
+                        loadTracksPanel.getChosenDirectoryTextArea().setText(directory.getAbsolutePath());
+                    }
+                } else {
+                    // otherwise we ask the user if they want to reload the directory
+                    Object[] options = {"Load a different directory", "Cancel"};
+                    int showOptionDialog = JOptionPane.showOptionDialog(null, "It seems a directory was already loaded.\nWhat do you want to do?", "", JOptionPane.CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[1]);
+                    switch (showOptionDialog) {
+                        case 0: // load a different directory:
+                            // reset the model of the directory tree
+                            DefaultTreeModel model = (DefaultTreeModel) loadTracksPanel.getDirectoryTree().getModel();
+                            DefaultMutableTreeNode rootNote = (DefaultMutableTreeNode) model.getRoot();
+                            rootNote.removeAllChildren();
+                            model.reload();
+                            chooseDirectoryAndLoadData();
+                            loadTracksPanel.getChosenDirectoryTextArea().setText(directory.getAbsolutePath());
+                            break;  // cancel: do nothing
+                    }
+                }
+            }
+        });
+
+        // import the selected files in the tree
+        loadTracksPanel.getImportFilesButton().addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // get the selected file(s)
+                TreePath[] selectionPaths = loadTracksPanel.getDirectoryTree().getSelectionPaths();
+                if (selectionPaths != null && selectionPaths.length != 0) {
+                    for (TreePath path : selectionPaths) {
+                        String fileName = (String) path.getLastPathComponent().toString();
+                        File trackFile = new File(directory.getAbsolutePath() + File.separator + fileName);
+                        try {
+                            // get the tracks and add all the spots to the binding list
+                            List<Track> currentTracks = parseTrackFile(trackFile);
+                            for (Track track : currentTracks) {
+                                trackSpotsBindingList.addAll(track.getTrackSpots());
+                            }
+                            if (trackSpotsTableBinding == null) {
+                                trackSpotsTableBinding = SwingBindings.createJTableBinding(AutoBinding.UpdateStrategy.READ, trackSpotsBindingList, loadTracksPanel.getTracksTable());
+                                showTracksInTable(trackSpotsTableBinding);
+                            }
+                        } catch (FileParserException ex) {
+                            LOG.error("Could not parse the file: " + trackFile, ex);
+                            cellCoordController.showMessage((String) loadTracksPanel.getFileFormatComboBox().getSelectedItem() + " expected!",
+                                      "Error parsing file", JOptionPane.ERROR_MESSAGE);
+                            return;
+                        }
+                    }
+                    cellCoordController.showMessage(selectionPaths.length + " file(s) successfully imported!", "success loading", JOptionPane.INFORMATION_MESSAGE);
+                    // proceed with next step in the plugin
+                    cellCoordController.getCellCoordFrame().getNextButton().setEnabled(true);
+                } else {
+                    // inform the user that no file was selected!
+                    cellCoordController.showMessage("You have to select at least one file!", "no files selected", JOptionPane.WARNING_MESSAGE);
+                }
+            }
+        });
+
+        // add view to parent component
+        cellCoordController.getCellCoordFrame().getLoadTracksParentPanel().add(loadTracksPanel, gridBagConstraints);
+    }
+
+    /**
+     * Parse a specific track file.
+     *
+     * @param trackFile
+     * @return list of tracks
+     */
+    private List<Track> parseTrackFile(File trackFile) throws FileParserException {
+        // get the selected file format -- call the correspondent file parser
+        String parserName = (String) loadTracksPanel.getFileFormatComboBox().getSelectedItem();
+        TrackFileParser parser = TrackFileParserFactory.getInstance().getParser(parserName);
+        return parser.parseTrackFile(trackFile);
     }
 
     /**
@@ -132,7 +177,7 @@ public class LoadTracksController {
      *
      * @param trackSpotsTableBinding
      */
-    public void showTracksInTable(JTableBinding trackSpotsTableBinding) {
+    private void showTracksInTable(JTableBinding trackSpotsTableBinding) {
         //add column bindings
         JTableBinding.ColumnBinding columnBinding = trackSpotsTableBinding.addColumnBinding(ELProperty.create("${track.trackid}"));
         columnBinding.setColumnName("track_id");
@@ -168,25 +213,25 @@ public class LoadTracksController {
      *
      * @param dataTree
      */
-    public void chooseDirectoryAndLoadData(JTree dataTree) {
+    private void chooseDirectoryAndLoadData() {
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setDialogTitle("Select a root folder");
         // allow for directories only
         fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         // removing "All Files" option from FileType
         fileChooser.setAcceptAllFileFilterUsed(false);
-        int returnVal = fileChooser.showOpenDialog(getMainFrame());
+        int returnVal = fileChooser.showOpenDialog(cellCoordController.getCellCoordFrame());
         if (returnVal == JFileChooser.APPROVE_OPTION) {
             // the directory for the data
             directory = fileChooser.getSelectedFile();
             try {
-                loadDataIntoTree(dataTree);
+                loadDataIntoTree();
             } catch (LoadDirectoryException ex) {
                 LOG.error(ex.getMessage());
-                showMessage(ex.getMessage(), "wrong directory structure error", JOptionPane.ERROR_MESSAGE);
+                cellCoordController.showMessage(ex.getMessage(), "wrong directory structure error", JOptionPane.ERROR_MESSAGE);
             }
         } else {
-            showMessage("Open command cancelled by user", "", JOptionPane.INFORMATION_MESSAGE);
+            cellCoordController.showMessage("Open command cancelled by user", "", JOptionPane.INFORMATION_MESSAGE);
         }
     }
 
@@ -195,8 +240,8 @@ public class LoadTracksController {
      *
      * @throws LoadDirectoryException - when the directory is empty!
      */
-    private void loadDataIntoTree(JTree dataTree) throws LoadDirectoryException {
-        DefaultTreeModel model = (DefaultTreeModel) dataTree.getModel();
+    private void loadDataIntoTree() throws LoadDirectoryException {
+        DefaultTreeModel model = (DefaultTreeModel) loadTracksPanel.getDirectoryTree().getModel();
         DefaultMutableTreeNode rootNote = (DefaultMutableTreeNode) model.getRoot();
         // change name (user object) of root node
         rootNote.setUserObject(directory.getName());
@@ -218,78 +263,6 @@ public class LoadTracksController {
             throw new LoadDirectoryException("This directory seems to be empty!");
         }
         model.reload();
-        showMessage("Directory successful loaded!\nYou can select the files to import!", "", JOptionPane.INFORMATION_MESSAGE);
-    }
-
-    /**
-     * Initialize main view
-     */
-    private void initLoadTracksPanel() {
-        // new object
-        loadTracksPanel = new LoadTracksPanel();
-        // add radio buttons to a group: only one selection allowed!
-        ButtonGroup buttonGroup = new ButtonGroup();
-        buttonGroup.add(loadTracksPanel.getLoadDirectoryRadioButton());
-        buttonGroup.add(loadTracksPanel.getLoadPlateRadioButton());
-        buttonGroup.add(loadTracksPanel.getLoadTrackMateRadioButton());
-        // select first option by default
-        loadTracksPanel.getLoadDirectoryRadioButton().setSelected(true);
-
-        // set icon for the question button
-        Icon questionIcon = UIManager.getIcon("OptionPane.questionIcon");
-        loadTracksPanel.getDirectoryInfoButton().setIcon(GuiUtils.getScaledIcon(questionIcon));
-        loadTracksPanel.getSingleFileInfoButton().setIcon(GuiUtils.getScaledIcon(questionIcon));
-        loadTracksPanel.getTrackMateInfoButton().setIcon(GuiUtils.getScaledIcon(questionIcon));
-
-        /**
-         * Show appropriate info dialogs.
-         */
-        loadTracksPanel.getDirectoryInfoButton().addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // simply show the dialog
-                sparseFilesInfoDialog.setVisible(true);
-            }
-        });
-
-        loadTracksPanel.getSingleFileInfoButton().addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-            }
-        });
-
-        loadTracksPanel.getTrackMateInfoButton().addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // simply show the dialog
-                trackMateFilesInfoDialog.setVisible(true);
-            }
-        });
-
-        /**
-         * Next action: read the selection and call the correspondent child
-         * controller.
-         */
-        loadTracksPanel.getNextButton().addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (loadTracksPanel.getLoadDirectoryRadioButton().isSelected()) {
-                    // call the sparse files controller
-                    loadDirectoryController.onLoadingSparseFilesGui();
-                } else if (loadTracksPanel.getLoadPlateRadioButton().isSelected()) {
-                    // call the plate view controller
-                } else {
-                    // call the TrackMate controller
-                    loadTrackMateFilesController.onLoadingTrackMateFilesGui();
-                }
-            }
-        });
-
-        // add view to parent component
-        cellCoordController.getCellCoordFrame().getLoadTracksParentPanel().add(loadTracksPanel, gridBagConstraints);
+        cellCoordController.showMessage("Directory successful loaded!\nYou can select the files to import!", "", JOptionPane.INFORMATION_MESSAGE);
     }
 }

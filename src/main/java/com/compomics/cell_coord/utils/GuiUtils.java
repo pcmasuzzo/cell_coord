@@ -6,12 +6,16 @@
 package com.compomics.cell_coord.utils;
 
 import java.awt.BasicStroke;
+import java.awt.CardLayout;
+import java.awt.Component;
+import java.awt.Container;
 import java.awt.Graphics2D;
 import java.awt.GridBagConstraints;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.JPanel;
 
 /**
  * An utilities class for GUI elements.
@@ -31,6 +35,27 @@ public class GuiUtils {
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 1.0;
         return gridBagConstraints;
+    }
+
+    /**
+     * Gets the name of the component currently visible in the card layout.
+     *
+     * @param parentContainer the parent container
+     * @return the component name
+     */
+    public static String getCurrentCardName(Container parentContainer) {
+        CardLayout cardLayout = (CardLayout) parentContainer.getLayout();
+        if (cardLayout == null) {
+            throw new IllegalArgumentException("The layout of the parent container is no card layout.");
+        }
+        JPanel card = null;
+        for (Component component : parentContainer.getComponents()) {
+            if (component.isVisible()) {
+                card = (JPanel) component;
+                break;
+            }
+        }
+        return card.getName();
     }
 
     /**

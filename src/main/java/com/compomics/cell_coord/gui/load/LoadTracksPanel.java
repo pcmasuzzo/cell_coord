@@ -6,8 +6,11 @@
 package com.compomics.cell_coord.gui.load;
 
 import javax.swing.JButton;
-import javax.swing.JPanel;
-import javax.swing.JRadioButton;
+import javax.swing.JComboBox;
+import javax.swing.JEditorPane;
+import javax.swing.JTable;
+import javax.swing.JTextArea;
+import javax.swing.JTree;
 
 /**
  *
@@ -16,58 +19,38 @@ import javax.swing.JRadioButton;
 public class LoadTracksPanel extends javax.swing.JPanel {
 
     /**
-     * Creates new form LoadTracksPanel2
+     * Creates new form LoadTracksPanel
      */
     public LoadTracksPanel() {
         initComponents();
     }
 
-    public JRadioButton getLoadPlateRadioButton() {
-        return loadSingleFileRadioButton;
+    public JEditorPane getInfoEditorPane() {
+        return infoEditorPane;
     }
 
-    public JRadioButton getLoadDirectoryRadioButton() {
-        return loadDirectoryRadioButton;
+    public JTextArea getChosenDirectoryTextArea() {
+        return chosenDirectoryTextArea;
     }
 
-    public JRadioButton getLoadTrackMateRadioButton() {
-        return loadTrackMateRadioButton;
+    public JTree getDirectoryTree() {
+        return directoryTree;
     }
 
-    public JButton getNextButton() {
-        return nextButton;
+    public JComboBox getFileFormatComboBox() {
+        return fileFormatComboBox;
     }
 
-    public JButton getSingleFileInfoButton() {
-        return singleFileInfoButton;
+    public JButton getImportFilesButton() {
+        return importFilesButton;
     }
 
-    public JPanel getSingleFileParentPanel() {
-        return singleFileParentPanel;
+    public JButton getLoadDirectoryButton() {
+        return loadDirectoryButton;
     }
 
-    public JButton getPreviousButton() {
-        return previousButton;
-    }
-
-    public JButton getDirectoryInfoButton() {
-        return directoryInfoButton;
-    }
-
-    public JPanel getDirectoryParentPanel() {
-        return directoryParentPanel;
-    }
-
-    public JButton getTrackMateInfoButton() {
-        return trackMateInfoButton;
-    }
-
-    public JPanel getTrackMateParentPanel() {
-        return trackMateParentPanel;
-    }
-
-    public JPanel getTopPanel() {
-        return topPanel;
+    public JTable getTracksTable() {
+        return tracksTable;
     }
 
     /**
@@ -78,177 +61,121 @@ public class LoadTracksPanel extends javax.swing.JPanel {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-        java.awt.GridBagConstraints gridBagConstraints;
 
-        topPanel = new javax.swing.JPanel();
-        choicePanel = new javax.swing.JPanel();
-        trackMateInfoButton = new javax.swing.JButton();
-        directoryInfoButton = new javax.swing.JButton();
-        singleFileInfoButton = new javax.swing.JButton();
-        loadSingleFileRadioButton = new javax.swing.JRadioButton();
-        loadDirectoryRadioButton = new javax.swing.JRadioButton();
-        loadTrackMateRadioButton = new javax.swing.JRadioButton();
-        infoLabel = new javax.swing.JLabel();
-        directoryParentPanel = new javax.swing.JPanel();
-        singleFileParentPanel = new javax.swing.JPanel();
-        trackMateParentPanel = new javax.swing.JPanel();
-        bottomPanel = new javax.swing.JPanel();
-        nextButton = new javax.swing.JButton();
-        previousButton = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        fileFormatComboBox = new javax.swing.JComboBox();
+        loadDirectoryButton = new javax.swing.JButton();
+        importFilesButton = new javax.swing.JButton();
+        chosenDirectoryScrollPane = new javax.swing.JScrollPane();
+        chosenDirectoryTextArea = new javax.swing.JTextArea();
+        directoryScrollPane = new javax.swing.JScrollPane();
+        directoryTree = new javax.swing.JTree();
+        tracksScrollPane = new javax.swing.JScrollPane();
+        tracksTable = new javax.swing.JTable();
+        infoScrollPane = new javax.swing.JScrollPane();
+        infoEditorPane = new javax.swing.JEditorPane();
 
-        setLayout(new java.awt.GridBagLayout());
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel1.setText("Choose a file format");
 
-        topPanel.setMinimumSize(new java.awt.Dimension(20, 20));
-        topPanel.setPreferredSize(new java.awt.Dimension(20, 20));
-        topPanel.setLayout(new java.awt.CardLayout());
+        loadDirectoryButton.setText("Choose & Load Directory");
 
-        trackMateInfoButton.setBorder(null);
-        trackMateInfoButton.setContentAreaFilled(false);
+        importFilesButton.setText("Import Selected Files");
 
-        directoryInfoButton.setBorder(null);
-        directoryInfoButton.setContentAreaFilled(false);
+        chosenDirectoryScrollPane.setBorder(javax.swing.BorderFactory.createTitledBorder("Directory Loaded"));
 
-        singleFileInfoButton.setBorder(null);
-        singleFileInfoButton.setContentAreaFilled(false);
+        chosenDirectoryTextArea.setEditable(false);
+        chosenDirectoryTextArea.setColumns(20);
+        chosenDirectoryTextArea.setLineWrap(true);
+        chosenDirectoryTextArea.setRows(5);
+        chosenDirectoryTextArea.setBorder(null);
+        chosenDirectoryTextArea.setCaretColor(new java.awt.Color(255, 255, 255));
+        chosenDirectoryTextArea.setEnabled(false);
+        chosenDirectoryScrollPane.setViewportView(chosenDirectoryTextArea);
 
-        loadSingleFileRadioButton.setText("Load a single file");
+        directoryScrollPane.setBorder(null);
 
-        loadDirectoryRadioButton.setText("Load a directory of files");
+        javax.swing.tree.DefaultMutableTreeNode treeNode1 = new javax.swing.tree.DefaultMutableTreeNode("Root (data)");
+        directoryTree.setModel(new javax.swing.tree.DefaultTreeModel(treeNode1));
+        directoryScrollPane.setViewportView(directoryTree);
 
-        loadTrackMateRadioButton.setText("Load TrackMate model(s)");
+        tracksTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        tracksScrollPane.setViewportView(tracksTable);
 
-        infoLabel.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        infoLabel.setText("How do you want to load your cell tracking data?");
+        infoScrollPane.setBorder(javax.swing.BorderFactory.createTitledBorder("Info"));
 
-        javax.swing.GroupLayout choicePanelLayout = new javax.swing.GroupLayout(choicePanel);
-        choicePanel.setLayout(choicePanelLayout);
-        choicePanelLayout.setHorizontalGroup(
-            choicePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(choicePanelLayout.createSequentialGroup()
+        infoEditorPane.setEditable(false);
+        infoEditorPane.setContentType("text/html"); // NOI18N
+        infoEditorPane.setText("<html>\n         1. Select the fomat of the files you want to import (<b>CSV</b>: comma separated values; <b>TSV</b>: tab separated values or <b>XLS/XLSX</b>: Microsoft Excel; <b>TrackMate</b>)\n         </br>\n         <br>\n\t\t <br>\n\t\t </br>\n         2. Choose the directory containing the cell tracking files to import.\n         </br>\n         <br>\n         </br>\n         <br>\n         3. Once the files are rendered in the data tree, select the ones you wish to import: if the import is successful, the tracks will appear in the data table underneath.\n      </p>\n   </body>\n</html>");
+        infoScrollPane.setViewportView(infoEditorPane);
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        this.setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(choicePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(choicePanelLayout.createSequentialGroup()
-                        .addGroup(choicePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(loadDirectoryRadioButton)
-                            .addComponent(loadSingleFileRadioButton)
-                            .addComponent(loadTrackMateRadioButton))
-                        .addGap(28, 28, 28)
-                        .addGroup(choicePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(directoryInfoButton, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(singleFileInfoButton, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(trackMateInfoButton, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(infoLabel))
-                .addContainerGap(173, Short.MAX_VALUE))
-        );
-        choicePanelLayout.setVerticalGroup(
-            choicePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(choicePanelLayout.createSequentialGroup()
-                .addGap(12, 12, 12)
-                .addComponent(infoLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(choicePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(directoryInfoButton, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(loadDirectoryRadioButton))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(choicePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(choicePanelLayout.createSequentialGroup()
-                        .addGroup(choicePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(singleFileInfoButton, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(loadSingleFileRadioButton))
-                        .addGap(11, 11, 11)
-                        .addComponent(loadTrackMateRadioButton))
-                    .addComponent(trackMateInfoButton, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(266, Short.MAX_VALUE))
-        );
-
-        topPanel.add(choicePanel, "card2");
-
-        directoryParentPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Loading sparse files...", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 2, 11))); // NOI18N
-        directoryParentPanel.setMinimumSize(new java.awt.Dimension(20, 20));
-        directoryParentPanel.setName("directoryParentPanel"); // NOI18N
-        directoryParentPanel.setLayout(new java.awt.GridBagLayout());
-        topPanel.add(directoryParentPanel, "sparseParentPanel");
-        directoryParentPanel.getAccessibleContext().setAccessibleName("sparseParentPanel");
-
-        singleFileParentPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Loading files in a plate...", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 2, 11))); // NOI18N
-        singleFileParentPanel.setMinimumSize(new java.awt.Dimension(20, 20));
-        singleFileParentPanel.setName("singleFileParentPanel"); // NOI18N
-        singleFileParentPanel.setLayout(new java.awt.GridBagLayout());
-        topPanel.add(singleFileParentPanel, "plateParentPanel");
-        singleFileParentPanel.getAccessibleContext().setAccessibleName("plateParentPanel");
-
-        trackMateParentPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Loading TrackMate model(s)...", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 2, 11))); // NOI18N
-        trackMateParentPanel.setMinimumSize(new java.awt.Dimension(20, 20));
-        trackMateParentPanel.setName("trackMateParentPanel"); // NOI18N
-        trackMateParentPanel.setLayout(new java.awt.GridBagLayout());
-        topPanel.add(trackMateParentPanel, "trackMateParentPanel");
-        trackMateParentPanel.getAccessibleContext().setAccessibleName("trackMateParentPanel");
-
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTH;
-        gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.weighty = 0.95;
-        add(topPanel, gridBagConstraints);
-
-        bottomPanel.setMinimumSize(new java.awt.Dimension(20, 20));
-        bottomPanel.setPreferredSize(new java.awt.Dimension(20, 20));
-
-        nextButton.setText("Next >>");
-
-        previousButton.setText("<< Previous");
-
-        javax.swing.GroupLayout bottomPanelLayout = new javax.swing.GroupLayout(bottomPanel);
-        bottomPanel.setLayout(bottomPanelLayout);
-        bottomPanelLayout.setHorizontalGroup(
-            bottomPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, bottomPanelLayout.createSequentialGroup()
-                .addContainerGap(255, Short.MAX_VALUE)
-                .addComponent(previousButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(nextButton)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(tracksScrollPane)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(fileFormatComboBox, 0, 184, Short.MAX_VALUE)
+                            .addComponent(loadDirectoryButton, javax.swing.GroupLayout.DEFAULT_SIZE, 184, Short.MAX_VALUE)
+                            .addComponent(importFilesButton, javax.swing.GroupLayout.DEFAULT_SIZE, 184, Short.MAX_VALUE)
+                            .addComponent(chosenDirectoryScrollPane))
+                        .addGap(8, 8, 8)
+                        .addComponent(directoryScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 234, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(infoScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
-
-        bottomPanelLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {nextButton, previousButton});
-
-        bottomPanelLayout.setVerticalGroup(
-            bottomPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, bottomPanelLayout.createSequentialGroup()
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(bottomPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(nextButton)
-                    .addComponent(previousButton)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(directoryScrollPane, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(fileFormatComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(loadDirectoryButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(importFilesButton)
+                        .addGap(18, 18, 18)
+                        .addComponent(chosenDirectoryScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(infoScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(tracksScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 198, Short.MAX_VALUE)
+                .addContainerGap())
         );
-
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTH;
-        gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.weighty = 0.05;
-        add(bottomPanel, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel bottomPanel;
-    private javax.swing.JPanel choicePanel;
-    private javax.swing.JButton directoryInfoButton;
-    private javax.swing.JPanel directoryParentPanel;
-    private javax.swing.JLabel infoLabel;
-    private javax.swing.JRadioButton loadDirectoryRadioButton;
-    private javax.swing.JRadioButton loadSingleFileRadioButton;
-    private javax.swing.JRadioButton loadTrackMateRadioButton;
-    private javax.swing.JButton nextButton;
-    private javax.swing.JButton previousButton;
-    private javax.swing.JButton singleFileInfoButton;
-    private javax.swing.JPanel singleFileParentPanel;
-    private javax.swing.JPanel topPanel;
-    private javax.swing.JButton trackMateInfoButton;
-    private javax.swing.JPanel trackMateParentPanel;
+    private javax.swing.JScrollPane chosenDirectoryScrollPane;
+    private javax.swing.JTextArea chosenDirectoryTextArea;
+    private javax.swing.JScrollPane directoryScrollPane;
+    private javax.swing.JTree directoryTree;
+    private javax.swing.JComboBox fileFormatComboBox;
+    private javax.swing.JButton importFilesButton;
+    private javax.swing.JEditorPane infoEditorPane;
+    private javax.swing.JScrollPane infoScrollPane;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JButton loadDirectoryButton;
+    private javax.swing.JScrollPane tracksScrollPane;
+    private javax.swing.JTable tracksTable;
     // End of variables declaration//GEN-END:variables
 }

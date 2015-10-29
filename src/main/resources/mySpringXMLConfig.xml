@@ -42,6 +42,9 @@
     
     <bean id="XLS_XLSX" class="com.compomics.cell_coord.parser.impl.XLSFileParser">
     </bean>
+    
+    <bean id="TrackMate" class="com.compomics.cell_coord.parser.impl.TrackMateFileParser">
+    </bean>
     <!-- specify a bean name for each implementation, and the fully qualified classname, i.e.: including package -->
 
 </beans>

@@ -7,6 +7,7 @@ package com.compomics.cell_coord.gui.controller;
 
 import com.compomics.cell_coord.gui.CellCoordFrame;
 import com.compomics.cell_coord.gui.controller.load.LoadTracksController;
+import com.compomics.cell_coord.utils.GuiUtils;
 import java.awt.CardLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -28,7 +29,6 @@ public class CellCoordController {
 
     // model 
     // view
-    // main view
     private CellCoordFrame cellCoordFrame;
     // subviews
     // child controllers
@@ -52,10 +52,10 @@ public class CellCoordController {
 
         // new frame instance
         cellCoordFrame = new CellCoordFrame();
-        cellCoordFrame.setTitle("Cell_Coord");
         cellCoordFrame.setVisible(true);
         // at starter, show main panel with logo    
-        getCardLayout().first(cellCoordFrame.getBackgroundPanel());
+        getCardLayout().first(cellCoordFrame.getTopPanel());
+        onCardSwitch();
         // init child controllers
         loadTracksController.init();
         initMainFrame();
@@ -82,6 +82,15 @@ public class CellCoordController {
     }
 
     /**
+     * Update the label with the info for the user.
+     *
+     * @param info
+     */
+    public void updateInfoLabel(String info) {
+        cellCoordFrame.getInfoLabel().setText(info);
+    }
+
+    /**
      * Initialize main frame.
      */
     private void initMainFrame() {
@@ -89,15 +98,36 @@ public class CellCoordController {
         /**
          * Add action listeners.
          */
-        // On start: show next page: load tracks.
+        // On 'Start' Action: show next page, i.e. load cell tracking file(s).
         cellCoordFrame.getStartButton().addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent e) {
                 // first action: loading tracks
-                getCardLayout().show(cellCoordFrame.getBackgroundPanel(), cellCoordFrame.getLoadTracksParentPanel().getName());
+                getCardLayout().show(cellCoordFrame.getTopPanel(), cellCoordFrame.getLoadTracksParentPanel().getName());
+                onCardSwitch();
             }
         });
+
+        // On 'Next' Action: use the card switch
+        cellCoordFrame.getNextButton().addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                onCardSwitch();
+            }
+        });
+
+        // On 'Previous' Action: use the card switch
+        cellCoordFrame.getPreviousButton().addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                onCardSwitch();
+            }
+        });
+        
+        // On 'Cancel' Action
     }
 
     /**
@@ -106,7 +136,28 @@ public class CellCoordController {
      * @return
      */
     private CardLayout getCardLayout() {
-        return (CardLayout) cellCoordFrame.getBackgroundPanel().getLayout();
+        return (CardLayout) cellCoordFrame.getTopPanel().getLayout();
     }
 
+    /**
+     * On switching card: control components and render the right view.
+     */
+    private void onCardSwitch() {
+        String currentCardName = GuiUtils.getCurrentCardName(cellCoordFrame.getTopPanel());
+        switch (currentCardName) {
+            case "homePanel":
+                cellCoordFrame.getStartButton().setEnabled(true);
+                cellCoordFrame.getNextButton().setEnabled(false);
+                cellCoordFrame.getPreviousButton().setEnabled(false);
+                cellCoordFrame.getCancelButton().setEnabled(false);
+                updateInfoLabel("Please click the 'Start' button.");
+                break;
+            case "loadTracksParentPanel":
+                cellCoordFrame.getStartButton().setEnabled(false);
+                updateInfoLabel("Load your cell tracking file(s) here.");
+                break;
+            case "visualizeTracksPanel":
+                break;
+        }
+    }
 }
