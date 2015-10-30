@@ -44,6 +44,14 @@ public class CellCoordFrame extends javax.swing.JFrame {
         return loadTracksParentPanel;
     }
 
+    public JPanel getSummaryDataParentPanel() {
+        return summaryDataParentPanel;
+    }
+
+    public JPanel getVisualizeTracksParentPanel() {
+        return visualizeTracksParentPanel;
+    }
+
     public JButton getNextButton() {
         return nextButton;
     }
@@ -75,7 +83,10 @@ public class CellCoordFrame extends javax.swing.JFrame {
         welcomeScrollPane = new javax.swing.JScrollPane();
         welcomeEditorPane = new javax.swing.JEditorPane();
         loadTracksParentPanel = new javax.swing.JPanel();
-        visualizeTracksPanel = new javax.swing.JPanel();
+        summaryTracksPanel = new javax.swing.JPanel();
+        summaryTracksSplitPane = new javax.swing.JSplitPane();
+        summaryDataParentPanel = new javax.swing.JPanel();
+        visualizeTracksParentPanel = new javax.swing.JPanel();
         bottomPanel = new javax.swing.JPanel();
         previousButton = new javax.swing.JButton();
         nextButton = new javax.swing.JButton();
@@ -125,18 +136,43 @@ public class CellCoordFrame extends javax.swing.JFrame {
         topPanel.add(loadTracksParentPanel, "loadTracksParentPanel");
         loadTracksParentPanel.getAccessibleContext().setAccessibleName("loadTracksParentPanel");
 
-        javax.swing.GroupLayout visualizeTracksPanelLayout = new javax.swing.GroupLayout(visualizeTracksPanel);
-        visualizeTracksPanel.setLayout(visualizeTracksPanelLayout);
-        visualizeTracksPanelLayout.setHorizontalGroup(
-            visualizeTracksPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        summaryTracksPanel.setMinimumSize(new java.awt.Dimension(20, 20));
+        summaryTracksPanel.setName("summaryTracksPanel"); // NOI18N
+
+        summaryTracksSplitPane.setDividerLocation(300);
+        summaryTracksSplitPane.setMinimumSize(new java.awt.Dimension(40, 40));
+
+        summaryDataParentPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Cell Tracks Summary"));
+        summaryDataParentPanel.setLayout(new java.awt.GridBagLayout());
+        summaryTracksSplitPane.setLeftComponent(summaryDataParentPanel);
+
+        visualizeTracksParentPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Visualize Cell Tracks"));
+        visualizeTracksParentPanel.setLayout(new java.awt.GridBagLayout());
+        summaryTracksSplitPane.setRightComponent(visualizeTracksParentPanel);
+
+        javax.swing.GroupLayout summaryTracksPanelLayout = new javax.swing.GroupLayout(summaryTracksPanel);
+        summaryTracksPanel.setLayout(summaryTracksPanelLayout);
+        summaryTracksPanelLayout.setHorizontalGroup(
+            summaryTracksPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 709, Short.MAX_VALUE)
+            .addGroup(summaryTracksPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(summaryTracksPanelLayout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(summaryTracksSplitPane, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addContainerGap()))
         );
-        visualizeTracksPanelLayout.setVerticalGroup(
-            visualizeTracksPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        summaryTracksPanelLayout.setVerticalGroup(
+            summaryTracksPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 537, Short.MAX_VALUE)
+            .addGroup(summaryTracksPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(summaryTracksPanelLayout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(summaryTracksSplitPane, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addContainerGap()))
         );
 
-        topPanel.add(visualizeTracksPanel, "visualizeTracksPanel");
+        topPanel.add(summaryTracksPanel, "summaryTracksPanel");
+        summaryTracksPanel.getAccessibleContext().setAccessibleName("summaryTracksPanel");
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -250,8 +286,11 @@ public class CellCoordFrame extends javax.swing.JFrame {
     private javax.swing.JButton nextButton;
     private javax.swing.JButton previousButton;
     private javax.swing.JButton startButton;
+    private javax.swing.JPanel summaryDataParentPanel;
+    private javax.swing.JPanel summaryTracksPanel;
+    private javax.swing.JSplitPane summaryTracksSplitPane;
     private javax.swing.JPanel topPanel;
-    private javax.swing.JPanel visualizeTracksPanel;
+    private javax.swing.JPanel visualizeTracksParentPanel;
     private javax.swing.JEditorPane welcomeEditorPane;
     private javax.swing.JScrollPane welcomeScrollPane;
     // End of variables declaration//GEN-END:variables

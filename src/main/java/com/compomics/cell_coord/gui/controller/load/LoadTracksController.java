@@ -5,12 +5,15 @@
  */
 package com.compomics.cell_coord.gui.controller.load;
 
+import com.compomics.cell_coord.entity.Sample;
 import com.compomics.cell_coord.entity.Track;
 import com.compomics.cell_coord.entity.TrackSpot;
 import com.compomics.cell_coord.exception.FileParserException;
 import com.compomics.cell_coord.exception.LoadDirectoryException;
 import com.compomics.cell_coord.factory.TrackFileParserFactory;
+import com.compomics.cell_coord.gui.CellCoordFrame;
 import com.compomics.cell_coord.gui.controller.CellCoordController;
+import com.compomics.cell_coord.gui.controller.summary.SummaryTracksController;
 import com.compomics.cell_coord.gui.load.LoadTracksPanel;
 import com.compomics.cell_coord.parser.TrackFileParser;
 import com.compomics.cell_coord.utils.GuiUtils;
@@ -23,6 +26,7 @@ import java.util.List;
 import java.util.Set;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.table.JTableHeader;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;
@@ -35,7 +39,7 @@ import org.jdesktop.observablecollections.ObservableList;
 import org.jdesktop.swingbinding.JTableBinding;
 import org.jdesktop.swingbinding.SwingBindings;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
 
 /**
  * A controller to load single cell tracks: downstream of this loading, all
@@ -43,7 +47,7 @@ import org.springframework.stereotype.Component;
  *
  * @author Paola
  */
-@Component("loadTracksController")
+@Controller("loadTracksController")
 public class LoadTracksController {
 
     private static final Logger LOG = Logger.getLogger(LoadTracksController.class);
@@ -52,11 +56,15 @@ public class LoadTracksController {
     private ObservableList<TrackSpot> trackSpotsBindingList;
     private JTableBinding trackSpotsTableBinding;
     private File directory;
+    private List<Sample> samples;
     // view
     private LoadTracksPanel loadTracksPanel;
     // parent controller
     @Autowired
     private CellCoordController cellCoordController;
+    // child controllers
+    @Autowired
+    private SummaryTracksController summaryTracksController;
     // services
     private GridBagConstraints gridBagConstraints;
 
@@ -67,7 +75,23 @@ public class LoadTracksController {
         bindingGroup = new BindingGroup();
         gridBagConstraints = GuiUtils.getDefaultGridBagConstraints();
         trackSpotsBindingList = ObservableCollections.observableList(new ArrayList<TrackSpot>());
+        samples = new ArrayList<>();
         initView();
+        // init child controllers
+        summaryTracksController.init();
+    }
+
+    /**
+     * Getters
+     *
+     * @return
+     */
+    public List<Sample> getSamples() {
+        return samples;
+    }
+
+    public CellCoordFrame getMainFrame() {
+        return cellCoordController.getCellCoordFrame();
     }
 
     /**
@@ -83,6 +107,11 @@ public class LoadTracksController {
         for (String parser : parsers) {
             loadTracksPanel.getFileFormatComboBox().addItem(parser);
         }
+
+        // format the table
+        JTableHeader tracksTableHeader = loadTracksPanel.getTracksTable().getTableHeader();
+        tracksTableHeader.setBackground(GuiUtils.getHeaderColor());
+        tracksTableHeader.setReorderingAllowed(false);
 
         /**
          * Action Listeners.
@@ -136,8 +165,11 @@ public class LoadTracksController {
                             }
                             if (trackSpotsTableBinding == null) {
                                 trackSpotsTableBinding = SwingBindings.createJTableBinding(AutoBinding.UpdateStrategy.READ, trackSpotsBindingList, loadTracksPanel.getTracksTable());
-                                showTracksInTable(trackSpotsTableBinding);
+                                showTracksInTable();
                             }
+                            // for each file imported, create a new sample
+                            Sample sample = new Sample(currentTracks);
+                            samples.add(sample);
                         } catch (FileParserException ex) {
                             LOG.error("Could not parse the file: " + trackFile, ex);
                             cellCoordController.showMessage((String) loadTracksPanel.getFileFormatComboBox().getSelectedItem() + " expected!",
@@ -146,6 +178,8 @@ public class LoadTracksController {
                         }
                     }
                     cellCoordController.showMessage(selectionPaths.length + " file(s) successfully imported!", "success loading", JOptionPane.INFORMATION_MESSAGE);
+                    // go to child controller and show samples in the table
+                    summaryTracksController.showSamplesInTable();
                     // proceed with next step in the plugin
                     cellCoordController.getCellCoordFrame().getNextButton().setEnabled(true);
                 } else {
@@ -177,7 +211,7 @@ public class LoadTracksController {
      *
      * @param trackSpotsTableBinding
      */
-    private void showTracksInTable(JTableBinding trackSpotsTableBinding) {
+    private void showTracksInTable() {
         //add column bindings
         JTableBinding.ColumnBinding columnBinding = trackSpotsTableBinding.addColumnBinding(ELProperty.create("${track.trackid}"));
         columnBinding.setColumnName("track_id");

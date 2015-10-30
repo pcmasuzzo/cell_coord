@@ -19,6 +19,10 @@ public class Track {
     private Long trackid;
     // a collection of spots in the track
     private List<TrackSpot> trackSpots;
+    // coordinates matrix
+    private double[][] coordinates;
+    // shifted coordinates
+    private double[][] shiftedCoordinates;
 
     /**
      * Empty constructor
@@ -55,6 +59,22 @@ public class Track {
 
     public void setTrackSpots(List<TrackSpot> trackSpots) {
         this.trackSpots = trackSpots;
+    }
+
+    public double[][] getCoordinates() {
+        return coordinates;
+    }
+
+    public void setCoordinates(double[][] coordinates) {
+        this.coordinates = coordinates;
+    }
+
+    public double[][] getShiftedCoordinates() {
+        return shiftedCoordinates;
+    }
+
+    public void setShiftedCoordinates(double[][] shiftedCoordinates) {
+        this.shiftedCoordinates = shiftedCoordinates;
     }
 
     @Override

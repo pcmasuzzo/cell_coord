@@ -114,6 +114,7 @@ public class CellCoordController {
 
             @Override
             public void actionPerformed(ActionEvent e) {
+                getCardLayout().next(cellCoordFrame.getTopPanel());
                 onCardSwitch();
             }
         });
@@ -123,10 +124,11 @@ public class CellCoordController {
 
             @Override
             public void actionPerformed(ActionEvent e) {
+                getCardLayout().previous(cellCoordFrame.getTopPanel());
                 onCardSwitch();
             }
         });
-        
+
         // On 'Cancel' Action
     }
 
@@ -156,7 +158,9 @@ public class CellCoordController {
                 cellCoordFrame.getStartButton().setEnabled(false);
                 updateInfoLabel("Load your cell tracking file(s) here.");
                 break;
-            case "visualizeTracksPanel":
+            case "summaryTracksPanel":
+                cellCoordFrame.getPreviousButton().setEnabled(true);
+                updateInfoLabel("A quick summary of the loaded cell tracks.");
                 break;
         }
     }
