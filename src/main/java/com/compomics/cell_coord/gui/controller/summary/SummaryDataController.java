@@ -9,19 +9,17 @@ import com.compomics.cell_coord.entity.Sample;
 import com.compomics.cell_coord.entity.Track;
 import com.compomics.cell_coord.entity.TrackSpot;
 import com.compomics.cell_coord.gui.summary.SummaryDataPanel;
+import com.compomics.cell_coord.gui.table.model.SampleTableModel;
+import com.compomics.cell_coord.gui.table.model.TrackSpotTableModel;
+import com.compomics.cell_coord.gui.table.model.TrackTableModel;
 import com.compomics.cell_coord.utils.GuiUtils;
 import java.awt.GridBagConstraints;
-import java.util.ArrayList;
 import java.util.List;
+import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.JTableHeader;
 import org.apache.log4j.Logger;
-import org.jdesktop.beansbinding.AutoBinding;
-import org.jdesktop.beansbinding.BindingGroup;
-import org.jdesktop.beansbinding.ELProperty;
-import org.jdesktop.observablecollections.ObservableCollections;
-import org.jdesktop.observablecollections.ObservableList;
-import org.jdesktop.swingbinding.JTableBinding;
-import org.jdesktop.swingbinding.SwingBindings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
@@ -36,10 +34,6 @@ public class SummaryDataController {
 
     private static final Logger LOG = Logger.getLogger(SummaryDataController.class);
     // model
-    private BindingGroup bindingGroup;
-    private ObservableList<Sample> samplesBindingList;
-    private ObservableList<Track> tracksBindingList;
-    private ObservableList<TrackSpot> trackSpotsBindingList;
     // view
     private SummaryDataPanel summaryDataPanel;
     // parent controller
@@ -53,7 +47,6 @@ public class SummaryDataController {
      * Initialize controller.
      */
     public void init() {
-        bindingGroup = new BindingGroup();
         gridBagConstraints = GuiUtils.getDefaultGridBagConstraints();
         // init main view
         initSummaryDataPanel();
@@ -78,9 +71,42 @@ public class SummaryDataController {
         trackSpotsHeader.setBackground(GuiUtils.getHeaderColor());
         trackSpotsHeader.setReorderingAllowed(false);
 
-        samplesBindingList = ObservableCollections.observableList(summaryTracksController.getSamples());
-        tracksBindingList = ObservableCollections.observableList(new ArrayList<Track>());
-        trackSpotsBindingList = ObservableCollections.observableList(new ArrayList<TrackSpot>());
+        summaryDataPanel.getSamplesTable().setRowSelectionAllowed(true);
+        summaryDataPanel.getSamplesTable().setColumnSelectionAllowed(false);
+        summaryDataPanel.getSamplesTable().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
+        summaryDataPanel.getTracksTable().setRowSelectionAllowed(true);
+        summaryDataPanel.getTracksTable().setColumnSelectionAllowed(false);
+        summaryDataPanel.getTracksTable().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
+        // if you click on a sample, the relative tracks are shown in another table
+        summaryDataPanel.getSamplesTable().getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                if (!e.getValueIsAdjusting()) {
+                    int selectedRow = summaryDataPanel.getSamplesTable().getSelectedRow();
+                    if (selectedRow != -1) {
+                        Sample selectedSample = summaryTracksController.getSamples().get(selectedRow);
+                        showTracksInTable(selectedSample);
+                    }
+                }
+            }
+        });
+
+        // if you click on a track, the relative spots are shown in another table
+        summaryDataPanel.getTracksTable().getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                if (!e.getValueIsAdjusting()) {
+                    Sample selectedSample = summaryTracksController.getSamples().get(summaryDataPanel.getSamplesTable().getSelectedRow());
+                    int selectedRow = summaryDataPanel.getTracksTable().getSelectedRow();
+                    if (selectedRow != -1) {
+                        Track selectedTrack = selectedSample.getTracks().get(selectedRow);
+                        showSpotsInTable(selectedTrack);
+                    }
+                }
+            }
+        });
 
         // add view to parent controller
         summaryTracksController.getMainFrame().getSummaryDataParentPanel().add(summaryDataPanel, gridBagConstraints);
@@ -90,25 +116,29 @@ public class SummaryDataController {
      * Show loaded samples in correspondent table. When the user clicks on a
      * sample, the tracks are shown in another table.
      */
-    // MOST LIKELY I HAVE TO POPULATE THIS TABLE MANUALLY AND THE OTHER 2 WITH AN AUTOMATIC SWING BINDING.
     public void showSamplesInTable() {
-        // table binding
-        JTableBinding samplesTableBinding = SwingBindings.createJTableBinding(AutoBinding.UpdateStrategy.READ, samplesBindingList, summaryDataPanel.getSamplesTable());
-        // add column bindings
-        JTableBinding.ColumnBinding columnBinding = samplesTableBinding.addColumnBinding(ELProperty.create("${tracks}"));
-        columnBinding.setColumnName("nr tracks");
-        columnBinding.setEditable(false);
-//        columnBinding.setColumnClass(Integer.class);
-        bindingGroup.addBinding(samplesTableBinding);
-        bindingGroup.bind();
+        // get the table and set its model
+        summaryDataPanel.getSamplesTable().setModel(new SampleTableModel(summaryTracksController.getSamples()));
     }
 
-    public void showTracksInTable() {
-
+    /**
+     * For a selected sample, show the tracks in the correspondent table.
+     *
+     * @param sample
+     */
+    private void showTracksInTable(Sample sample) {
+        // get the table and set its model
+        summaryDataPanel.getTracksTable().setModel(new TrackTableModel(sample));
     }
 
-    public void showSpotsInTable() {
-
+    /**
+     * For a selected track, show track spots in the correspondent table.
+     *
+     * @param track
+     */
+    private void showSpotsInTable(Track track) {
+        // get the table and set the model
+        summaryDataPanel.getTrackSpotsTable().setModel(new TrackSpotTableModel(track));
     }
 
     /**
