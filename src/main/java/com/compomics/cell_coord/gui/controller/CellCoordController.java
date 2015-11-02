@@ -160,7 +160,9 @@ public class CellCoordController {
                 break;
             case "summaryTracksPanel":
                 cellCoordFrame.getPreviousButton().setEnabled(true);
-                updateInfoLabel("A quick summary of the loaded cell tracks.");
+                updateInfoLabel("A quick summary and visualization of the loaded cell tracks.");
+                // WARNING HERE!!!!
+                loadTracksController.preprocessSamples();
                 break;
         }
     }

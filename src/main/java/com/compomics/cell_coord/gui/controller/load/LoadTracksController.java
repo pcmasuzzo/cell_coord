@@ -5,6 +5,7 @@
  */
 package com.compomics.cell_coord.gui.controller.load;
 
+import com.compomics.cell_coord.computation.SampleOperator;
 import com.compomics.cell_coord.entity.Sample;
 import com.compomics.cell_coord.entity.Track;
 import com.compomics.cell_coord.entity.TrackSpot;
@@ -70,6 +71,8 @@ public class LoadTracksController {
     private VisualizeTracksController visualizeTracksController;
     // services
     private GridBagConstraints gridBagConstraints;
+    @Autowired
+    private SampleOperator sampleOperator;
 
     /**
      * Initialize controller.
@@ -96,6 +99,19 @@ public class LoadTracksController {
 
     public CellCoordFrame getMainFrame() {
         return cellCoordController.getCellCoordFrame();
+    }
+
+    /**
+     * Preprocess the samples -- i.e. basic computations to render the tracks.
+     */
+    public void preprocessSamples() {
+        for (Sample sample : samples) {
+            sampleOperator.prepareCoordinates(sample);
+            sampleOperator.prepareShiftedCoordinates(sample);
+            sampleOperator.computeCoordinatesRanges(sample);
+            sampleOperator.computeShiftedCoordinatesRanges(sample);
+        }
+        visualizeTracksController.computeRanges();
     }
 
     /**

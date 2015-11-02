@@ -25,8 +25,10 @@ public class Track {
     private Double[][] coordinates;
     // shifted coordinates
     private Double[][] shiftedCoordinates;
-    // coordinate ranges: [xmin, xmax, ymin; ymax]
+    // coordinate ranges: [xmin, xmax, ymin, ymax]
     private Double[][] coordinateRanges;
+    // shifted coordinate ranges: [xmin, xmax, ymin, ymax]
+    private Double[][] shiftedCoordinateRanges;
     // the net displacement in the x direction
     private Double xNetDisplacement;
     // the net displacement in the y direction
@@ -99,6 +101,14 @@ public class Track {
 
     public void setCoordinateRanges(Double[][] coordinateRanges) {
         this.coordinateRanges = coordinateRanges;
+    }
+
+    public Double[][] getShiftedCoordinateRanges() {
+        return shiftedCoordinateRanges;
+    }
+
+    public void setShiftedCoordinateRanges(Double[][] shiftedCoordinateRanges) {
+        this.shiftedCoordinateRanges = shiftedCoordinateRanges;
     }
 
     public Double getxNetDisplacement() {

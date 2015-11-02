@@ -75,4 +75,18 @@ public class TrackOperatorImpl implements TrackOperator {
         track.setxNetDisplacement(xMax - xMin);
         track.setyNetDisplacement(yMax - yMin);
     }
+
+    @Override
+    public void computeShiftedCoordinatesRanges(Track track) {
+        Double[][] shiftedCoordinates = track.getShiftedCoordinates();
+        Double[][] transpCoord = ComputationUtils.transpose2DArray(shiftedCoordinates);
+        List<Double> xCoordAsList = Arrays.asList(transpCoord[0]);
+        List<Double> yCoordAsList = Arrays.asList(transpCoord[1]);
+        Double xMin = Collections.min(xCoordAsList);
+        Double xMax = Collections.max(xCoordAsList);
+        Double yMin = Collections.min(yCoordAsList);
+        Double yMax = Collections.max(yCoordAsList);
+        Double[][] shiftedCoordRanges = new Double[][]{{xMin, xMax}, {yMin, yMax}};
+        track.setShiftedCoordinateRanges(shiftedCoordRanges);
+    }
 }

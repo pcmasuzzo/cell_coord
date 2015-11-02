@@ -34,4 +34,11 @@ public interface TrackOperator {
      * @param track
      */
     void computeCoordinatesRanges(Track track);
+
+    /**
+     * Compute [xmin, xmax, ymin, ymax] shifted-to-zero for a track.
+     *
+     * @param track
+     */
+    void computeShiftedCoordinatesRanges(Track track);
 }

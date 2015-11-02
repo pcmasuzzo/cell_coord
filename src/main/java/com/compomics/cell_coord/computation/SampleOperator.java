@@ -5,6 +5,8 @@
  */
 package com.compomics.cell_coord.computation;
 
+import com.compomics.cell_coord.entity.Sample;
+
 /**
  * An interface to operate computationally on a sample.
  *
@@ -12,4 +14,31 @@ package com.compomics.cell_coord.computation;
  */
 public interface SampleOperator {
 
+    /**
+     * Prepare the coordinates.
+     *
+     * @param sample
+     */
+    void prepareCoordinates(Sample sample);
+
+    /**
+     * Prepare the shifted coordinates.
+     *
+     * @param sample
+     */
+    void prepareShiftedCoordinates(Sample sample);
+
+    /**
+     * Compute [xmin, xmax, ymin, ymax].
+     *
+     * @param sample
+     */
+    void computeCoordinatesRanges(Sample sample);
+
+    /**
+     * Compute [xmin, xmax, ymin, ymax] shifted-to-zero.
+     *
+     * @param sample
+     */
+    void computeShiftedCoordinatesRanges(Sample sample);
 }
