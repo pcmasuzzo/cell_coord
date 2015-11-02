@@ -99,6 +99,8 @@ public class LoadTracksPanel extends javax.swing.JPanel {
         directoryTree.setModel(new javax.swing.tree.DefaultTreeModel(treeNode1));
         directoryScrollPane.setViewportView(directoryTree);
 
+        tracksScrollPane.setBorder(javax.swing.BorderFactory.createTitledBorder("Loaded Tracks"));
+
         tracksTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},

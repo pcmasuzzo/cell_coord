@@ -139,7 +139,7 @@ public class CellCoordFrame extends javax.swing.JFrame {
         summaryTracksPanel.setMinimumSize(new java.awt.Dimension(20, 20));
         summaryTracksPanel.setName("summaryTracksPanel"); // NOI18N
 
-        summaryTracksSplitPane.setDividerLocation(300);
+        summaryTracksSplitPane.setDividerLocation(500);
         summaryTracksSplitPane.setMinimumSize(new java.awt.Dimension(40, 40));
 
         summaryDataParentPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Cell Tracks Summary"));

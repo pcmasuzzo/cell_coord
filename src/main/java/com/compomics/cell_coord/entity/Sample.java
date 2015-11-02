@@ -15,6 +15,8 @@ import java.util.Objects;
  */
 public class Sample {
 
+    // a name for the sample (most likely, the path of its file)
+    private String name;
     // a list of tracks for this sample
     private List<Track> tracks;
 
@@ -24,8 +26,20 @@ public class Sample {
     public Sample() {
     }
 
+    public Sample(String name) {
+        this.name = name;
+    }
+
     public Sample(List<Track> tracks) {
         this.tracks = tracks;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public List<Track> getTracks() {

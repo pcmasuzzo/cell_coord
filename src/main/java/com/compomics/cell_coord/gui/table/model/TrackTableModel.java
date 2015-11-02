@@ -53,11 +53,11 @@ public class TrackTableModel extends AbstractTableModel {
      */
     private void initModel() {
         columnNames = new String[2];
-        columnNames[0] = "Track";
-        columnNames[1] = "Nr Track Spots";
+        columnNames[0] = "track";
+        columnNames[1] = "nr_track_spots";
         modelData = new Object[sample.getTracks().size()][columnNames.length];
         for (int i = 0; i < sample.getTracks().size(); i++) {
-            modelData[i][0] = "Track " + (i + 1);
+            modelData[i][0] = sample.getTracks().get(i).getTrackid();
             modelData[i][1] = sample.getTracks().get(i).getTrackSpots().size();
         }
     }

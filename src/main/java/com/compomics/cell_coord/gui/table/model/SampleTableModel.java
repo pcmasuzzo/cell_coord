@@ -55,11 +55,11 @@ public class SampleTableModel extends AbstractTableModel {
      */
     private void initModel() {
         columnNames = new String[2];
-        columnNames[0] = "Sample";
-        columnNames[1] = "Nr Cell Tracks";
+        columnNames[0] = "sample_name";
+        columnNames[1] = "nr_cell_tracks";
         modelData = new Object[samples.size()][columnNames.length];
         for (int i = 0; i < samples.size(); i++) {
-            modelData[i][0] = "Sample " + (i + 1);
+            modelData[i][0] = samples.get(i).getName();
             modelData[i][1] = samples.get(i).getTracks().size();
         }
     }

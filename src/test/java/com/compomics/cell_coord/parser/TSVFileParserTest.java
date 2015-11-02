@@ -5,6 +5,7 @@
  */
 package com.compomics.cell_coord.parser;
 
+import com.compomics.cell_coord.entity.Sample;
 import com.compomics.cell_coord.entity.Track;
 import com.compomics.cell_coord.entity.TrackSpot;
 import com.compomics.cell_coord.exception.FileParserException;
@@ -37,16 +38,15 @@ public class TSVFileParserTest {
      */
     @Test
     public void testCSVFileParsing() {
-
         File trackingFile = new File(TSVFileParserTest.class.getClassLoader().getResource("track_file_test.txt").getPath());
-        List<Track> trackList = new ArrayList<>();
+        Sample sample = null;
         // try to parse the file
         try {
-            trackList = tSVFileParser.parseTrackFile(trackingFile);
+            sample = tSVFileParser.parseTrackFile(trackingFile);
         } catch (FileParserException ex) {
             Logger.getLogger(TSVFileParserTest.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+        List<Track> trackList = sample.getTracks();
         assertTrue(!trackList.isEmpty());
         assertEquals(45, trackList.size());
         // this is the last parsed track

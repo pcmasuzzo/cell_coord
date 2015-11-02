@@ -5,6 +5,7 @@
  */
 package com.compomics.cell_coord.parser.impl;
 
+import com.compomics.cell_coord.entity.Sample;
 import com.compomics.cell_coord.entity.Track;
 import com.compomics.cell_coord.entity.TrackSpot;
 import com.compomics.cell_coord.exception.FileParserException;
@@ -31,8 +32,10 @@ public class XLSFileParser implements TrackFileParser {
     private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger(XLSFileParser.class);
 
     @Override
-    public List<Track> parseTrackFile(File trackFile) throws FileParserException {
+    public Sample parseTrackFile(File trackFile) throws FileParserException {
         List<Track> list = new ArrayList<>();
+        // create a new sample object -- watch out to set the relationships!
+        Sample sample = new Sample(trackFile.getName());
         try {
             FileInputStream fileInputStream = new FileInputStream(trackFile);
             Workbook workbook = null;
@@ -70,6 +73,7 @@ public class XLSFileParser implements TrackFileParser {
                         TrackSpot trackSpot = new TrackSpot(spotid, x, y, time, currentTrack);
                         currentTrackPointList.add(trackSpot);
                         currentTrack.setTrackSpots(currentTrackPointList);
+                        currentTrack.setSample(sample);
                     }
                 } else {
                     throw new FileParserException("It seems an Excel file does not have any sheets!\nPlease check your files!");
@@ -83,6 +87,7 @@ public class XLSFileParser implements TrackFileParser {
             LOG.error(ex.getMessage(), ex);
             throw new FileParserException("It seems like a line does not contain a number!\nPlease check your files!");
         }
-        return list;
+        sample.setTracks(list);
+        return sample;
     }
 }

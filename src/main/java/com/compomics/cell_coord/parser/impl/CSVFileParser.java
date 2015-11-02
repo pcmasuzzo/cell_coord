@@ -5,6 +5,7 @@
  */
 package com.compomics.cell_coord.parser.impl;
 
+import com.compomics.cell_coord.entity.Sample;
 import com.compomics.cell_coord.entity.Track;
 import com.compomics.cell_coord.entity.TrackSpot;
 import com.compomics.cell_coord.exception.FileParserException;
@@ -37,7 +38,9 @@ public class CSVFileParser implements TrackFileParser {
     private static final String TIME = "time";
 
     @Override
-    public List<Track> parseTrackFile(File trackFile) throws FileParserException {
+    public Sample parseTrackFile(File trackFile) throws FileParserException {
+        // create a new sample object -- watch out to set the relationships!
+        Sample sample = new Sample(trackFile.getName());
         // initialize an empty list of tracks
         List<Track> list = new ArrayList<>();
         CSVParser csvFileParser;
@@ -73,6 +76,7 @@ public class CSVFileParser implements TrackFileParser {
                 TrackSpot trackSpot = new TrackSpot(spotid, x, y, time, currentTrack);
                 currentTrackPointList.add(trackSpot);
                 currentTrack.setTrackSpots(currentTrackPointList);
+                currentTrack.setSample(sample);
             }
         } catch (IOException ex) {
             LOG.error(ex.getMessage(), ex);
@@ -80,6 +84,8 @@ public class CSVFileParser implements TrackFileParser {
             LOG.error(ex.getMessage(), ex);
             throw new FileParserException("It seems like a line does not contain a number!\nPlease check your files!");
         }
-        return list;
+        // set the tracks for the sample
+        sample.setTracks(list);
+        return sample;
     }
 }

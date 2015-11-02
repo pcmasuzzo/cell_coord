@@ -6,6 +6,7 @@
 package com.compomics.cell_coord.gui.table.model;
 
 import com.compomics.cell_coord.entity.Track;
+import com.compomics.cell_coord.entity.TrackSpot;
 import javax.swing.table.AbstractTableModel;
 
 /**
@@ -52,15 +53,18 @@ public class TrackSpotTableModel extends AbstractTableModel {
      * Initialize the model.
      */
     private void initModel() {
-        columnNames = new String[3];
-        columnNames[0] = "Track Spot";
+        columnNames = new String[4];
+        columnNames[0] = "track_spot";
         columnNames[1] = "x";
         columnNames[2] = "y";
+        columnNames[3] = "time";
         modelData = new Object[track.getTrackSpots().size()][columnNames.length];
         for (int i = 0; i < track.getTrackSpots().size(); i++) {
-            modelData[i][0] = "TrackSpot " + (i + 1);
-            modelData[i][1] = track.getTrackSpots().get(i).getX();
-            modelData[i][2] = track.getTrackSpots().get(i).getY();
+            TrackSpot trackSpot = track.getTrackSpots().get(i);
+            modelData[i][0] = trackSpot.getTrackSpotid();
+            modelData[i][1] = trackSpot.getX();
+            modelData[i][2] = trackSpot.getY();
+            modelData[i][3] = trackSpot.getTime();
         }
     }
 }

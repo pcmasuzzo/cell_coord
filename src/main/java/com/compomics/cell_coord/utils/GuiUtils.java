@@ -9,6 +9,7 @@ import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
+import java.awt.Font;
 import java.awt.GridBagConstraints;
 import javax.swing.JPanel;
 
@@ -24,6 +25,7 @@ public class GuiUtils {
         34), new Color(148, 0, 211), new Color(255, 140, 0), new Color(30, 144, 255), new Color(255, 0, 255), new Color(0, 140, 140), new Color(128, 0, 0), new Color(128, 128, 0)};
 
     private static final Color headerColor = new Color(204, 255, 153);
+    private static final Font headerFont = new Font("SansSerif", Font.BOLD, 12);
 
     /**
      * Getters.
@@ -36,6 +38,10 @@ public class GuiUtils {
 
     public static Color getHeaderColor() {
         return headerColor;
+    }
+
+    public static Font getHeaderFont() {
+        return headerFont;
     }
 
     /**

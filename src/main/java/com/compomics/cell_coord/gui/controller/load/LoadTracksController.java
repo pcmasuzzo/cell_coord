@@ -13,7 +13,8 @@ import com.compomics.cell_coord.exception.LoadDirectoryException;
 import com.compomics.cell_coord.factory.TrackFileParserFactory;
 import com.compomics.cell_coord.gui.CellCoordFrame;
 import com.compomics.cell_coord.gui.controller.CellCoordController;
-import com.compomics.cell_coord.gui.controller.summary.SummaryTracksController;
+import com.compomics.cell_coord.gui.controller.summary.SummaryDataController;
+import com.compomics.cell_coord.gui.controller.summary.VisualizeTracksController;
 import com.compomics.cell_coord.gui.load.LoadTracksPanel;
 import com.compomics.cell_coord.parser.TrackFileParser;
 import com.compomics.cell_coord.utils.GuiUtils;
@@ -64,7 +65,9 @@ public class LoadTracksController {
     private CellCoordController cellCoordController;
     // child controllers
     @Autowired
-    private SummaryTracksController summaryTracksController;
+    private SummaryDataController summaryDataController;
+    @Autowired
+    private VisualizeTracksController visualizeTracksController;
     // services
     private GridBagConstraints gridBagConstraints;
 
@@ -78,7 +81,8 @@ public class LoadTracksController {
         samples = new ArrayList<>();
         initView();
         // init child controllers
-        summaryTracksController.init();
+        summaryDataController.init();
+        visualizeTracksController.init();
     }
 
     /**
@@ -111,6 +115,7 @@ public class LoadTracksController {
         // format the table
         JTableHeader tracksTableHeader = loadTracksPanel.getTracksTable().getTableHeader();
         tracksTableHeader.setBackground(GuiUtils.getHeaderColor());
+        tracksTableHeader.setFont(GuiUtils.getHeaderFont());
         tracksTableHeader.setReorderingAllowed(false);
 
         /**
@@ -154,22 +159,24 @@ public class LoadTracksController {
                 // get the selected file(s)
                 TreePath[] selectionPaths = loadTracksPanel.getDirectoryTree().getSelectionPaths();
                 if (selectionPaths != null && selectionPaths.length != 0) {
-                    for (TreePath path : selectionPaths) {
-                        String fileName = (String) path.getLastPathComponent().toString();
+                    for (int i = 0; i < selectionPaths.length; i++) {
+                        String fileName = (String) selectionPaths[i].getLastPathComponent().toString();
                         File trackFile = new File(directory.getAbsolutePath() + File.separator + fileName);
                         try {
-                            // get the tracks and add all the spots to the binding list
-                            List<Track> currentTracks = parseTrackFile(trackFile);
+                            // get the sample
+                            Sample sample = parseTrackFile(trackFile);
+                            // get the tracks from the sample
+                            List<Track> currentTracks = sample.getTracks();
+                            // add all its spots to the binding list
                             for (Track track : currentTracks) {
                                 trackSpotsBindingList.addAll(track.getTrackSpots());
                             }
+                            // add the sample to the list
+                            samples.add(sample);
                             if (trackSpotsTableBinding == null) {
                                 trackSpotsTableBinding = SwingBindings.createJTableBinding(AutoBinding.UpdateStrategy.READ, trackSpotsBindingList, loadTracksPanel.getTracksTable());
                                 showTracksInTable();
                             }
-                            // for each file imported, create a new sample
-                            Sample sample = new Sample(currentTracks);
-                            samples.add(sample);
                         } catch (FileParserException ex) {
                             LOG.error("Could not parse the file: " + trackFile, ex);
                             cellCoordController.showMessage((String) loadTracksPanel.getFileFormatComboBox().getSelectedItem() + " expected!",
@@ -179,7 +186,7 @@ public class LoadTracksController {
                     }
                     cellCoordController.showMessage(selectionPaths.length + " file(s) successfully imported!", "success loading", JOptionPane.INFORMATION_MESSAGE);
                     // go to child controller and show samples in the table
-                    summaryTracksController.showSamplesInTable();
+                    summaryDataController.showSamplesInTable();
                     // proceed with next step in the plugin
                     cellCoordController.getCellCoordFrame().getNextButton().setEnabled(true);
                 } else {
@@ -199,7 +206,7 @@ public class LoadTracksController {
      * @param trackFile
      * @return list of tracks
      */
-    private List<Track> parseTrackFile(File trackFile) throws FileParserException {
+    private Sample parseTrackFile(File trackFile) throws FileParserException {
         // get the selected file format -- call the correspondent file parser
         String parserName = (String) loadTracksPanel.getFileFormatComboBox().getSelectedItem();
         TrackFileParser parser = TrackFileParserFactory.getInstance().getParser(parserName);
@@ -213,7 +220,12 @@ public class LoadTracksController {
      */
     private void showTracksInTable() {
         //add column bindings
-        JTableBinding.ColumnBinding columnBinding = trackSpotsTableBinding.addColumnBinding(ELProperty.create("${track.trackid}"));
+        JTableBinding.ColumnBinding columnBinding = trackSpotsTableBinding.addColumnBinding(ELProperty.create("${track.sample.name}"));
+        columnBinding.setColumnName("sample_name");
+        columnBinding.setEditable(false);
+        columnBinding.setColumnClass(String.class);
+
+        columnBinding = trackSpotsTableBinding.addColumnBinding(ELProperty.create("${track.trackid}"));
         columnBinding.setColumnName("track_id");
         columnBinding.setEditable(false);
         columnBinding.setColumnClass(Long.class);

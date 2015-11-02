@@ -5,6 +5,7 @@
  */
 package com.compomics.cell_coord.parser;
 
+import com.compomics.cell_coord.entity.Sample;
 import com.compomics.cell_coord.entity.Track;
 import com.compomics.cell_coord.entity.TrackSpot;
 import com.compomics.cell_coord.exception.FileParserException;
@@ -37,20 +38,19 @@ public class CSVFileParserTest {
      */
     @Test
     public void testCSVFileParsing() {
-
         File trackingFile = new File(CSVFileParserTest.class.getClassLoader().getResource("track_file_test.csv").getPath());
-        List<Track> trackList = new ArrayList<>();
+        Sample sample = null;
         // try to parse the file
         try {
-            trackList = csvFileParser.parseTrackFile(trackingFile);
+            sample = csvFileParser.parseTrackFile(trackingFile);
         } catch (FileParserException ex) {
             Logger.getLogger(CSVFileParserTest.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-        assertTrue(!trackList.isEmpty());
-        assertEquals(45, trackList.size());
+        List<Track> tracks = sample.getTracks();
+        assertTrue(!tracks.isEmpty());
+        assertEquals(45, tracks.size());
         // this is the last parsed track
-        Track lastTrack = trackList.get(trackList.size() - 1);
+        Track lastTrack = tracks.get(tracks.size() - 1);
         List<TrackSpot> trackSpots = lastTrack.getTrackSpots();
         assertEquals(58, trackSpots.size());
         // the first track spot

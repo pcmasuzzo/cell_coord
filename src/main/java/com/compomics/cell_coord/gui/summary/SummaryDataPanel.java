@@ -5,6 +5,7 @@
  */
 package com.compomics.cell_coord.gui.summary;
 
+import javax.swing.JEditorPane;
 import javax.swing.JList;
 import javax.swing.JTable;
 
@@ -51,7 +52,7 @@ public class SummaryDataPanel extends javax.swing.JPanel {
         infoScrollPane = new javax.swing.JScrollPane();
         infoEditorPane = new javax.swing.JEditorPane();
 
-        samplesScrollPane.setBorder(javax.swing.BorderFactory.createTitledBorder("Samples"));
+        samplesScrollPane.setBorder(javax.swing.BorderFactory.createTitledBorder("1. Samples"));
 
         samplesTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -66,7 +67,7 @@ public class SummaryDataPanel extends javax.swing.JPanel {
         ));
         samplesScrollPane.setViewportView(samplesTable);
 
-        tracksScrollPane.setBorder(javax.swing.BorderFactory.createTitledBorder("Cell Tracks"));
+        tracksScrollPane.setBorder(javax.swing.BorderFactory.createTitledBorder("2. Cell Tracks"));
 
         tracksTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -81,7 +82,7 @@ public class SummaryDataPanel extends javax.swing.JPanel {
         ));
         tracksScrollPane.setViewportView(tracksTable);
 
-        trackSpotsScrollPane.setBorder(javax.swing.BorderFactory.createTitledBorder("Track Spots"));
+        trackSpotsScrollPane.setBorder(javax.swing.BorderFactory.createTitledBorder("3. Track Spots"));
 
         trackSpotsTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -99,7 +100,8 @@ public class SummaryDataPanel extends javax.swing.JPanel {
         infoScrollPane.setBorder(javax.swing.BorderFactory.createTitledBorder("Info"));
 
         infoEditorPane.setEditable(false);
-        infoEditorPane.setText("Click on a sample to inspect its data in the table below.\n\nFor each sample, the table lists:\n\n1. the number of cell tracks\n2. min and max (x, y) coordinates");
+        infoEditorPane.setContentType("text/html"); // NOI18N
+        infoEditorPane.setText("<html>\n         1. Click on a sample in the table number <b>1</b> to visualize the correspondent cell tracks in the table number <b>2</b>.\n         </br>\n         <br>\n\t\t <br>\n\t\t </br>\n         2. Click on a cell track in the table number <b>2</b> to visualize the correspondent track spots in the final table number <b>3</b>.\n         </br>\n         <br>\n         </br>\n         <br>\n         3. For each <b>track_spot</b>, table number <b>3</b> lists:\n <br>-- the x coordinate</br>\n <br>-- the y coordinate</br>\n <br>-- the time point</br>\n      </p>\n   </body>\n</html>");
         infoScrollPane.setViewportView(infoEditorPane);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);

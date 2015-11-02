@@ -17,12 +17,20 @@ public class Track {
 
     // the track trackid
     private Long trackid;
+    // the sample the track belongs to
+    private Sample sample;
     // a collection of spots in the track
     private List<TrackSpot> trackSpots;
     // coordinates matrix
-    private double[][] coordinates;
+    private Double[][] coordinates;
     // shifted coordinates
-    private double[][] shiftedCoordinates;
+    private Double[][] shiftedCoordinates;
+    // coordinate ranges: [xmin, xmax, ymin; ymax]
+    private Double[][] coordinateRanges;
+    // the net displacement in the x direction
+    private Double xNetDisplacement;
+    // the net displacement in the y direction
+    private Double yNetDisplacement;
 
     /**
      * Empty constructor
@@ -49,6 +57,14 @@ public class Track {
         return trackid;
     }
 
+    public Sample getSample() {
+        return sample;
+    }
+
+    public void setSample(Sample sample) {
+        this.sample = sample;
+    }
+
     public void setTrackid(Long trackid) {
         this.trackid = trackid;
     }
@@ -61,20 +77,44 @@ public class Track {
         this.trackSpots = trackSpots;
     }
 
-    public double[][] getCoordinates() {
+    public Double[][] getCoordinates() {
         return coordinates;
     }
 
-    public void setCoordinates(double[][] coordinates) {
+    public void setCoordinates(Double[][] coordinates) {
         this.coordinates = coordinates;
     }
 
-    public double[][] getShiftedCoordinates() {
+    public Double[][] getShiftedCoordinates() {
         return shiftedCoordinates;
     }
 
-    public void setShiftedCoordinates(double[][] shiftedCoordinates) {
+    public void setShiftedCoordinates(Double[][] shiftedCoordinates) {
         this.shiftedCoordinates = shiftedCoordinates;
+    }
+
+    public Double[][] getCoordinateRanges() {
+        return coordinateRanges;
+    }
+
+    public void setCoordinateRanges(Double[][] coordinateRanges) {
+        this.coordinateRanges = coordinateRanges;
+    }
+
+    public Double getxNetDisplacement() {
+        return xNetDisplacement;
+    }
+
+    public void setxNetDisplacement(Double xNetDisplacement) {
+        this.xNetDisplacement = xNetDisplacement;
+    }
+
+    public Double getyNetDisplacement() {
+        return yNetDisplacement;
+    }
+
+    public void setyNetDisplacement(Double yNetDisplacement) {
+        this.yNetDisplacement = yNetDisplacement;
     }
 
     @Override

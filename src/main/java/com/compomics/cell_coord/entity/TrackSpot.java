@@ -33,6 +33,8 @@ public class TrackSpot {
 
     /**
      * Constructors of convenience.
+     * @param x
+     * @param y
      */
     public TrackSpot(double x, double y) {
         this.x = x;

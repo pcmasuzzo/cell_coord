@@ -5,6 +5,7 @@
  */
 package com.compomics.cell_coord.parser.impl;
 
+import com.compomics.cell_coord.entity.Sample;
 import com.compomics.cell_coord.entity.Track;
 import com.compomics.cell_coord.entity.TrackSpot;
 import com.compomics.cell_coord.exception.FileParserException;
@@ -26,7 +27,9 @@ import java.util.Set;
 public class TrackMateFileParser implements TrackFileParser {
 
     @Override
-    public List<Track> parseTrackFile(File trackFile) throws FileParserException {
+    public Sample parseTrackFile(File trackFile) throws FileParserException {
+        // create a new sample object -- watch out to set the relationships!
+        Sample sample = new Sample(trackFile.getName());
         // initialize an empty list of tracks
         List<Track> list = new ArrayList<>();
         // check that we actually have to parse an xml TrackMate model, and if not, throw an exception
@@ -54,6 +57,7 @@ public class TrackMateFileParser implements TrackFileParser {
                         trackSpotList.add(trackSpot);
                     }
                     track.setTrackSpots(trackSpotList);
+                    track.setSample(sample);
                     list.add(track);
                 }
             } else {
@@ -63,6 +67,7 @@ public class TrackMateFileParser implements TrackFileParser {
         } else {
             throw new FileParserException("One or more files does not seem to be a TrackMate xml model!\nPlease check your files!");
         }
-        return list;
+        sample.setTracks(list);
+        return sample;
     }
 }

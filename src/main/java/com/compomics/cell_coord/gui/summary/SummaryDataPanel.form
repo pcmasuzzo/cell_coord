@@ -57,7 +57,7 @@
       <Properties>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
-            <TitledBorder title="Samples"/>
+            <TitledBorder title="1. Samples"/>
           </Border>
         </Property>
       </Properties>
@@ -85,7 +85,7 @@
       <Properties>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
-            <TitledBorder title="Cell Tracks"/>
+            <TitledBorder title="2. Cell Tracks"/>
           </Border>
         </Property>
       </Properties>
@@ -113,7 +113,7 @@
       <Properties>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
-            <TitledBorder title="Track Spots"/>
+            <TitledBorder title="3. Track Spots"/>
           </Border>
         </Property>
       </Properties>
@@ -154,7 +154,8 @@
         <Component class="javax.swing.JEditorPane" name="infoEditorPane">
           <Properties>
             <Property name="editable" type="boolean" value="false"/>
-            <Property name="text" type="java.lang.String" value="Click on a sample to inspect its data in the table below.&#xa;&#xa;For each sample, the table lists:&#xa;&#xa;1. the number of cell tracks&#xa;2. min and max (x, y) coordinates"/>
+            <Property name="contentType" type="java.lang.String" value="text/html" noResource="true"/>
+            <Property name="text" type="java.lang.String" value="&lt;html&gt;&#xa;         1. Click on a sample in the table number &lt;b&gt;1&lt;/b&gt; to visualize the correspondent cell tracks in the table number &lt;b&gt;2&lt;/b&gt;.&#xa;         &lt;/br&gt;&#xa;         &lt;br&gt;&#xa;&#x9;&#x9; &lt;br&gt;&#xa;&#x9;&#x9; &lt;/br&gt;&#xa;         2. Click on a cell track in the table number &lt;b&gt;2&lt;/b&gt; to visualize the correspondent track spots in the final table number &lt;b&gt;3&lt;/b&gt;.&#xa;         &lt;/br&gt;&#xa;         &lt;br&gt;&#xa;         &lt;/br&gt;&#xa;         &lt;br&gt;&#xa;         3. For each &lt;b&gt;track_spot&lt;/b&gt;, table number &lt;b&gt;3&lt;/b&gt; lists:&#xa; &lt;br&gt;-- the x coordinate&lt;/br&gt;&#xa; &lt;br&gt;-- the y coordinate&lt;/br&gt;&#xa; &lt;br&gt;-- the time point&lt;/br&gt;&#xa;      &lt;/p&gt;&#xa;   &lt;/body&gt;&#xa;&lt;/html&gt;"/>
           </Properties>
         </Component>
       </SubComponents>
