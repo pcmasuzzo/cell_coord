@@ -41,4 +41,25 @@ public interface TrackOperator {
      * @param track
      */
     void computeShiftedCoordinatesRanges(Track track);
+
+    /**
+     * Compute steps (step movements) for a track.
+     *
+     * @param track
+     */
+    void computeSteps(Track track);
+
+    /**
+     * Compute the step displacements - stepX² + stepY - for a track.
+     *
+     * @param track
+     */
+    void computeStepDisplacements(Track track);
+
+    /**
+     * Compute the turning angles for a track.
+     *
+     * @param track
+     */
+    void computeAngles(Track track);
 }

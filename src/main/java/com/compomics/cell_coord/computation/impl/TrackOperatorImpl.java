@@ -89,4 +89,47 @@ public class TrackOperatorImpl implements TrackOperator {
         Double[][] shiftedCoordRanges = new Double[][]{{xMin, xMax}, {yMin, yMax}};
         track.setShiftedCoordinateRanges(shiftedCoordRanges);
     }
+
+    @Override
+    public void computeSteps(Track track) {
+        Double[][] coordinates = track.getCoordinates();
+        Double[][] steps = new Double[coordinates.length - 1][coordinates[0].length];
+        // need to start from the second row
+        for (int row = 1; row < coordinates.length; row++) {
+            // compute the steps
+            double stepX = coordinates[row][0] - coordinates[row - 1][0];
+            double stepY = coordinates[row][1] - coordinates[row - 1][1];
+            steps[row - 1] = new Double[]{stepX, stepY};
+        }
+        track.setSteps(steps);
+    }
+
+    @Override
+    public void computeStepDisplacements(Track track) {
+        Double[][] steps = track.getSteps();
+        Double[] stepDisplacements = new Double[steps.length];
+        for (int row = 0; row < stepDisplacements.length; row++) {
+            Double stepDispl = Math.hypot(steps[row][0], steps[row][1]);
+            stepDisplacements[row] = stepDispl;
+        }
+        track.setStepDisplacements(stepDisplacements);
+    }
+
+    @Override
+    public void computeAngles(Track track) {
+        Double[][] steps = track.getSteps();
+        Double[] angles = new Double[steps.length];
+        for (int row = 0; row < angles.length; row++) {
+            // This method computes the phase theta by computing an arc tangent of y/x in the range of -pi to pi.
+            double d = steps[row][1] / steps[row][0]; // if division is 0, the cell is going exactly back on its path!
+            Double angleRadians = Math.atan(d) + 0; // need to add 0 to avoid signed 0 in Java
+            // go from radians to degrees
+            Double angleDegrees = Math.toDegrees(angleRadians);
+            // if the angle is NaN (both deltaX and deltaY are zero), the cell stays exactly on place 
+            if (angleDegrees < 0) {
+                angleDegrees = angleDegrees + 360;
+            }
+            angles[row] = angleDegrees;
+        }
+    }
 }

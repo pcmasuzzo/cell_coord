@@ -33,6 +33,12 @@ public class Track {
     private Double xNetDisplacement;
     // the net displacement in the y direction
     private Double yNetDisplacement;
+    // the steps in both directions
+    private Double[][] steps;
+    // the step displacements
+    private Double[] stepDisplacements;
+    // the turning angles
+    private Double[] angles;
 
     /**
      * Empty constructor
@@ -125,6 +131,30 @@ public class Track {
 
     public void setyNetDisplacement(Double yNetDisplacement) {
         this.yNetDisplacement = yNetDisplacement;
+    }
+
+    public Double[][] getSteps() {
+        return steps;
+    }
+
+    public void setSteps(Double[][] steps) {
+        this.steps = steps;
+    }
+
+    public Double[] getStepDisplacements() {
+        return stepDisplacements;
+    }
+
+    public void setStepDisplacements(Double[] stepDisplacements) {
+        this.stepDisplacements = stepDisplacements;
+    }
+
+    public Double[] getAngles() {
+        return angles;
+    }
+
+    public void setAngles(Double[] angles) {
+        this.angles = angles;
     }
 
     @Override
