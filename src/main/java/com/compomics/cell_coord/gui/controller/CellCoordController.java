@@ -161,8 +161,6 @@ public class CellCoordController {
             case "summaryTracksPanel":
                 cellCoordFrame.getPreviousButton().setEnabled(true);
                 updateInfoLabel("A quick summary and visualization of the loaded cell tracks.");
-                // WARNING HERE!!!!
-                loadTracksController.preprocessSamples();
                 break;
         }
     }

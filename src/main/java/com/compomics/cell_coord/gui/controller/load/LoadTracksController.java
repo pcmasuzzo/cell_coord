@@ -58,6 +58,7 @@ public class LoadTracksController {
     private ObservableList<TrackSpot> trackSpotsBindingList;
     private JTableBinding trackSpotsTableBinding;
     private File directory;
+    private boolean isImported;
     private List<Sample> samples;
     // view
     private LoadTracksPanel loadTracksPanel;
@@ -102,25 +103,15 @@ public class LoadTracksController {
     }
 
     /**
-     * Preprocess the samples -- i.e. basic computations to render the tracks.
-     */
-    public void preprocessSamples() {
-        for (Sample sample : samples) {
-            sampleOperator.prepareCoordinates(sample);
-            sampleOperator.prepareShiftedCoordinates(sample);
-            sampleOperator.computeCoordinatesRanges(sample);
-            sampleOperator.computeShiftedCoordinatesRanges(sample);
-        }
-        visualizeTracksController.computeRanges();
-    }
-
-    /**
      * Initialize the view components.
      */
     private void initView() {
         // create new view
         loadTracksPanel = new LoadTracksPanel();
-
+        // disable the IMPORT FILES button
+        loadTracksPanel.getImportFilesButton().setEnabled(false);
+        // initialize the flag to keep track of importing
+        isImported = false;
         // populate the combobox with available file formats
         // note: these are annoatated as spring beans
         Set<String> parsers = TrackFileParserFactory.getInstance().getParserBeanNames();
@@ -144,10 +135,6 @@ public class LoadTracksController {
             public void actionPerformed(ActionEvent e) {
                 if (directory == null) {
                     chooseDirectoryAndLoadData();
-                    // if loading the directory was successful (i.e. the directory is still not null), set the ttext in the JComponent
-                    if (directory != null) {
-                        loadTracksPanel.getChosenDirectoryTextArea().setText(directory.getAbsolutePath());
-                    }
                 } else {
                     // otherwise we ask the user if they want to reload the directory
                     Object[] options = {"Load a different directory", "Cancel"};
@@ -172,48 +159,62 @@ public class LoadTracksController {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                // get the selected file(s)
-                TreePath[] selectionPaths = loadTracksPanel.getDirectoryTree().getSelectionPaths();
-                if (selectionPaths != null && selectionPaths.length != 0) {
-                    for (int i = 0; i < selectionPaths.length; i++) {
-                        String fileName = (String) selectionPaths[i].getLastPathComponent().toString();
-                        File trackFile = new File(directory.getAbsolutePath() + File.separator + fileName);
-                        try {
-                            // get the sample
-                            Sample sample = parseTrackFile(trackFile);
-                            // get the tracks from the sample
-                            List<Track> currentTracks = sample.getTracks();
-                            // add all its spots to the binding list
-                            for (Track track : currentTracks) {
-                                trackSpotsBindingList.addAll(track.getTrackSpots());
-                            }
-                            // add the sample to the list
-                            samples.add(sample);
-                            if (trackSpotsTableBinding == null) {
-                                trackSpotsTableBinding = SwingBindings.createJTableBinding(AutoBinding.UpdateStrategy.READ, trackSpotsBindingList, loadTracksPanel.getTracksTable());
-                                showTracksInTable();
-                            }
-                        } catch (FileParserException ex) {
-                            LOG.error("Could not parse the file: " + trackFile, ex);
-                            cellCoordController.showMessage((String) loadTracksPanel.getFileFormatComboBox().getSelectedItem() + " expected!",
-                                      "Error parsing file", JOptionPane.ERROR_MESSAGE);
-                            return;
-                        }
+                // check if an import already took place
+                if (!isImported) {
+                    // get the selected file(s) from the JTree
+                    TreePath[] selectionPaths = loadTracksPanel.getDirectoryTree().getSelectionPaths();
+                    if (selectionPaths != null && selectionPaths.length != 0) {
+                        // at least a file was selected --  proceed with the import
+                        importFiles();
+                        isImported = true;
+                        cellCoordController.showMessage(selectionPaths.length + " file(s) successfully imported!", "success loading", JOptionPane.INFORMATION_MESSAGE);
+                        // do basic computations
+                        preprocess();
+                        // go to child controller and show samples in the table
+                        summaryDataController.showSamplesInTable();
+                        // proceed with next step in the plugin
+                        cellCoordController.getCellCoordFrame().getNextButton().setEnabled(true);
+                    } else {
+                        // inform the user that no file was selected!
+                        cellCoordController.showMessage("You have to select at least one file!", "no files selected", JOptionPane.WARNING_MESSAGE);
                     }
-                    cellCoordController.showMessage(selectionPaths.length + " file(s) successfully imported!", "success loading", JOptionPane.INFORMATION_MESSAGE);
-                    // go to child controller and show samples in the table
-                    summaryDataController.showSamplesInTable();
-                    // proceed with next step in the plugin
-                    cellCoordController.getCellCoordFrame().getNextButton().setEnabled(true);
                 } else {
-                    // inform the user that no file was selected!
-                    cellCoordController.showMessage("You have to select at least one file!", "no files selected", JOptionPane.WARNING_MESSAGE);
+                    // an import already took place: ask for user input
+                    Object[] options = {"Load other file(s)", "Cancel"};
+                    int showOptionDialog = JOptionPane.showOptionDialog(loadTracksPanel, "It seems some files were already loaded.\nWhat do you want to do?", "", JOptionPane.CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[1]);
+                    switch (showOptionDialog) {
+                        case 0: // load other files
+                            // clear the sample list
+                            samples.clear();
+                            // clear the track spot list
+                            trackSpotsBindingList.clear();
+                            // clear the selection in the JTree
+                            loadTracksPanel.getDirectoryTree().clearSelection();
+                            isImported = false;
+                            // inform the user they need to select other files
+                            JOptionPane.showMessageDialog(loadTracksPanel, "Please select other files", "", JOptionPane.INFORMATION_MESSAGE);
+                            break;  // cancel: do nothing
+                    }
                 }
+
             }
         });
 
         // add view to parent component
         cellCoordController.getCellCoordFrame().getLoadTracksParentPanel().add(loadTracksPanel, gridBagConstraints);
+    }
+
+    /**
+     * Preprocess the samples -- i.e. basic computations to render the tracks.
+     */
+    private void preprocess() {
+        for (Sample sample : samples) {
+            sampleOperator.prepareCoordinates(sample);
+            sampleOperator.prepareShiftedCoordinates(sample);
+            sampleOperator.computeCoordinatesRanges(sample);
+            sampleOperator.computeShiftedCoordinatesRanges(sample);
+        }
+        visualizeTracksController.computeRanges();
     }
 
     /**
@@ -277,7 +278,7 @@ public class LoadTracksController {
      */
     private void chooseDirectoryAndLoadData() {
         JFileChooser fileChooser = new JFileChooser();
-        fileChooser.setDialogTitle("Select a root folder");
+        fileChooser.setDialogTitle("Please select a root folder containing your files");
         // allow for directories only
         fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         // removing "All Files" option from FileType
@@ -294,6 +295,37 @@ public class LoadTracksController {
             }
         } else {
             cellCoordController.showMessage("Open command cancelled by user", "", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }
+
+    /**
+     * Import the files selected in the Data Tree.
+     */
+    private void importFiles() {
+        for (TreePath selectionPath : loadTracksPanel.getDirectoryTree().getSelectionPaths()) {
+            String fileName = (String) selectionPath.getLastPathComponent().toString();
+            File trackFile = new File(directory.getAbsolutePath() + File.separator + fileName);
+            try {
+                // get the sample
+                Sample sample = parseTrackFile(trackFile);
+                // get the tracks from the sample
+                List<Track> currentTracks = sample.getTracks();
+                // add all its spots to the binding list
+                for (Track track : currentTracks) {
+                    trackSpotsBindingList.addAll(track.getTrackSpots());
+                }
+                // add the sample to the list
+                samples.add(sample);
+                if (trackSpotsTableBinding == null) {
+                    trackSpotsTableBinding = SwingBindings.createJTableBinding(AutoBinding.UpdateStrategy.READ, trackSpotsBindingList, loadTracksPanel.getTracksTable());
+                    showTracksInTable();
+                }
+            } catch (FileParserException ex) {
+                LOG.error("Could not parse the file: " + trackFile, ex);
+                cellCoordController.showMessage((String) loadTracksPanel.getFileFormatComboBox().getSelectedItem() + " expected!",
+                          "Error parsing file", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
         }
     }
 
@@ -325,6 +357,8 @@ public class LoadTracksController {
             throw new LoadDirectoryException("This directory seems to be empty!");
         }
         model.reload();
-        cellCoordController.showMessage("Directory successful loaded!\nYou can select the files to import!", "", JOptionPane.INFORMATION_MESSAGE);
+        loadTracksPanel.getChosenDirectoryTextArea().setText(directory.getAbsolutePath());
+        cellCoordController.showMessage("Directory successful loaded!\nYou can now select the files to import!", "", JOptionPane.INFORMATION_MESSAGE);
+        loadTracksPanel.getImportFilesButton().setEnabled(true);
     }
 }

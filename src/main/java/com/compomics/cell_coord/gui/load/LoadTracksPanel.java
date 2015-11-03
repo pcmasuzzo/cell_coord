@@ -86,6 +86,7 @@ public class LoadTracksPanel extends javax.swing.JPanel {
 
         chosenDirectoryTextArea.setEditable(false);
         chosenDirectoryTextArea.setColumns(20);
+        chosenDirectoryTextArea.setFont(new java.awt.Font("Monospaced", 3, 13)); // NOI18N
         chosenDirectoryTextArea.setLineWrap(true);
         chosenDirectoryTextArea.setRows(5);
         chosenDirectoryTextArea.setBorder(null);

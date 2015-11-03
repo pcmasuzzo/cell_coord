@@ -101,7 +101,7 @@ public class SummaryDataPanel extends javax.swing.JPanel {
 
         infoEditorPane.setEditable(false);
         infoEditorPane.setContentType("text/html"); // NOI18N
-        infoEditorPane.setText("<html>\n         1. Click on a sample in the table number <b>1</b> to visualize the correspondent cell tracks in the table number <b>2</b>.\n         </br>\n         <br>\n\t\t <br>\n\t\t </br>\n         2. Click on a cell track in the table number <b>2</b> to visualize the correspondent track spots in the final table number <b>3</b>.\n         </br>\n         <br>\n         </br>\n         <br>\n         3. For each <b>track_spot</b>, table number <b>3</b> lists:\n <br>-- the x coordinate</br>\n <br>-- the y coordinate</br>\n <br>-- the time point</br>\n      </p>\n   </body>\n</html>");
+        infoEditorPane.setText("<html>\n         1. Click on a sample in the table number <b>1</b> to visualize the correspondent cell tracks in the table number <b>2</b>.\n         </br>\n         <br>\n\t\t <br>\n\t\t </br>\n         2. Click on a cell track in the table number <b>2</b> to visualize the correspondent track spots in the final table number <b>3</b>.\n         </br>\n         <br>\n         </br>\n         <br>\n\t\t For each <b>track</b>, table number <b>2</b> lists:\n\t\t <br>- min and max <i>x</i> and <i>y</i> coordinates</br>\n\t\t <br>- net displacements in the <i>x</i> and <i>y</i> directions</br>\n\t\t <br>\n\t\t </br>\n\t\t <br>\n\t\t </br>\n         3. For each <b>track_spot</b>, table number <b>3</b> lists:\n <br>- the x coordinate</br>\n <br>- the y coordinate</br>\n <br>- the time point</br>\n      </p>\n   </body>\n</html>");
         infoScrollPane.setViewportView(infoEditorPane);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -113,10 +113,12 @@ public class SummaryDataPanel extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(samplesScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                            .addComponent(tracksScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                        .addGap(10, 10, 10)
-                        .addComponent(infoScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 294, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(samplesScrollPane)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(tracksScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(18, 18, 18)
+                        .addComponent(infoScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(trackSpotsScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 752, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -127,7 +129,7 @@ public class SummaryDataPanel extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(samplesScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(tracksScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                     .addComponent(infoScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 315, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)

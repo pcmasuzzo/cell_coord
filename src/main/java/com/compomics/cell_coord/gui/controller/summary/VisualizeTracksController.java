@@ -22,6 +22,8 @@ import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.chart.plot.XYPlot;
+import org.jfree.data.Range;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,7 +44,6 @@ public class VisualizeTracksController {
     // view
     private VisualizeTracksPanel visualizeTracksPanel;
     private List<ChartPanel> tracksChartPanels;
-    // controller
     // parent controller
     @Autowired
     private LoadTracksController loadTracksController;
@@ -118,12 +119,11 @@ public class VisualizeTracksController {
         ButtonGroup scaleAxesButtonGroup = new ButtonGroup();
         scaleAxesButtonGroup.add(visualizeTracksPanel.getDoNotScaleAxesRadioButton());
         scaleAxesButtonGroup.add(visualizeTracksPanel.getScaleAxesRadioButton());
-        visualizeTracksPanel.getDoNotScaleAxesRadioButton().setSelected(true);
+
         // another button group for the shifted/unshifted coordinates
         ButtonGroup shiftedCoordinatesButtonGroup = new ButtonGroup();
         shiftedCoordinatesButtonGroup.add(visualizeTracksPanel.getRawCoordRadioButton());
         shiftedCoordinatesButtonGroup.add(visualizeTracksPanel.getRosePlotRadioButton());
-        visualizeTracksPanel.getRawCoordRadioButton().setSelected(true);
 
         /**
          * Action Listeners.
@@ -147,7 +147,10 @@ public class VisualizeTracksController {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                boolean useRawData = visualizeTracksPanel.getRawCoordRadioButton().isSelected();
+                for (ChartPanel chartPanel : tracksChartPanels) {
+                    scaleAxes(chartPanel.getChart(), useRawData);
+                }
             }
         });
 
@@ -191,8 +194,32 @@ public class VisualizeTracksController {
             }
         });
 
+        visualizeTracksPanel.getDoNotScaleAxesRadioButton().setSelected(true);
+        visualizeTracksPanel.getRawCoordRadioButton().setSelected(true);
+        visualizeTracksPanel.getTracksGraphicsParentPanel().revalidate();
+        visualizeTracksPanel.getTracksGraphicsParentPanel().repaint();
+
         // add view to parent controller
         loadTracksController.getMainFrame().getVisualizeTracksParentPanel().add(visualizeTracksPanel, gridBagConstraints);
+    }
+
+    /**
+     * Scale the axes to the experiment coordinates ranges.
+     *
+     * @param chart
+     */
+    private void scaleAxes(JFreeChart chart, boolean useRawData) {
+        XYPlot xYPlot = chart.getXYPlot();
+        Double[][] coordinatesRanges;
+        if (useRawData) {
+            coordinatesRanges = coordRanges;
+        } else {
+            coordinatesRanges = shiftedCoordRange;
+        }
+        Double[] xCoords = coordinatesRanges[0];
+        Double[] yCoords = coordinatesRanges[1];
+        xYPlot.getDomainAxis().setRange(new Range(yCoords[0], yCoords[1]));
+        xYPlot.getRangeAxis().setRange(new Range(xCoords[0], xCoords[1]));
     }
 
     /**
@@ -213,6 +240,8 @@ public class VisualizeTracksController {
     }
 
     /**
+     * Generate the data for the plots.
+     *
      * @param useRawData
      * @return
      */
@@ -251,6 +280,8 @@ public class VisualizeTracksController {
     }
 
     /**
+     * Given the number of columns to use, set the charts with the
+     * xySeriesCollections generated.
      *
      * @param nCols
      */
@@ -267,15 +298,13 @@ public class VisualizeTracksController {
             // and a new chart panel as well
             ChartPanel coordinatesChartPanel = new ChartPanel(null);
             coordinatesChartPanel.setOpaque(false);
-
             // compute the constraints
-            GridBagConstraints gridBagConstraints = getGridBagConstraints(nPlots, i, nCols);
-            visualizeTracksPanel.getTracksGraphicsParentPanel().add(coordinatesChartPanel, gridBagConstraints);
+            GridBagConstraints specialGBC = getGridBagConstraints(nPlots, i, nCols);
+            visualizeTracksPanel.getTracksGraphicsParentPanel().add(coordinatesChartPanel, specialGBC);
             if (visualizeTracksPanel.getScaleAxesRadioButton().isSelected()) {
-
+                scaleAxes(coordinatesChart, visualizeTracksPanel.getRawCoordRadioButton().isSelected());
             }
             coordinatesChartPanel.setChart(coordinatesChart);
-
             // add the chart panels to the list
             tracksChartPanels.add(coordinatesChartPanel);
             visualizeTracksPanel.getTracksGraphicsParentPanel().revalidate();
@@ -294,18 +323,17 @@ public class VisualizeTracksController {
      * @return the GridBagConstraints
      */
     private GridBagConstraints getGridBagConstraints(int nPlots, int index, int nCols) {
-        GridBagConstraints gridBagConstraints = new GridBagConstraints();
+        GridBagConstraints specialGBC = new GridBagConstraints();
         int nRows = (int) Math.ceil(nPlots / nCols);
-        gridBagConstraints.fill = GridBagConstraints.BOTH;
-        gridBagConstraints.weightx = 1.0 / nCols;
-        gridBagConstraints.weighty = 1.0 / nRows;
-        gridBagConstraints.gridy = (int) Math.floor(index / nCols);
+        specialGBC.fill = GridBagConstraints.BOTH;
+        specialGBC.weightx = 1.0 / nCols;
+        specialGBC.weighty = 1.0 / nRows;
+        specialGBC.gridy = (int) Math.floor(index / nCols);
         if (index < nCols) {
-            gridBagConstraints.gridx = index;
+            specialGBC.gridx = index;
         } else {
-            gridBagConstraints.gridx = index - ((index / nCols) * nCols);
+            specialGBC.gridx = index - ((index / nCols) * nCols);
         }
-        return gridBagConstraints;
+        return specialGBC;
     }
-
 }

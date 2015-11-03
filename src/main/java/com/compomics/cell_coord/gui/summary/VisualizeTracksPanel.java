@@ -79,7 +79,7 @@ public class VisualizeTracksPanel extends javax.swing.JPanel {
 
         rosePlotRadioButton.setText("Rose plot (coordinates shifted to origin)");
 
-        nColumnsComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "2", "3", "4" }));
+        nColumnsComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "1", "2", "3", "4" }));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel1.setText("nr columns");

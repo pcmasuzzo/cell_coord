@@ -52,13 +52,25 @@ public class TrackTableModel extends AbstractTableModel {
      * Initialize the model.
      */
     private void initModel() {
-        columnNames = new String[2];
+        columnNames = new String[8];
         columnNames[0] = "track";
         columnNames[1] = "nr_track_spots";
+        columnNames[2] = "x_min";
+        columnNames[3] = "x_max";
+        columnNames[4] = "y_min";
+        columnNames[5] = "y_max";
+        columnNames[6] = "x_net";
+        columnNames[7] = "y_net";
         modelData = new Object[sample.getTracks().size()][columnNames.length];
         for (int i = 0; i < sample.getTracks().size(); i++) {
             modelData[i][0] = sample.getTracks().get(i).getTrackid();
             modelData[i][1] = sample.getTracks().get(i).getTrackSpots().size();
+            modelData[i][2] = sample.getTracks().get(i).getCoordinateRanges()[0][0];
+            modelData[i][3] = sample.getTracks().get(i).getCoordinateRanges()[0][1];
+            modelData[i][4] = sample.getTracks().get(i).getCoordinateRanges()[1][0];
+            modelData[i][5] = sample.getTracks().get(i).getCoordinateRanges()[1][1];
+            modelData[i][6] = sample.getTracks().get(i).getxNetDisplacement();
+            modelData[i][7] = sample.getTracks().get(i).getyNetDisplacement();
         }
     }
 }
