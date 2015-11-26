@@ -52,6 +52,14 @@ public class CellCoordFrame extends javax.swing.JFrame {
         return visualizeTracksParentPanel;
     }
 
+    public JPanel getComputationDataParentPanel() {
+        return computationDataParentPanel;
+    }
+
+    public JPanel getComputationGraphParentPanel() {
+        return computationGraphParentPanel;
+    }
+
     public JButton getNextButton() {
         return nextButton;
     }
@@ -87,6 +95,10 @@ public class CellCoordFrame extends javax.swing.JFrame {
         summaryTracksSplitPane = new javax.swing.JSplitPane();
         summaryDataParentPanel = new javax.swing.JPanel();
         visualizeTracksParentPanel = new javax.swing.JPanel();
+        computationPanel = new javax.swing.JPanel();
+        computationSplitPane = new javax.swing.JSplitPane();
+        computationDataParentPanel = new javax.swing.JPanel();
+        computationGraphParentPanel = new javax.swing.JPanel();
         bottomPanel = new javax.swing.JPanel();
         previousButton = new javax.swing.JButton();
         nextButton = new javax.swing.JButton();
@@ -117,14 +129,14 @@ public class CellCoordFrame extends javax.swing.JFrame {
             homePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(homePanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(welcomeScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 689, Short.MAX_VALUE)
+                .addComponent(welcomeScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 727, Short.MAX_VALUE)
                 .addContainerGap())
         );
         homePanelLayout.setVerticalGroup(
             homePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(homePanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(welcomeScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 515, Short.MAX_VALUE)
+                .addComponent(welcomeScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 503, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -154,25 +166,67 @@ public class CellCoordFrame extends javax.swing.JFrame {
         summaryTracksPanel.setLayout(summaryTracksPanelLayout);
         summaryTracksPanelLayout.setHorizontalGroup(
             summaryTracksPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 709, Short.MAX_VALUE)
+            .addGap(0, 747, Short.MAX_VALUE)
             .addGroup(summaryTracksPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(summaryTracksPanelLayout.createSequentialGroup()
                     .addContainerGap()
-                    .addComponent(summaryTracksSplitPane, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(summaryTracksSplitPane, javax.swing.GroupLayout.DEFAULT_SIZE, 727, Short.MAX_VALUE)
                     .addContainerGap()))
         );
         summaryTracksPanelLayout.setVerticalGroup(
             summaryTracksPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 537, Short.MAX_VALUE)
+            .addGap(0, 525, Short.MAX_VALUE)
             .addGroup(summaryTracksPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(summaryTracksPanelLayout.createSequentialGroup()
                     .addContainerGap()
-                    .addComponent(summaryTracksSplitPane, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(summaryTracksSplitPane, javax.swing.GroupLayout.DEFAULT_SIZE, 503, Short.MAX_VALUE)
                     .addContainerGap()))
         );
 
         topPanel.add(summaryTracksPanel, "summaryTracksPanel");
         summaryTracksPanel.getAccessibleContext().setAccessibleName("summaryTracksPanel");
+
+        computationPanel.setMinimumSize(new java.awt.Dimension(20, 20));
+        computationPanel.setName("computationPanel"); // NOI18N
+
+        computationSplitPane.setDividerLocation(400);
+        computationSplitPane.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
+        computationSplitPane.setMinimumSize(new java.awt.Dimension(40, 40));
+        computationSplitPane.setPreferredSize(new java.awt.Dimension(31, 25));
+
+        computationDataParentPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Data"));
+        computationDataParentPanel.setPreferredSize(new java.awt.Dimension(25, 25));
+        computationDataParentPanel.setLayout(new java.awt.GridBagLayout());
+        computationSplitPane.setTopComponent(computationDataParentPanel);
+
+        computationGraphParentPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Plot Data"));
+        computationGraphParentPanel.setLayout(new java.awt.GridBagLayout());
+        computationSplitPane.setBottomComponent(computationGraphParentPanel);
+
+        javax.swing.GroupLayout computationPanelLayout = new javax.swing.GroupLayout(computationPanel);
+        computationPanel.setLayout(computationPanelLayout);
+        computationPanelLayout.setHorizontalGroup(
+            computationPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 747, Short.MAX_VALUE)
+            .addGroup(computationPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(computationPanelLayout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(computationSplitPane, javax.swing.GroupLayout.DEFAULT_SIZE, 727, Short.MAX_VALUE)
+                    .addContainerGap()))
+        );
+        computationPanelLayout.setVerticalGroup(
+            computationPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 525, Short.MAX_VALUE)
+            .addGroup(computationPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(computationPanelLayout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(computationSplitPane, javax.swing.GroupLayout.DEFAULT_SIZE, 503, Short.MAX_VALUE)
+                    .addContainerGap()))
+        );
+
+        topPanel.add(computationPanel, "computationPanel");
+        computationPanel.getAccessibleContext().setAccessibleName("computationPanel");
+        computationPanel.getAccessibleContext().setAccessibleDescription("");
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -200,7 +254,7 @@ public class CellCoordFrame extends javax.swing.JFrame {
             bottomPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, bottomPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(infoLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 289, Short.MAX_VALUE)
+                .addComponent(infoLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 327, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(previousButton)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -280,6 +334,10 @@ public class CellCoordFrame extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel bottomPanel;
     private javax.swing.JButton cancelButton;
+    private javax.swing.JPanel computationDataParentPanel;
+    private javax.swing.JPanel computationGraphParentPanel;
+    private javax.swing.JPanel computationPanel;
+    private javax.swing.JSplitPane computationSplitPane;
     private javax.swing.JPanel homePanel;
     private javax.swing.JLabel infoLabel;
     private javax.swing.JPanel loadTracksParentPanel;

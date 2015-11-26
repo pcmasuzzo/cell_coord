@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.compomics.cell_coord.gui.summary;
+package com.compomics.cell_coord.gui.computation;
 
 import javax.swing.JTable;
 
@@ -11,21 +11,21 @@ import javax.swing.JTable;
  *
  * @author Paola
  */
-public class SummaryDataPanel extends javax.swing.JPanel {
+public class ComputationDataPanel extends javax.swing.JPanel {
 
     /**
-     * Creates new form SummaryDataPanel
+     * Creates new form ComputationPanel
      */
-    public SummaryDataPanel() {
+    public ComputationDataPanel() {
         initComponents();
+    }
+
+    public JTable getDataTable() {
+        return dataTable;
     }
 
     public JTable getSamplesTable() {
         return samplesTable;
-    }
-
-    public JTable getTrackSpotsTable() {
-        return trackSpotsTable;
     }
 
     public JTable getTracksTable() {
@@ -45,10 +45,8 @@ public class SummaryDataPanel extends javax.swing.JPanel {
         samplesTable = new javax.swing.JTable();
         tracksScrollPane = new javax.swing.JScrollPane();
         tracksTable = new javax.swing.JTable();
-        trackSpotsScrollPane = new javax.swing.JScrollPane();
-        trackSpotsTable = new javax.swing.JTable();
-        infoScrollPane = new javax.swing.JScrollPane();
-        infoEditorPane = new javax.swing.JEditorPane();
+        dataScrollPane = new javax.swing.JScrollPane();
+        dataTable = new javax.swing.JTable();
 
         samplesScrollPane.setBorder(javax.swing.BorderFactory.createTitledBorder("1. Samples"));
 
@@ -80,9 +78,9 @@ public class SummaryDataPanel extends javax.swing.JPanel {
         ));
         tracksScrollPane.setViewportView(tracksTable);
 
-        trackSpotsScrollPane.setBorder(javax.swing.BorderFactory.createTitledBorder("3. Track Spots"));
+        dataScrollPane.setBorder(javax.swing.BorderFactory.createTitledBorder("3. Data"));
 
-        trackSpotsTable.setModel(new javax.swing.table.DefaultTableModel(
+        dataTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -93,14 +91,7 @@ public class SummaryDataPanel extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        trackSpotsScrollPane.setViewportView(trackSpotsTable);
-
-        infoScrollPane.setBorder(javax.swing.BorderFactory.createTitledBorder("Info"));
-
-        infoEditorPane.setEditable(false);
-        infoEditorPane.setContentType("text/html"); // NOI18N
-        infoEditorPane.setText("<html>\n         1. Click on a sample in the table number <b>1</b> to visualize the correspondent cell tracks in the table number <b>2</b>.\n         </br>\n         <br>\n\t\t <br>\n\t\t </br>\n         2. Click on a cell track in the table number <b>2</b> to visualize the correspondent track spots in the final table number <b>3</b>.\n         </br>\n         <br>\n         </br>\n         <br>\n\t\t For each <b>track</b>, table number <b>2</b> lists:\n\t\t <br>- min and max <i>x</i> and <i>y</i> coordinates</br>\n\t\t <br>- net displacements in the <i>x</i> and <i>y</i> directions</br>\n\t\t <br>\n\t\t </br>\n\t\t <br>\n\t\t </br>\n         3. For each <b>track_spot</b>, table number <b>3</b> lists:\n <br>- the x coordinate</br>\n <br>- the y coordinate</br>\n <br>- the time point</br>\n      </p>\n   </body>\n</html>");
-        infoScrollPane.setViewportView(infoEditorPane);
+        dataScrollPane.setViewportView(dataTable);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -109,15 +100,11 @@ public class SummaryDataPanel extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(dataScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 759, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(samplesScrollPane)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(tracksScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE)))
-                        .addGap(18, 18, 18)
-                        .addComponent(infoScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(trackSpotsScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 752, Short.MAX_VALUE))
+                        .addComponent(samplesScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 374, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(tracksScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -125,25 +112,20 @@ public class SummaryDataPanel extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(samplesScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(tracksScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                    .addComponent(infoScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 315, Short.MAX_VALUE))
+                    .addComponent(tracksScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(samplesScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(trackSpotsScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 232, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(dataScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JEditorPane infoEditorPane;
-    private javax.swing.JScrollPane infoScrollPane;
+    private javax.swing.JScrollPane dataScrollPane;
+    private javax.swing.JTable dataTable;
     private javax.swing.JScrollPane samplesScrollPane;
     private javax.swing.JTable samplesTable;
-    private javax.swing.JScrollPane trackSpotsScrollPane;
-    private javax.swing.JTable trackSpotsTable;
     private javax.swing.JScrollPane tracksScrollPane;
     private javax.swing.JTable tracksTable;
     // End of variables declaration//GEN-END:variables

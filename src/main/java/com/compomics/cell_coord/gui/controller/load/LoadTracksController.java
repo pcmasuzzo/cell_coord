@@ -14,6 +14,7 @@ import com.compomics.cell_coord.exception.LoadDirectoryException;
 import com.compomics.cell_coord.factory.TrackFileParserFactory;
 import com.compomics.cell_coord.gui.CellCoordFrame;
 import com.compomics.cell_coord.gui.controller.CellCoordController;
+import com.compomics.cell_coord.gui.controller.computation.ComputationMainController;
 import com.compomics.cell_coord.gui.controller.summary.SummaryDataController;
 import com.compomics.cell_coord.gui.controller.summary.VisualizeTracksController;
 import com.compomics.cell_coord.gui.load.LoadTracksPanel;
@@ -70,6 +71,8 @@ public class LoadTracksController {
     private SummaryDataController summaryDataController;
     @Autowired
     private VisualizeTracksController visualizeTracksController;
+    @Autowired
+    private ComputationMainController computationMainController;
     // services
     private GridBagConstraints gridBagConstraints;
     @Autowired
@@ -87,6 +90,7 @@ public class LoadTracksController {
         // init child controllers
         summaryDataController.init();
         visualizeTracksController.init();
+        computationMainController.init();
     }
 
     /**
@@ -170,8 +174,9 @@ public class LoadTracksController {
                         cellCoordController.showMessage(selectionPaths.length + " file(s) successfully imported!", "success loading", JOptionPane.INFORMATION_MESSAGE);
                         // do basic computations
                         preprocess();
-                        // go to child controller and show samples in the table
+                        // go to child controllers and show samples in the tables
                         summaryDataController.showSamplesInTable();
+                        computationMainController.showSamplesInTable();
                         // proceed with next step in the plugin
                         cellCoordController.getCellCoordFrame().getNextButton().setEnabled(true);
                     } else {
