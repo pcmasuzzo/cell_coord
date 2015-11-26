@@ -9,6 +9,7 @@ import java.awt.Color;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTable;
 import javax.swing.UIManager;
 
 /**
@@ -56,8 +57,12 @@ public class CellCoordFrame extends javax.swing.JFrame {
         return computationDataParentPanel;
     }
 
-    public JPanel getComputationGraphParentPanel() {
-        return computationGraphParentPanel;
+    public JTable getSamplesTable() {
+        return samplesTable;
+    }
+
+    public JTable getTracksTable() {
+        return tracksTable;
     }
 
     public JButton getNextButton() {
@@ -97,8 +102,12 @@ public class CellCoordFrame extends javax.swing.JFrame {
         visualizeTracksParentPanel = new javax.swing.JPanel();
         computationPanel = new javax.swing.JPanel();
         computationSplitPane = new javax.swing.JSplitPane();
+        computationMainPanel = new javax.swing.JPanel();
+        samplesScrollPane = new javax.swing.JScrollPane();
+        samplesTable = new javax.swing.JTable();
+        tracksScrollPane = new javax.swing.JScrollPane();
+        tracksTable = new javax.swing.JTable();
         computationDataParentPanel = new javax.swing.JPanel();
-        computationGraphParentPanel = new javax.swing.JPanel();
         bottomPanel = new javax.swing.JPanel();
         previousButton = new javax.swing.JButton();
         nextButton = new javax.swing.JButton();
@@ -129,14 +138,14 @@ public class CellCoordFrame extends javax.swing.JFrame {
             homePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(homePanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(welcomeScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 727, Short.MAX_VALUE)
+                .addComponent(welcomeScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 888, Short.MAX_VALUE)
                 .addContainerGap())
         );
         homePanelLayout.setVerticalGroup(
             homePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(homePanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(welcomeScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 503, Short.MAX_VALUE)
+                .addComponent(welcomeScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 492, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -166,20 +175,20 @@ public class CellCoordFrame extends javax.swing.JFrame {
         summaryTracksPanel.setLayout(summaryTracksPanelLayout);
         summaryTracksPanelLayout.setHorizontalGroup(
             summaryTracksPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 747, Short.MAX_VALUE)
+            .addGap(0, 908, Short.MAX_VALUE)
             .addGroup(summaryTracksPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(summaryTracksPanelLayout.createSequentialGroup()
                     .addContainerGap()
-                    .addComponent(summaryTracksSplitPane, javax.swing.GroupLayout.DEFAULT_SIZE, 727, Short.MAX_VALUE)
+                    .addComponent(summaryTracksSplitPane, javax.swing.GroupLayout.DEFAULT_SIZE, 888, Short.MAX_VALUE)
                     .addContainerGap()))
         );
         summaryTracksPanelLayout.setVerticalGroup(
             summaryTracksPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 525, Short.MAX_VALUE)
+            .addGap(0, 514, Short.MAX_VALUE)
             .addGroup(summaryTracksPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(summaryTracksPanelLayout.createSequentialGroup()
                     .addContainerGap()
-                    .addComponent(summaryTracksSplitPane, javax.swing.GroupLayout.DEFAULT_SIZE, 503, Short.MAX_VALUE)
+                    .addComponent(summaryTracksSplitPane, javax.swing.GroupLayout.DEFAULT_SIZE, 492, Short.MAX_VALUE)
                     .addContainerGap()))
         );
 
@@ -189,38 +198,91 @@ public class CellCoordFrame extends javax.swing.JFrame {
         computationPanel.setMinimumSize(new java.awt.Dimension(20, 20));
         computationPanel.setName("computationPanel"); // NOI18N
 
-        computationSplitPane.setDividerLocation(400);
+        computationSplitPane.setDividerLocation(200);
         computationSplitPane.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
         computationSplitPane.setMinimumSize(new java.awt.Dimension(40, 40));
         computationSplitPane.setPreferredSize(new java.awt.Dimension(31, 25));
 
-        computationDataParentPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Data"));
-        computationDataParentPanel.setPreferredSize(new java.awt.Dimension(25, 25));
-        computationDataParentPanel.setLayout(new java.awt.GridBagLayout());
-        computationSplitPane.setTopComponent(computationDataParentPanel);
+        computationMainPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Samples/Tracks"));
+        computationMainPanel.setPreferredSize(new java.awt.Dimension(25, 25));
 
-        computationGraphParentPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Plot Data"));
-        computationGraphParentPanel.setLayout(new java.awt.GridBagLayout());
-        computationSplitPane.setBottomComponent(computationGraphParentPanel);
+        samplesScrollPane.setBorder(javax.swing.BorderFactory.createTitledBorder("1. Samples"));
+
+        samplesTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        samplesScrollPane.setViewportView(samplesTable);
+
+        tracksScrollPane.setBorder(javax.swing.BorderFactory.createTitledBorder("2. Cell Tracks"));
+
+        tracksTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        tracksScrollPane.setViewportView(tracksTable);
+
+        javax.swing.GroupLayout computationMainPanelLayout = new javax.swing.GroupLayout(computationMainPanel);
+        computationMainPanel.setLayout(computationMainPanelLayout);
+        computationMainPanelLayout.setHorizontalGroup(
+            computationMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(computationMainPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(samplesScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 374, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(tracksScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 470, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        computationMainPanelLayout.setVerticalGroup(
+            computationMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(computationMainPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(computationMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(tracksScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 98, Short.MAX_VALUE)
+                    .addGroup(computationMainPanelLayout.createSequentialGroup()
+                        .addComponent(samplesScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 96, Short.MAX_VALUE)
+                        .addGap(2, 2, 2)))
+                .addContainerGap())
+        );
+
+        computationSplitPane.setTopComponent(computationMainPanel);
+
+        computationDataParentPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Data"));
+        computationDataParentPanel.setLayout(new java.awt.GridBagLayout());
+        computationSplitPane.setBottomComponent(computationDataParentPanel);
 
         javax.swing.GroupLayout computationPanelLayout = new javax.swing.GroupLayout(computationPanel);
         computationPanel.setLayout(computationPanelLayout);
         computationPanelLayout.setHorizontalGroup(
             computationPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 747, Short.MAX_VALUE)
+            .addGap(0, 908, Short.MAX_VALUE)
             .addGroup(computationPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(computationPanelLayout.createSequentialGroup()
                     .addContainerGap()
-                    .addComponent(computationSplitPane, javax.swing.GroupLayout.DEFAULT_SIZE, 727, Short.MAX_VALUE)
+                    .addComponent(computationSplitPane, javax.swing.GroupLayout.DEFAULT_SIZE, 888, Short.MAX_VALUE)
                     .addContainerGap()))
         );
         computationPanelLayout.setVerticalGroup(
             computationPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 525, Short.MAX_VALUE)
+            .addGap(0, 514, Short.MAX_VALUE)
             .addGroup(computationPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(computationPanelLayout.createSequentialGroup()
                     .addContainerGap()
-                    .addComponent(computationSplitPane, javax.swing.GroupLayout.DEFAULT_SIZE, 503, Short.MAX_VALUE)
+                    .addComponent(computationSplitPane, javax.swing.GroupLayout.DEFAULT_SIZE, 492, Short.MAX_VALUE)
                     .addContainerGap()))
         );
 
@@ -254,7 +316,7 @@ public class CellCoordFrame extends javax.swing.JFrame {
             bottomPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, bottomPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(infoLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 327, Short.MAX_VALUE)
+                .addComponent(infoLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 488, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(previousButton)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -335,7 +397,7 @@ public class CellCoordFrame extends javax.swing.JFrame {
     private javax.swing.JPanel bottomPanel;
     private javax.swing.JButton cancelButton;
     private javax.swing.JPanel computationDataParentPanel;
-    private javax.swing.JPanel computationGraphParentPanel;
+    private javax.swing.JPanel computationMainPanel;
     private javax.swing.JPanel computationPanel;
     private javax.swing.JSplitPane computationSplitPane;
     private javax.swing.JPanel homePanel;
@@ -343,11 +405,15 @@ public class CellCoordFrame extends javax.swing.JFrame {
     private javax.swing.JPanel loadTracksParentPanel;
     private javax.swing.JButton nextButton;
     private javax.swing.JButton previousButton;
+    private javax.swing.JScrollPane samplesScrollPane;
+    private javax.swing.JTable samplesTable;
     private javax.swing.JButton startButton;
     private javax.swing.JPanel summaryDataParentPanel;
     private javax.swing.JPanel summaryTracksPanel;
     private javax.swing.JSplitPane summaryTracksSplitPane;
     private javax.swing.JPanel topPanel;
+    private javax.swing.JScrollPane tracksScrollPane;
+    private javax.swing.JTable tracksTable;
     private javax.swing.JPanel visualizeTracksParentPanel;
     private javax.swing.JEditorPane welcomeEditorPane;
     private javax.swing.JScrollPane welcomeScrollPane;

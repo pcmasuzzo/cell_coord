@@ -50,4 +50,25 @@ public class SampleOperatorImpl implements SampleOperator {
             trackOperator.computeShiftedCoordinatesRanges(track);
         }
     }
+
+    @Override
+    public void computeSteps(Sample sample) {
+        for (Track track : sample.getTracks()) {
+            trackOperator.computeSteps(track);
+        }
+    }
+
+    @Override
+    public void computeStepDisplacements(Sample sample) {
+        for (Track track : sample.getTracks()) {
+            trackOperator.computeStepDisplacements(track);
+        }
+    }
+
+    @Override
+    public void computeAngles(Sample sample) {
+        for (Track track : sample.getTracks()) {
+            trackOperator.computeAngles(track);
+        }
+    }
 }

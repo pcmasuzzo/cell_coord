@@ -5,6 +5,7 @@
  */
 package com.compomics.cell_coord.gui.computation;
 
+import javax.swing.JPanel;
 import javax.swing.JTable;
 
 /**
@@ -14,22 +15,34 @@ import javax.swing.JTable;
 public class ComputationDataPanel extends javax.swing.JPanel {
 
     /**
-     * Creates new form ComputationPanel
+     * Creates new form ComputationGraphPanel
      */
     public ComputationDataPanel() {
         initComponents();
     }
 
-    public JTable getDataTable() {
-        return dataTable;
+    public JTable getTrackDataTable() {
+        return trackDataTable;
     }
 
-    public JTable getSamplesTable() {
-        return samplesTable;
+    public JTable getSampleDataTable() {
+        return sampleDataTable;
     }
 
-    public JTable getTracksTable() {
-        return tracksTable;
+    public JPanel getAnglePlotPanel() {
+        return anglePlotPanel;
+    }
+
+    public JPanel getDeltaxPlotPanel() {
+        return deltaxPlotPanel;
+    }
+
+    public JPanel getDeltayPlotPanel() {
+        return deltayPlotPanel;
+    }
+
+    public JPanel getDisplPlotPanel() {
+        return displPlotPanel;
     }
 
     /**
@@ -40,17 +53,32 @@ public class ComputationDataPanel extends javax.swing.JPanel {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
 
-        samplesScrollPane = new javax.swing.JScrollPane();
-        samplesTable = new javax.swing.JTable();
-        tracksScrollPane = new javax.swing.JScrollPane();
-        tracksTable = new javax.swing.JTable();
-        dataScrollPane = new javax.swing.JScrollPane();
-        dataTable = new javax.swing.JTable();
+        dataTabbedPane = new javax.swing.JTabbedPane();
+        trackDataPanel = new javax.swing.JPanel();
+        trackDataSplitPane = new javax.swing.JSplitPane();
+        trackDataTablePanel = new javax.swing.JPanel();
+        trackDataScrollPane = new javax.swing.JScrollPane();
+        trackDataTable = new javax.swing.JTable();
+        trackDataPlotPanel = new javax.swing.JPanel();
+        deltaxPlotPanel = new javax.swing.JPanel();
+        deltayPlotPanel = new javax.swing.JPanel();
+        displPlotPanel = new javax.swing.JPanel();
+        anglePlotPanel = new javax.swing.JPanel();
+        sampleDataPanel = new javax.swing.JPanel();
+        sampleDataSplitPane = new javax.swing.JSplitPane();
+        sampleDataTablePanel = new javax.swing.JPanel();
+        sampleDataScrollPane = new javax.swing.JScrollPane();
+        sampleDataTable = new javax.swing.JTable();
+        sampleDataPlotPanel = new javax.swing.JPanel();
 
-        samplesScrollPane.setBorder(javax.swing.BorderFactory.createTitledBorder("1. Samples"));
+        trackDataSplitPane.setDividerLocation(200);
+        trackDataSplitPane.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
 
-        samplesTable.setModel(new javax.swing.table.DefaultTableModel(
+        trackDataTablePanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Data"));
+
+        trackDataTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -61,11 +89,100 @@ public class ComputationDataPanel extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        samplesScrollPane.setViewportView(samplesTable);
+        trackDataScrollPane.setViewportView(trackDataTable);
 
-        tracksScrollPane.setBorder(javax.swing.BorderFactory.createTitledBorder("2. Cell Tracks"));
+        javax.swing.GroupLayout trackDataTablePanelLayout = new javax.swing.GroupLayout(trackDataTablePanel);
+        trackDataTablePanel.setLayout(trackDataTablePanelLayout);
+        trackDataTablePanelLayout.setHorizontalGroup(
+            trackDataTablePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, trackDataTablePanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(trackDataScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 667, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        trackDataTablePanelLayout.setVerticalGroup(
+            trackDataTablePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(trackDataTablePanelLayout.createSequentialGroup()
+                .addComponent(trackDataScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 172, Short.MAX_VALUE)
+                .addGap(4, 4, 4))
+        );
 
-        tracksTable.setModel(new javax.swing.table.DefaultTableModel(
+        trackDataSplitPane.setLeftComponent(trackDataTablePanel);
+
+        trackDataPlotPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Plot"));
+        trackDataPlotPanel.setLayout(new java.awt.GridBagLayout());
+
+        deltaxPlotPanel.setPreferredSize(new java.awt.Dimension(20, 20));
+        deltaxPlotPanel.setLayout(new java.awt.GridBagLayout());
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.SOUTH;
+        gridBagConstraints.weightx = 0.5;
+        gridBagConstraints.weighty = 0.5;
+        trackDataPlotPanel.add(deltaxPlotPanel, gridBagConstraints);
+
+        deltayPlotPanel.setPreferredSize(new java.awt.Dimension(20, 20));
+        deltayPlotPanel.setLayout(new java.awt.GridBagLayout());
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.SOUTH;
+        gridBagConstraints.weightx = 0.5;
+        gridBagConstraints.weighty = 0.5;
+        trackDataPlotPanel.add(deltayPlotPanel, gridBagConstraints);
+
+        displPlotPanel.setPreferredSize(new java.awt.Dimension(20, 20));
+        displPlotPanel.setLayout(new java.awt.GridBagLayout());
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.SOUTH;
+        gridBagConstraints.weightx = 0.5;
+        gridBagConstraints.weighty = 0.5;
+        trackDataPlotPanel.add(displPlotPanel, gridBagConstraints);
+
+        anglePlotPanel.setPreferredSize(new java.awt.Dimension(20, 20));
+        anglePlotPanel.setLayout(new java.awt.GridBagLayout());
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.SOUTH;
+        gridBagConstraints.weightx = 0.5;
+        gridBagConstraints.weighty = 0.5;
+        trackDataPlotPanel.add(anglePlotPanel, gridBagConstraints);
+
+        trackDataSplitPane.setRightComponent(trackDataPlotPanel);
+
+        javax.swing.GroupLayout trackDataPanelLayout = new javax.swing.GroupLayout(trackDataPanel);
+        trackDataPanel.setLayout(trackDataPanelLayout);
+        trackDataPanelLayout.setHorizontalGroup(
+            trackDataPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(trackDataPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(trackDataSplitPane)
+                .addContainerGap())
+        );
+        trackDataPanelLayout.setVerticalGroup(
+            trackDataPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(trackDataPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(trackDataSplitPane)
+                .addContainerGap())
+        );
+
+        dataTabbedPane.addTab("track data", trackDataPanel);
+
+        sampleDataSplitPane.setDividerLocation(200);
+        sampleDataSplitPane.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
+
+        sampleDataTablePanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Data"));
+
+        sampleDataTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -76,57 +193,99 @@ public class ComputationDataPanel extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        tracksScrollPane.setViewportView(tracksTable);
+        sampleDataScrollPane.setViewportView(sampleDataTable);
 
-        dataScrollPane.setBorder(javax.swing.BorderFactory.createTitledBorder("3. Data"));
+        javax.swing.GroupLayout sampleDataTablePanelLayout = new javax.swing.GroupLayout(sampleDataTablePanel);
+        sampleDataTablePanel.setLayout(sampleDataTablePanelLayout);
+        sampleDataTablePanelLayout.setHorizontalGroup(
+            sampleDataTablePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, sampleDataTablePanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(sampleDataScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 667, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        sampleDataTablePanelLayout.setVerticalGroup(
+            sampleDataTablePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(sampleDataTablePanelLayout.createSequentialGroup()
+                .addComponent(sampleDataScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 172, Short.MAX_VALUE)
+                .addGap(4, 4, 4))
+        );
 
-        dataTable.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        dataScrollPane.setViewportView(dataTable);
+        sampleDataSplitPane.setLeftComponent(sampleDataTablePanel);
+
+        sampleDataPlotPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Plot"));
+
+        javax.swing.GroupLayout sampleDataPlotPanelLayout = new javax.swing.GroupLayout(sampleDataPlotPanel);
+        sampleDataPlotPanel.setLayout(sampleDataPlotPanelLayout);
+        sampleDataPlotPanelLayout.setHorizontalGroup(
+            sampleDataPlotPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 687, Short.MAX_VALUE)
+        );
+        sampleDataPlotPanelLayout.setVerticalGroup(
+            sampleDataPlotPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 262, Short.MAX_VALUE)
+        );
+
+        sampleDataSplitPane.setRightComponent(sampleDataPlotPanel);
+
+        javax.swing.GroupLayout sampleDataPanelLayout = new javax.swing.GroupLayout(sampleDataPanel);
+        sampleDataPanel.setLayout(sampleDataPanelLayout);
+        sampleDataPanelLayout.setHorizontalGroup(
+            sampleDataPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(sampleDataPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(sampleDataSplitPane)
+                .addContainerGap())
+        );
+        sampleDataPanelLayout.setVerticalGroup(
+            sampleDataPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(sampleDataPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(sampleDataSplitPane))
+        );
+
+        dataTabbedPane.addTab("sample data", sampleDataPanel);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(dataScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 759, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(samplesScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 374, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(tracksScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+            .addGap(0, 746, Short.MAX_VALUE)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(dataTabbedPane)
+                    .addContainerGap()))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(tracksScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(samplesScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(dataScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGap(0, 552, Short.MAX_VALUE)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(dataTabbedPane)
+                    .addContainerGap()))
         );
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JScrollPane dataScrollPane;
-    private javax.swing.JTable dataTable;
-    private javax.swing.JScrollPane samplesScrollPane;
-    private javax.swing.JTable samplesTable;
-    private javax.swing.JScrollPane tracksScrollPane;
-    private javax.swing.JTable tracksTable;
+    private javax.swing.JPanel anglePlotPanel;
+    private javax.swing.JTabbedPane dataTabbedPane;
+    private javax.swing.JPanel deltaxPlotPanel;
+    private javax.swing.JPanel deltayPlotPanel;
+    private javax.swing.JPanel displPlotPanel;
+    private javax.swing.JPanel sampleDataPanel;
+    private javax.swing.JPanel sampleDataPlotPanel;
+    private javax.swing.JScrollPane sampleDataScrollPane;
+    private javax.swing.JSplitPane sampleDataSplitPane;
+    private javax.swing.JTable sampleDataTable;
+    private javax.swing.JPanel sampleDataTablePanel;
+    private javax.swing.JPanel trackDataPanel;
+    private javax.swing.JPanel trackDataPlotPanel;
+    private javax.swing.JScrollPane trackDataScrollPane;
+    private javax.swing.JSplitPane trackDataSplitPane;
+    private javax.swing.JTable trackDataTable;
+    private javax.swing.JPanel trackDataTablePanel;
     // End of variables declaration//GEN-END:variables
 }

@@ -162,6 +162,9 @@ public class CellCoordController {
                 cellCoordFrame.getPreviousButton().setEnabled(true);
                 updateInfoLabel("A quick summary and visualization of the loaded cell tracks.");
                 break;
+            case "computationPanel":
+                updateInfoLabel("Data computed and visualized for samples and tracks.");
+                break;
         }
     }
 }

@@ -131,5 +131,6 @@ public class TrackOperatorImpl implements TrackOperator {
             }
             angles[row] = angleDegrees;
         }
+        track.setAngles(angles);
     }
 }

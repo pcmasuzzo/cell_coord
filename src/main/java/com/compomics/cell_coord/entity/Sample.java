@@ -66,9 +66,13 @@ public class Sample {
             return false;
         }
         final Sample other = (Sample) obj;
+        if (!Objects.equals(this.name, other.name)) {
+            return false;
+        }
         if (!Objects.equals(this.tracks, other.tracks)) {
             return false;
         }
         return true;
     }
+
 }

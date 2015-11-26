@@ -113,11 +113,11 @@ public class SummaryDataPanel extends javax.swing.JPanel {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(samplesScrollPane)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(tracksScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE)))
+                                .addComponent(tracksScrollPane)
+                                .addGap(1, 1, 1)))
                         .addGap(18, 18, 18)
                         .addComponent(infoScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(trackSpotsScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 752, Short.MAX_VALUE))
+                    .addComponent(trackSpotsScrollPane))
                 .addContainerGap())
         );
         layout.setVerticalGroup(

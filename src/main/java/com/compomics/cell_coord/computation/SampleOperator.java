@@ -41,4 +41,25 @@ public interface SampleOperator {
      * @param sample
      */
     void computeShiftedCoordinatesRanges(Sample sample);
+
+    /**
+     * Compute step movements.
+     *
+     * @param sample
+     */
+    void computeSteps(Sample sample);
+
+    /**
+     * Compute the step displacements.
+     *
+     * @param sample
+     */
+    void computeStepDisplacements(Sample sample);
+
+    /**
+     * Compute the angles.
+     *
+     * @param sample
+     */
+    void computeAngles(Sample sample);
 }
