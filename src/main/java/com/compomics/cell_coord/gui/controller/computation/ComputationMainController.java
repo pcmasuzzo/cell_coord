@@ -142,8 +142,10 @@ public class ComputationMainController {
                     if (selectedRow != -1) {
                         Track selectedTrack = selectedSample.getTracks().get(selectedRow);
                         // call child controller to show track data in table
+                        computationDataController.showStepData(selectedTrack);
                         computationDataController.showTrackData(selectedTrack);
                         // call child controller to plot whatever we need to plot
+                        computationDataController.plotStepData(selectedTrack);
                         computationDataController.plotTrackData(selectedTrack);
                     }
                 }

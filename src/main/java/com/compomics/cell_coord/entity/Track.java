@@ -21,6 +21,8 @@ public class Track {
     private Sample sample;
     // a collection of spots in the track
     private List<TrackSpot> trackSpots;
+    // the temporal indexes for the track
+    private double[] timeIndexes;
     // coordinates matrix
     private Double[][] coordinates;
     // shifted coordinates
@@ -39,6 +41,18 @@ public class Track {
     private Double[] stepDisplacements;
     // the turning angles
     private Double[] angles;
+    // the cumulative distance
+    private double cumulativeDistance;
+    // the euclidean distance
+    private double euclideanDistance;
+    // directionality: this is  the ratio between the euclidean and the cumulative distance
+    private double endPointDirectionality;
+    // the convex hull
+    private ConvexHull convexHull;
+    // displacement ratio: displacement/maximal displacement
+    private double displacementRatio;
+    // outreach ratio: maximal displacement/path length
+    private double outreachRatio;
 
     /**
      * Empty constructor
@@ -83,6 +97,14 @@ public class Track {
 
     public void setTrackSpots(List<TrackSpot> trackSpots) {
         this.trackSpots = trackSpots;
+    }
+
+    public double[] getTimeIndexes() {
+        return timeIndexes;
+    }
+
+    public void setTimeIndexes(double[] timeIndexes) {
+        this.timeIndexes = timeIndexes;
     }
 
     public Double[][] getCoordinates() {
@@ -155,6 +177,54 @@ public class Track {
 
     public void setAngles(Double[] angles) {
         this.angles = angles;
+    }
+
+    public double getCumulativeDistance() {
+        return cumulativeDistance;
+    }
+
+    public void setCumulativeDistance(double cumulativeDistance) {
+        this.cumulativeDistance = cumulativeDistance;
+    }
+
+    public double getEuclideanDistance() {
+        return euclideanDistance;
+    }
+
+    public void setEuclideanDistance(double euclideanDistance) {
+        this.euclideanDistance = euclideanDistance;
+    }
+
+    public double getEndPointDirectionality() {
+        return endPointDirectionality;
+    }
+
+    public void setEndPointDirectionality(double endPointDirectionality) {
+        this.endPointDirectionality = endPointDirectionality;
+    }
+
+    public ConvexHull getConvexHull() {
+        return convexHull;
+    }
+
+    public void setConvexHull(ConvexHull convexHull) {
+        this.convexHull = convexHull;
+    }
+
+    public double getDisplacementRatio() {
+        return displacementRatio;
+    }
+
+    public void setDisplacementRatio(double displacementRatio) {
+        this.displacementRatio = displacementRatio;
+    }
+
+    public double getOutreachRatio() {
+        return outreachRatio;
+    }
+
+    public void setOutreachRatio(double outreachRatio) {
+        this.outreachRatio = outreachRatio;
     }
 
     @Override

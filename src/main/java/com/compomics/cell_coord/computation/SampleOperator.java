@@ -15,6 +15,13 @@ import com.compomics.cell_coord.entity.Sample;
 public interface SampleOperator {
 
     /**
+     * Prepare the time indexes.
+     *
+     * @param sample
+     */
+    void prepareTimeIndexes(Sample sample);
+
+    /**
      * Prepare the coordinates.
      *
      * @param sample
@@ -62,4 +69,47 @@ public interface SampleOperator {
      * @param sample
      */
     void computeAngles(Sample sample);
+
+    /**
+     * Compute the Cumulative distances.
+     *
+     * @param sample
+     */
+    void computeCumulativeDistances(Sample sample);
+
+    /**
+     * Compute the Euclidean distances.
+     *
+     * @param sample
+     */
+    void computeEuclideanDistances(Sample sample);
+
+    /**
+     * Compute the end point directionality ratios.
+     *
+     * @param sample
+     */
+    void computeEndPointDirectionalities(Sample sample);
+
+    /**
+     * Compute the convex hulls.
+     *
+     * @param sample
+     */
+    void computeConvexHulls(Sample sample);
+
+    /**
+     * Compute the displacement ratios.
+     *
+     * @param sample
+     */
+    void computeDisplacementRatios(Sample sample);
+
+    /**
+     * Compute the outreach ratios.
+     *
+     * @param sample
+     */
+    void computeOutreachRatios(Sample sample);
+
 }

@@ -24,6 +24,8 @@ public class TrackSpot {
     private double time;
     // the track the spot belongs to
     private Track track;
+    // a geometric point associate dwith this spot
+    private GeometricPoint geometricPoint;
 
     /**
      * Empty constructor
@@ -33,6 +35,7 @@ public class TrackSpot {
 
     /**
      * Constructors of convenience.
+     *
      * @param x
      * @param y
      */
@@ -96,34 +99,12 @@ public class TrackSpot {
         this.track = track;
     }
 
-    /**
-     * Get the radius in polar coordinates.
-     *
-     * @return sqrt(x*x + y*y)
-     */
-    public double getPolarRadius() {
-        return Math.hypot(x, y);
+    public GeometricPoint getGeometricPoint() {
+        return geometricPoint;
     }
 
-    /**
-     * Get the angle theta in polar coordinates.
-     *
-     * @return the angle in radians (between -pi/2 and pi/2)
-     */
-    public double getTheta() {
-        return Math.atan2(y, x);
-    }
-
-    /**
-     * Euclidean distance from one point to another one.
-     *
-     * @param other
-     * @return
-     */
-    public double euclideanDistanceTo(TrackSpot other) {
-        double dx = this.x - other.x;
-        double dy = this.y - other.y;
-        return Math.hypot(dx, dy);
+    public void setGeometricPoint(GeometricPoint geometricPoint) {
+        this.geometricPoint = geometricPoint;
     }
 
     @Override

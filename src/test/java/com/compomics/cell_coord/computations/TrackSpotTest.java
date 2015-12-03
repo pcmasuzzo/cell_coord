@@ -5,6 +5,7 @@
  */
 package com.compomics.cell_coord.computations;
 
+import com.compomics.cell_coord.entity.GeometricPoint;
 import com.compomics.cell_coord.entity.TrackSpot;
 import junit.framework.Assert;
 import org.junit.BeforeClass;
@@ -32,14 +33,16 @@ public class TrackSpotTest {
     @BeforeClass
     public static void createPoints() {
         q = new TrackSpot(2.5, 3.5);
+        q.setGeometricPoint(new GeometricPoint(q.getX(), q.getY()));
         r = new TrackSpot(7.7, 6.8);
+        r.setGeometricPoint(new GeometricPoint(r.getX(), r.getY()));
     }
 
     @Test
     public void test2DEuclideanDistance() {
-        double euclideanDistanceTo = q.euclideanDistanceTo(r);
+        double euclideanDistanceTo = q.getGeometricPoint().euclideanDistanceTo(r.getGeometricPoint());
         Assert.assertEquals(6.158733636065128, euclideanDistanceTo);
-        double zeroDistance = q.euclideanDistanceTo(q);
+        double zeroDistance = q.getGeometricPoint().euclideanDistanceTo(q.getGeometricPoint());
         Assert.assertEquals(0.0, zeroDistance);
     }
 }

@@ -9,10 +9,11 @@ import com.compomics.cell_coord.entity.Track;
 import javax.swing.table.AbstractTableModel;
 
 /**
+ * A table model to show data computed for a track.
  *
  * @author Paola
  */
-public class TrackDataTableModel extends AbstractTableModel {
+public class StepDataTableModel extends AbstractTableModel {
 
     private final Track track;
     private String columnNames[];
@@ -23,14 +24,14 @@ public class TrackDataTableModel extends AbstractTableModel {
      *
      * @param track
      */
-    public TrackDataTableModel(Track track) {
+    public StepDataTableModel(Track track) {
         this.track = track;
         initModel();
     }
 
     @Override
     public int getRowCount() {
-        return 4;
+        return track.getSteps().length;
     }
 
     @Override
@@ -49,21 +50,21 @@ public class TrackDataTableModel extends AbstractTableModel {
     }
 
     /**
-     * Initialize the model.
+     * Initialize the model
      */
     private void initModel() {
-        columnNames = new String[2];
-        columnNames[0] = "property";
-        columnNames[1] = "value";
-        modelData = new Object[track.getSteps().length][columnNames.length];
-        modelData[0][0] = "CD";
-        modelData[1][0] = "ED";
-        modelData[2][0] = "DR";
-        modelData[3][0] = "CH";
+        columnNames = new String[4];
+        columnNames[0] = "delta_x";
+        columnNames[1] = "delta_y";
+        columnNames[2] = "displacement";
+        columnNames[3] = "delta_teta";
 
-        modelData[0][1] = track.getCumulativeDistance();
-        modelData[1][1] = track.getEuclideanDistance();
-        modelData[2][1] = track.getEndPointDirectionality();
-        modelData[3][1] = track.getConvexHull().getHullSize();
+        modelData = new Object[track.getSteps().length][columnNames.length];
+        for (int i = 0; i < track.getSteps().length; i++) {
+            modelData[i][0] = track.getSteps()[i][0];
+            modelData[i][1] = track.getSteps()[i][1];
+            modelData[i][2] = track.getStepDisplacements()[i];
+            modelData[i][3] = track.getAngles()[i];
+        }
     }
 }

@@ -15,6 +15,13 @@ import com.compomics.cell_coord.entity.Track;
 public interface TrackOperator {
 
     /**
+     * Prepare the time indexes.
+     *
+     * @param track
+     */
+    void prepareTimeIndexes(Track track);
+
+    /**
      * Prepare the coordinates matrix for a track.
      *
      * @param track
@@ -62,4 +69,46 @@ public interface TrackOperator {
      * @param track
      */
     void computeAngles(Track track);
+
+    /**
+     * Compute the cumulative distance for a track.
+     *
+     * @param track
+     */
+    void computeCumulativeDistance(Track track);
+
+    /**
+     * Compute the Euclidean distance for a track.
+     *
+     * @param track
+     */
+    void computeEuclideanDistance(Track track);
+
+    /**
+     * Compute the directionality.
+     *
+     * @param track
+     */
+    void computeEndPointDirectionality(Track track);
+
+    /**
+     * Compute the convex hull.
+     *
+     * @param track
+     */
+    void computeConvexHull(Track track);
+
+    /**
+     * Compute the displacement ratio.
+     *
+     * @param track
+     */
+    void computeDisplacementRatio(Track track);
+
+    /**
+     * Compute the outreach ratio.
+     *
+     * @param track
+     */
+    void computeOutreachRatio(Track track);
 }

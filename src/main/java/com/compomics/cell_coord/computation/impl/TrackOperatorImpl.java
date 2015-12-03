@@ -5,13 +5,18 @@
  */
 package com.compomics.cell_coord.computation.impl;
 
+import com.compomics.cell_coord.computation.ConvexHullOperator;
 import com.compomics.cell_coord.computation.TrackOperator;
+import com.compomics.cell_coord.entity.ConvexHull;
+import com.compomics.cell_coord.entity.GeometricPoint;
+import com.compomics.cell_coord.entity.MostDistantPointsPair;
 import com.compomics.cell_coord.entity.Track;
 import com.compomics.cell_coord.entity.TrackSpot;
 import com.compomics.cell_coord.utils.ComputationUtils;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
@@ -21,6 +26,26 @@ import org.springframework.stereotype.Component;
  */
 @Component("trackOperator")
 public class TrackOperatorImpl implements TrackOperator {
+
+    @Autowired
+    private GrahamScanAlgorithm grahamScanAlgorithm;
+    @Autowired
+    private ConvexHullOperator convexHullOperator;
+
+    /**
+     * Prepare the time indexes.
+     *
+     * @param track
+     */
+    @Override
+    public void prepareTimeIndexes(Track track) {
+        List<TrackSpot> trackSpots = track.getTrackSpots();
+        double[] timeIndexes = new double[trackSpots.size()];
+        for (int i = 0; i < timeIndexes.length; i++) {
+            timeIndexes[i] = trackSpots.get(i).getTime();
+        }
+        track.setTimeIndexes(timeIndexes);
+    }
 
     /**
      * Prepare raw coordinates matrix for a track.
@@ -36,6 +61,8 @@ public class TrackOperatorImpl implements TrackOperator {
             Double x = trackSpot.getX();
             Double y = trackSpot.getY();
             coordinates[i] = new Double[]{x, y};
+            GeometricPoint geometricPoint = new GeometricPoint(x, y);
+            trackSpot.setGeometricPoint(geometricPoint);
         }
         track.setCoordinates(coordinates);
     }
@@ -132,5 +159,63 @@ public class TrackOperatorImpl implements TrackOperator {
             angles[row] = angleDegrees;
         }
         track.setAngles(angles);
+    }
+
+    @Override
+    public void computeCumulativeDistance(Track track) {
+        double cumulativeDistance = 0;
+        Double[] stepDisplacements = track.getStepDisplacements();
+        for (Double stepDisplacement : stepDisplacements) {
+            if (stepDisplacement != null) {
+                cumulativeDistance += stepDisplacement;
+            }
+        }
+        track.setCumulativeDistance(cumulativeDistance);
+    }
+
+    @Override
+    public void computeEuclideanDistance(Track track) {
+        List<TrackSpot> trackSpots = track.getTrackSpots();
+        TrackSpot firstSpot = trackSpots.get(0);
+        TrackSpot lastSpot = trackSpots.get(trackSpots.size() - 1);
+        double euclideanDistance = lastSpot.getGeometricPoint().euclideanDistanceTo(firstSpot.getGeometricPoint());
+        track.setEuclideanDistance(euclideanDistance);
+    }
+
+    @Override
+    public void computeEndPointDirectionality(Track track) {
+        double endPointDirectionality = track.getEuclideanDistance() / track.getCumulativeDistance();
+        track.setEndPointDirectionality(endPointDirectionality);
+    }
+
+    @Override
+    public void computeConvexHull(Track track) {
+        ConvexHull convexHull = new ConvexHull();
+        grahamScanAlgorithm.computeHull(track, convexHull);
+        grahamScanAlgorithm.computeHullSize(convexHull);
+        grahamScanAlgorithm.findMostDistantPoints(track, convexHull);
+        convexHullOperator.computePerimeter(convexHull);
+        convexHullOperator.computeArea(convexHull);
+        convexHullOperator.computeAcircularity(convexHull);
+        convexHullOperator.computeDirectionality(convexHull);
+        track.setConvexHull(convexHull);
+    }
+
+    @Override
+    public void computeDisplacementRatio(Track track) {
+        ConvexHull convexHull = track.getConvexHull();
+        MostDistantPointsPair mostDistantPointsPair = convexHull.getMostDistantPointsPair();
+        double maxSpan = mostDistantPointsPair.getMaxSpan();
+        double displacementRatio = track.getEuclideanDistance() / maxSpan;
+        track.setDisplacementRatio(displacementRatio);
+    }
+
+    @Override
+    public void computeOutreachRatio(Track track) {
+        ConvexHull convexHull = track.getConvexHull();
+        MostDistantPointsPair mostDistantPointsPair = convexHull.getMostDistantPointsPair();
+        double maxSpan = mostDistantPointsPair.getMaxSpan();
+        double outreachRatio = maxSpan / track.getCumulativeDistance();
+        track.setOutreachRatio(outreachRatio);
     }
 }

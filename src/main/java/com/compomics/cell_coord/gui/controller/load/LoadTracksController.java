@@ -214,6 +214,7 @@ public class LoadTracksController {
      */
     private void preprocess() {
         for (Sample sample : samples) {
+            sampleOperator.prepareTimeIndexes(sample);
             sampleOperator.prepareCoordinates(sample);
             sampleOperator.prepareShiftedCoordinates(sample);
             sampleOperator.computeCoordinatesRanges(sample);

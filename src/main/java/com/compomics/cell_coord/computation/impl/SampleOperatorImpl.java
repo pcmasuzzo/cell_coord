@@ -24,6 +24,13 @@ public class SampleOperatorImpl implements SampleOperator {
     private TrackOperator trackOperator;
 
     @Override
+    public void prepareTimeIndexes(Sample sample) {
+        for (Track track : sample.getTracks()) {
+            trackOperator.prepareTimeIndexes(track);
+        }
+    }
+
+    @Override
     public void prepareCoordinates(Sample sample) {
         for (Track track : sample.getTracks()) {
             trackOperator.prepareCoordinates(track);
@@ -69,6 +76,48 @@ public class SampleOperatorImpl implements SampleOperator {
     public void computeAngles(Sample sample) {
         for (Track track : sample.getTracks()) {
             trackOperator.computeAngles(track);
+        }
+    }
+
+    @Override
+    public void computeCumulativeDistances(Sample sample) {
+        for (Track track : sample.getTracks()) {
+            trackOperator.computeCumulativeDistance(track);
+        }
+    }
+
+    @Override
+    public void computeEuclideanDistances(Sample sample) {
+        for (Track track : sample.getTracks()) {
+            trackOperator.computeEuclideanDistance(track);
+        }
+    }
+
+    @Override
+    public void computeEndPointDirectionalities(Sample sample) {
+        for (Track track : sample.getTracks()) {
+            trackOperator.computeEndPointDirectionality(track);
+        }
+    }
+
+    @Override
+    public void computeConvexHulls(Sample sample) {
+        for (Track track : sample.getTracks()) {
+            trackOperator.computeConvexHull(track);
+        }
+    }
+
+    @Override
+    public void computeDisplacementRatios(Sample sample) {
+        for (Track track : sample.getTracks()) {
+            trackOperator.computeDisplacementRatio(track);
+        }
+    }
+
+    @Override
+    public void computeOutreachRatios(Sample sample) {
+        for (Track track : sample.getTracks()) {
+            trackOperator.computeOutreachRatio(track);
         }
     }
 }
